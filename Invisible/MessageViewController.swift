@@ -10,6 +10,12 @@ import UIKit
 import Parse
 
 class MessageViewController: UIViewController {
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    navigationItem.title = "New Message"
+  }
 
   @IBAction func logOutButtonPressed(sender: UIButton) {
     PFUser.logOut()

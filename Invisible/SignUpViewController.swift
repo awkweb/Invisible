@@ -64,8 +64,7 @@ class SignUpViewController: UIViewController {
         }
       } else {
         println("Sign up success!")
-        let messageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
-        self.presentViewController(messageViewController, animated: true, completion: nil)
+        self.presentViewController(pageController, animated: true, completion: nil)
       }
     }
   }
@@ -78,6 +77,7 @@ class SignUpViewController: UIViewController {
   
 }
 
+// MARK: - UITextFieldDelegate
 extension SignUpViewController: UITextFieldDelegate {
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050974F41B00CE9000C282B6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050974F31B00CE9000C282B6 /* SettingsViewController.swift */; };
+		050974F61B00CEE500C282B6 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050974F51B00CEE500C282B6 /* PageViewController.swift */; };
+		050974F81B00D8C600C282B6 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050974F71B00D8C600C282B6 /* ContactsViewController.swift */; };
 		052620061AFF975000825C3B /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052620051AFF975000825C3B /* MessageViewController.swift */; };
 		052620081AFFA30F00825C3B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052620071AFFA30F00825C3B /* LogInViewController.swift */; };
 		053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */; };
@@ -42,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		050974F31B00CE9000C282B6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		050974F51B00CEE500C282B6 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		050974F71B00D8C600C282B6 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		052620051AFF975000825C3B /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		052620071AFFA30F00825C3B /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		053F42AC1AFE92FE00A2CA53 /* Invisible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invisible.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,7 +131,10 @@
 				053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */,
 				052620071AFFA30F00825C3B /* LogInViewController.swift */,
 				053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */,
+				050974F51B00CEE500C282B6 /* PageViewController.swift */,
 				052620051AFF975000825C3B /* MessageViewController.swift */,
+				050974F31B00CE9000C282B6 /* SettingsViewController.swift */,
+				050974F71B00D8C600C282B6 /* ContactsViewController.swift */,
 				053F42B51AFE92FE00A2CA53 /* Main.storyboard */,
 				053F42AF1AFE92FE00A2CA53 /* Supporting Files */,
 			);
@@ -285,10 +294,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
+				050974F61B00CEE500C282B6 /* PageViewController.swift in Sources */,
 				053F42F11AFED7A400A2CA53 /* SignUpViewController.swift in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
 				052620081AFFA30F00825C3B /* LogInViewController.swift in Sources */,
+				050974F81B00D8C600C282B6 /* ContactsViewController.swift in Sources */,
 				052620061AFF975000825C3B /* MessageViewController.swift in Sources */,
+				050974F41B00CE9000C282B6 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -46,8 +46,7 @@ class LogInViewController: UIViewController {
       
       if user != nil {
         println("Log in success!")
-        let messageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
-        self.presentViewController(messageViewController, animated: true, completion: nil)
+        self.presentViewController(pageController, animated: true, completion: nil)
       } else {
         println("Log in error: \(error)")
       }
@@ -56,6 +55,7 @@ class LogInViewController: UIViewController {
   
 }
 
+// MARK: - UITextFieldDelegate
 extension LogInViewController: UITextFieldDelegate {
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {
