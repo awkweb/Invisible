@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		052620061AFF975000825C3B /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052620051AFF975000825C3B /* MessageViewController.swift */; };
+		052620081AFFA30F00825C3B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052620071AFFA30F00825C3B /* LogInViewController.swift */; };
 		053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */; };
 		053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B51AFE92FE00A2CA53 /* Main.storyboard */; };
 		053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B81AFE92FE00A2CA53 /* Images.xcassets */; };
@@ -26,7 +28,6 @@
 		053F42E81AFE949000A2CA53 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E71AFE949000A2CA53 /* libz.dylib */; };
 		053F42EA1AFE949C00A2CA53 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */; };
 		053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42EC1AFEA41C00A2CA53 /* Constants.swift */; };
-		053F42EF1AFEA6BD00A2CA53 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42EE1AFEA6BD00A2CA53 /* LogInViewController.swift */; };
 		053F42F11AFED7A400A2CA53 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		052620051AFF975000825C3B /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
+		052620071AFFA30F00825C3B /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		053F42AC1AFE92FE00A2CA53 /* Invisible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invisible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		053F42B01AFE92FE00A2CA53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,7 +67,6 @@
 		053F42E71AFE949000A2CA53 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		053F42EC1AFEA41C00A2CA53 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		053F42EE1AFEA6BD00A2CA53 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,8 +123,9 @@
 			isa = PBXGroup;
 			children = (
 				053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */,
-				053F42EE1AFEA6BD00A2CA53 /* LogInViewController.swift */,
+				052620071AFFA30F00825C3B /* LogInViewController.swift */,
 				053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */,
+				052620051AFF975000825C3B /* MessageViewController.swift */,
 				053F42B51AFE92FE00A2CA53 /* Main.storyboard */,
 				053F42AF1AFE92FE00A2CA53 /* Supporting Files */,
 			);
@@ -281,10 +284,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				053F42EF1AFEA6BD00A2CA53 /* LogInViewController.swift in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
 				053F42F11AFED7A400A2CA53 /* SignUpViewController.swift in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
+				052620081AFFA30F00825C3B /* LogInViewController.swift in Sources */,
+				052620061AFF975000825C3B /* MessageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +502,7 @@
 				053F42CD1AFE92FE00A2CA53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		053F42CE1AFE92FE00A2CA53 /* Build configuration list for PBXNativeTarget "InvisibleTests" */ = {
 			isa = XCConfigurationList;
@@ -506,6 +511,7 @@
 				053F42D01AFE92FE00A2CA53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

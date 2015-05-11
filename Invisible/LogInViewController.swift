@@ -14,7 +14,14 @@ class LogInViewController: UIViewController {
   @IBOutlet weak var usernameTextField: UITextField!
   @IBOutlet weak var passwordTextField: UITextField!
   
-  @IBAction func loginButtonPressed(sender: UIButton) {
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    usernameTextField.delegate = self
+    passwordTextField.delegate = self
+  }
+  
+  @IBAction func logInButtonPressed(sender: UIButton) {
     let username = usernameTextField.text
     let password = passwordTextField.text
     
@@ -30,7 +37,7 @@ class LogInViewController: UIViewController {
   }
   
   @IBAction func signUpButtonPressed(sender: UIButton) {
-    self.performSegueWithIdentifier("presentSignUpVC", sender: self)
+    performSegueWithIdentifier("showSignUpVC", sender: self)
   }
   
   private func logIn(username: String, password: String) {
@@ -39,10 +46,26 @@ class LogInViewController: UIViewController {
       
       if user != nil {
         println("Log in success!")
+        let messageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
+        self.presentViewController(messageViewController, animated: true, completion: nil)
       } else {
         println("Log in error: \(error)")
       }
     }
   }
+  
+}
 
+extension LogInViewController: UITextFieldDelegate {
+  
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    if textField == usernameTextField {
+      passwordTextField.becomeFirstResponder()
+    } else if textField == passwordTextField {
+      textField.resignFirstResponder()
+    }
+    return true
+  }
+  
 }

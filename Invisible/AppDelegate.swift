@@ -16,8 +16,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    
     Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
+    
+    // Determine initialViewController
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    var initialViewController: UIViewController
+    
+    if PFUser.currentUser() != nil {
+      initialViewController = storyboard.instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
+    } else {
+      initialViewController = storyboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
+    }
+    
+    window?.rootViewController = initialViewController
+    window?.makeKeyAndVisible()
     
     // Register for Push Notitications
     if application.applicationState != .Background {

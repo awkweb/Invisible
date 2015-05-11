@@ -15,6 +15,14 @@ class SignUpViewController: UIViewController {
   @IBOutlet weak var passwordTextField: UITextField!
   @IBOutlet weak var emailTextField: UITextField!
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    usernameTextField.delegate = self
+    passwordTextField.delegate = self
+    emailTextField.delegate = self
+  }
+  
   @IBAction func signUpButtonPressed(sender: UIButton) {
     let username = usernameTextField.text
     let password = passwordTextField.text
@@ -56,6 +64,8 @@ class SignUpViewController: UIViewController {
         }
       } else {
         println("Sign up success!")
+        let messageViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
+        self.presentViewController(messageViewController, animated: true, completion: nil)
       }
     }
   }
@@ -64,6 +74,27 @@ class SignUpViewController: UIViewController {
     let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
     let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
     return emailTest.evaluateWithObject(email)
+  }
+  
+}
+
+extension SignUpViewController: UITextFieldDelegate {
+  
+  func textFieldShouldReturn(textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    
+    switch textField {
+    case usernameTextField:
+      emailTextField.becomeFirstResponder()
+    case emailTextField:
+      passwordTextField.becomeFirstResponder()
+    case passwordTextField:
+      textField.resignFirstResponder()
+    default:
+      textField.resignFirstResponder()
+    }
+    
+    return true
   }
   
 }

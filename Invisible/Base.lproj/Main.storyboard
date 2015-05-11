@@ -8,7 +8,7 @@
         <!--Log In View Controller-->
         <scene sceneID="ITJ-T2-iVU">
             <objects>
-                <viewController id="ges-cX-JsQ" customClass="LogInViewController" customModule="Invisible" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogInViewController" id="ges-cX-JsQ" customClass="LogInViewController" customModule="Invisible" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EaA-RI-g3x"/>
                         <viewControllerLayoutGuide type="bottom" id="SWN-zL-w8H"/>
@@ -20,18 +20,18 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gmk-kW-arN">
                                 <rect key="frame" x="16" y="101" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yZb-Dw-w80">
                                 <rect key="frame" x="16" y="157" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKQ-a8-DUd">
                                 <rect key="frame" x="16" y="211" width="568" height="30"/>
-                                <state key="normal" title="Login"/>
+                                <state key="normal" title="Log In"/>
                                 <connections>
-                                    <action selector="loginButtonPressed:" destination="ges-cX-JsQ" eventType="touchUpInside" id="5xm-F1-kAp"/>
+                                    <action selector="logInButtonPressed:" destination="ges-cX-JsQ" eventType="touchUpInside" id="ut3-qn-oV7"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJA-rL-1GI">
@@ -40,8 +40,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="signUpButtonPressed:" destination="ges-cX-JsQ" eventType="touchUpInside" id="Raj-EU-Sax"/>
-                                    <segue destination="8iB-WR-liW" kind="presentation" identifier="presentSignUpVC" id="yX4-rY-QJj"/>
+                                    <action selector="signUpButtonPressed:" destination="ges-cX-JsQ" eventType="touchUpInside" id="e22-RL-pwF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -62,13 +61,49 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="passwordTextField" destination="yZb-Dw-w80" id="NED-X8-ca3"/>
-                        <outlet property="usernameTextField" destination="Gmk-kW-arN" id="bmN-jc-9fc"/>
+                        <outlet property="passwordTextField" destination="yZb-Dw-w80" id="lCj-sO-5A2"/>
+                        <outlet property="usernameTextField" destination="Gmk-kW-arN" id="wV5-tM-iq3"/>
+                        <segue destination="8iB-WR-liW" kind="presentation" identifier="showSignUpVC" id="fg9-Ju-RdB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pio-Hk-ooH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="254" y="334"/>
+            <point key="canvasLocation" x="282" y="334"/>
+        </scene>
+        <!--Message View Controller-->
+        <scene sceneID="Z6P-UL-APd">
+            <objects>
+                <viewController storyboardIdentifier="MessageViewController" id="dzq-KM-n5v" customClass="MessageViewController" customModule="Invisible" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2H2-L6-uaR"/>
+                        <viewControllerLayoutGuide type="bottom" id="dyP-4Q-gfa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="TzZ-wj-eBT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTG-4S-ncu">
+                                <rect key="frame" x="16" y="149" width="568" height="30"/>
+                                <state key="normal" title="Log Out">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logOutButtonPressed:" destination="dzq-KM-n5v" eventType="touchUpInside" id="QFt-kV-PjV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HTG-4S-ncu" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" id="4C8-ns-onH"/>
+                            <constraint firstItem="HTG-4S-ncu" firstAttribute="trailing" secondItem="TzZ-wj-eBT" secondAttribute="trailingMargin" id="BTz-2m-VFH"/>
+                            <constraint firstItem="HTG-4S-ncu" firstAttribute="top" secondItem="2H2-L6-uaR" secondAttribute="bottom" constant="85" id="ecW-NE-MoP"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="FHk-Dd-313"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qVC-tY-lix" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="942" y="1032"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="pjT-Cw-qoE">
@@ -113,7 +148,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XaU-0Z-LeF">
                                 <rect key="frame" x="16" y="150" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -144,6 +179,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rh2-V9-fBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="942" y="334"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="juE-4q-Alp">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q4c-Ci-9Hm" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wdc-Oo-BkJ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="dzq-KM-n5v" kind="relationship" relationship="rootViewController" id="UjI-vH-sel"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mmP-O0-hx7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="282" y="1032"/>
         </scene>
     </scenes>
 </document>
