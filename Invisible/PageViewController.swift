@@ -8,17 +8,25 @@
 
 import UIKit
 
-let pageController = PageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
-
 class PageViewController: UIPageViewController {
   
-  let settingsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SettingsNavController") as! UIViewController
-  let messageVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MessageNavController") as! UIViewController
-  let contactsVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ContactsNavController") as! UIViewController
+  let settingsVC = kStoryboard.instantiateViewControllerWithIdentifier("SettingsNavController") as! UIViewController
+  let messageVC = kStoryboard.instantiateViewControllerWithIdentifier("MessageNavController") as! UIViewController
+  let contactsVC = kStoryboard.instantiateViewControllerWithIdentifier("ContactsNavController") as! UIViewController
+  
+  required init(coder aDecoder: NSCoder) {
+    super.init(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+  }
+  
+  override init(transitionStyle style: UIPageViewControllerTransitionStyle, navigationOrientation: UIPageViewControllerNavigationOrientation, options: [NSObject : AnyObject]?) {
+    super.init(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+    
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    view.backgroundColor = UIColor.whiteColor()
     dataSource = self
     setViewControllers([messageVC], direction: .Forward, animated: true, completion: nil)
   }
@@ -41,28 +49,18 @@ extension PageViewController: UIPageViewControllerDataSource {
   func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
     
     switch viewController {
-    case settingsVC:
-      return nil
-    case messageVC:
-      return settingsVC
-    case contactsVC:
-      return messageVC
-    default:
-      return nil
+    case messageVC: return settingsVC
+    case contactsVC: return messageVC
+    default: return nil
     }
   }
   
   func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
     
     switch viewController {
-    case settingsVC:
-      return messageVC
-    case messageVC:
-      return contactsVC
-    case contactsVC:
-      return nil
-    default:
-      return nil
+    case settingsVC: return messageVC
+    case messageVC: return contactsVC
+    default: return nil
     }
   }
 }

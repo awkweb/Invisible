@@ -19,13 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
     
     // Determine initialViewController
-    let storyboard = UIStoryboard(name: "Main", bundle: nil)
     var initialViewController: UIViewController
     
     if PFUser.currentUser() != nil {
-      initialViewController = pageController
+      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("PageViewController") as! PageViewController
     } else {
-      initialViewController = storyboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
+      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
     }
     
     window?.rootViewController = initialViewController

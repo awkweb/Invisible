@@ -63,7 +63,6 @@
                     <connections>
                         <outlet property="passwordTextField" destination="yZb-Dw-w80" id="lCj-sO-5A2"/>
                         <outlet property="usernameTextField" destination="Gmk-kW-arN" id="wV5-tM-iq3"/>
-                        <segue destination="8iB-WR-liW" kind="presentation" identifier="showSignUpVC" id="fg9-Ju-RdB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pio-Hk-ooH" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -82,24 +81,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTG-4S-ncu">
-                                <rect key="frame" x="16" y="149" width="568" height="30"/>
-                                <state key="normal" title="Log Out">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="logOutButtonPressed:" destination="dzq-KM-n5v" eventType="touchUpInside" id="QFt-kV-PjV"/>
-                                </connections>
-                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LUc-vg-xrf">
+                                <rect key="frame" x="16" y="144" width="568" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="HTG-4S-ncu" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" id="4C8-ns-onH"/>
-                            <constraint firstItem="HTG-4S-ncu" firstAttribute="trailing" secondItem="TzZ-wj-eBT" secondAttribute="trailingMargin" id="BTz-2m-VFH"/>
-                            <constraint firstItem="HTG-4S-ncu" firstAttribute="top" secondItem="2H2-L6-uaR" secondAttribute="bottom" constant="85" id="ecW-NE-MoP"/>
+                            <constraint firstItem="LUc-vg-xrf" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" id="2Le-dE-2uI"/>
+                            <constraint firstItem="LUc-vg-xrf" firstAttribute="trailing" secondItem="TzZ-wj-eBT" secondAttribute="trailingMargin" id="HVp-tc-OOX"/>
+                            <constraint firstItem="LUc-vg-xrf" firstAttribute="top" secondItem="2H2-L6-uaR" secondAttribute="bottom" constant="80" id="stC-2X-Cpq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FHk-Dd-313"/>
+                    <connections>
+                        <outlet property="usernameLabel" destination="LUc-vg-xrf" id="F96-Yf-cAr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qVC-tY-lix" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -116,7 +115,23 @@
                     <view key="view" contentMode="scaleToFill" id="gl3-Qq-FnC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KRj-QH-nF1">
+                                <rect key="frame" x="16" y="138" width="568" height="30"/>
+                                <state key="normal" title="Log Out">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logOutButtonPressed:" destination="elu-AN-zzf" eventType="touchUpInside" id="c8M-Nq-h69"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KRj-QH-nF1" firstAttribute="leading" secondItem="gl3-Qq-FnC" secondAttribute="leadingMargin" id="j5e-aF-rc0"/>
+                            <constraint firstItem="KRj-QH-nF1" firstAttribute="top" secondItem="ydT-nb-D2m" secondAttribute="bottom" constant="74" id="kKG-SK-kp5"/>
+                            <constraint firstItem="KRj-QH-nF1" firstAttribute="trailing" secondItem="gl3-Qq-FnC" secondAttribute="trailingMargin" id="m0T-GU-SSj"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ecZ-Sy-5BB"/>
                 </viewController>
@@ -146,7 +161,7 @@
         <!--Page View Controller-->
         <scene sceneID="2gs-Xo-v6v">
             <objects>
-                <viewController id="zNZ-j4-Zbb" customClass="PageViewController" customModule="Invisible" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PageViewController" id="zNZ-j4-Zbb" customClass="PageViewController" customModule="Invisible" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MLR-Qs-uoi"/>
                         <viewControllerLayoutGuide type="bottom" id="XHD-Nc-EnV"/>
@@ -159,12 +174,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7n-s1-96G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1626" y="1032"/>
+            <point key="canvasLocation" x="1598" y="334"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="pjT-Cw-qoE">
             <objects>
-                <viewController id="8iB-WR-liW" customClass="SignUpViewController" customModule="Invisible" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignUpViewController" id="8iB-WR-liW" customClass="SignUpViewController" customModule="Invisible" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aYm-66-UMP"/>
                         <viewControllerLayoutGuide type="bottom" id="Hlg-l0-GRH"/>

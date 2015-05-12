@@ -37,7 +37,8 @@ class LogInViewController: UIViewController {
   }
   
   @IBAction func signUpButtonPressed(sender: UIButton) {
-    performSegueWithIdentifier("showSignUpVC", sender: self)
+    let signUpVC = kStoryboard.instantiateViewControllerWithIdentifier("SignUpViewController") as! SignUpViewController
+    presentViewController(signUpVC, animated: true, completion: nil)
   }
   
   private func logIn(username: String, password: String) {
@@ -46,7 +47,8 @@ class LogInViewController: UIViewController {
       
       if user != nil {
         println("Log in success!")
-        self.presentViewController(pageController, animated: true, completion: nil)
+        let pageVC = kStoryboard.instantiateViewControllerWithIdentifier("PageViewController") as! PageViewController
+        self.presentViewController(pageVC, animated: true, completion: nil)
       } else {
         println("Log in error: \(error)")
       }
@@ -59,13 +61,15 @@ class LogInViewController: UIViewController {
 extension LogInViewController: UITextFieldDelegate {
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    if textField == usernameTextField {
-      passwordTextField.becomeFirstResponder()
-    } else if textField == passwordTextField {
-      textField.resignFirstResponder()
+    
+    switch textField {
+    case usernameTextField: passwordTextField.becomeFirstResponder()
+    case passwordTextField: textField.resignFirstResponder()
+    default: break
     }
+    
     return true
   }
   
 }
+

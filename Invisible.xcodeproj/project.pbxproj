@@ -129,12 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */,
-				052620071AFFA30F00825C3B /* LogInViewController.swift */,
-				053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */,
-				050974F51B00CEE500C282B6 /* PageViewController.swift */,
-				052620051AFF975000825C3B /* MessageViewController.swift */,
-				050974F31B00CE9000C282B6 /* SettingsViewController.swift */,
-				050974F71B00D8C600C282B6 /* ContactsViewController.swift */,
+				05EF02771B026A5A0050455C /* ViewControllers */,
 				053F42B51AFE92FE00A2CA53 /* Main.storyboard */,
 				053F42AF1AFE92FE00A2CA53 /* Supporting Files */,
 			);
@@ -189,6 +184,19 @@
 			);
 			name = Frameworks;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		05EF02771B026A5A0050455C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				052620071AFFA30F00825C3B /* LogInViewController.swift */,
+				053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */,
+				050974F51B00CEE500C282B6 /* PageViewController.swift */,
+				052620051AFF975000825C3B /* MessageViewController.swift */,
+				050974F31B00CE9000C282B6 /* SettingsViewController.swift */,
+				050974F71B00D8C600C282B6 /* ContactsViewController.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

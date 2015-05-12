@@ -11,15 +11,13 @@ import Parse
 
 class MessageViewController: UIViewController {
   
+  @IBOutlet weak var usernameLabel: UILabel!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
     navigationItem.title = "New Message"
+    usernameLabel.text = PFUser.currentUser()?.username
   }
-
-  @IBAction func logOutButtonPressed(sender: UIButton) {
-    PFUser.logOut()
-    let logInViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
-    presentViewController(logInViewController, animated: true, completion: nil)
-  }
+  
 }

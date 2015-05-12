@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class SettingsViewController: UIViewController {
   
@@ -15,4 +16,20 @@ class SettingsViewController: UIViewController {
     
     navigationItem.title = "Settings"
   }
+  
+  @IBAction func logOutButtonPressed(sender: UIButton) {
+    PFUser.logOutInBackgroundWithBlock {
+      error in
+      
+      if error != nil {
+        println("Log out error")
+      } else {
+        println("Log out success!")
+        let logInViewController = kStoryboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
+        self.presentViewController(logInViewController, animated: true, completion: nil)
+      }
+    }
+  
+  }
+  
 }

@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
 let kParseApplicationId = "XXX"
 let kParseClientKey = "YYY"
+
+let kStoryboard = UIStoryboard(name: "Main", bundle: nil)

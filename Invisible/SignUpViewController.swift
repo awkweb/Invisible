@@ -14,7 +14,7 @@ class SignUpViewController: UIViewController {
   @IBOutlet weak var usernameTextField: UITextField!
   @IBOutlet weak var passwordTextField: UITextField!
   @IBOutlet weak var emailTextField: UITextField!
-  
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -34,7 +34,7 @@ class SignUpViewController: UIViewController {
       if password.isEmpty {
         println("Enter a password.")
       } else {
-        if isValidEmail(email) == false {
+        if !isValidEmail(email) {
           println("Enter a valid email.")
         } else {
           signUp(username, password: password, email: email)
@@ -44,7 +44,7 @@ class SignUpViewController: UIViewController {
   }
   
   @IBAction func cancelButtonPressed(sender: UIButton) {
-    self.dismissViewControllerAnimated(true, completion: nil)
+    dismissViewControllerAnimated(true, completion: nil)
   }
   
   private func signUp(username: String, password: String, email: String) {
@@ -59,12 +59,14 @@ class SignUpViewController: UIViewController {
       if let error = error {
         let errorString = error.userInfo?["error"] as? NSString
         println("Log in error: \(errorString)")
+        
         if error.code == 202 {
           println("Bummer! Username already taken.")
         }
       } else {
         println("Sign up success!")
-        self.presentViewController(pageController, animated: true, completion: nil)
+        let pageVC = kStoryboard.instantiateViewControllerWithIdentifier("PageViewController") as! PageViewController
+        self.presentViewController(pageVC, animated: true, completion: nil)
       }
     }
   }
@@ -81,17 +83,12 @@ class SignUpViewController: UIViewController {
 extension SignUpViewController: UITextFieldDelegate {
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
     
     switch textField {
-    case usernameTextField:
-      emailTextField.becomeFirstResponder()
-    case emailTextField:
-      passwordTextField.becomeFirstResponder()
-    case passwordTextField:
-      textField.resignFirstResponder()
-    default:
-      textField.resignFirstResponder()
+    case usernameTextField: emailTextField.becomeFirstResponder()
+    case emailTextField: passwordTextField.becomeFirstResponder()
+    case passwordTextField: textField.resignFirstResponder()
+    default: break
     }
     
     return true
