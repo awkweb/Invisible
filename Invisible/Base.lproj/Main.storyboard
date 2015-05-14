@@ -87,16 +87,46 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A5F-RF-xi0">
+                                <rect key="frame" x="16" y="257" width="568" height="30"/>
+                                <state key="normal" title="Send Push">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendPushButtonPressed:" destination="dzq-KM-n5v" eventType="touchUpInside" id="Mtb-1p-Djc"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="64n-gJ-8k0">
+                                <rect key="frame" x="16" y="173" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fn0-Q2-pea">
+                                <rect key="frame" x="16" y="217" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="LUc-vg-xrf" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" id="2Le-dE-2uI"/>
+                            <constraint firstItem="64n-gJ-8k0" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" id="2fl-mh-1ZP"/>
+                            <constraint firstItem="fn0-Q2-pea" firstAttribute="top" secondItem="64n-gJ-8k0" secondAttribute="bottom" constant="14" id="3N0-lz-ZoX"/>
+                            <constraint firstItem="fn0-Q2-pea" firstAttribute="trailing" secondItem="TzZ-wj-eBT" secondAttribute="trailingMargin" id="D5q-Hh-b0K"/>
                             <constraint firstItem="LUc-vg-xrf" firstAttribute="trailing" secondItem="TzZ-wj-eBT" secondAttribute="trailingMargin" id="HVp-tc-OOX"/>
+                            <constraint firstItem="64n-gJ-8k0" firstAttribute="top" secondItem="LUc-vg-xrf" secondAttribute="bottom" constant="8" id="K2i-tE-5lN"/>
+                            <constraint firstItem="64n-gJ-8k0" firstAttribute="trailing" secondItem="TzZ-wj-eBT" secondAttribute="trailingMargin" id="PuJ-B2-Uj4"/>
+                            <constraint firstItem="fn0-Q2-pea" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" id="W2Q-ct-j7p"/>
+                            <constraint firstItem="A5F-RF-xi0" firstAttribute="top" secondItem="fn0-Q2-pea" secondAttribute="bottom" constant="10" id="cJF-KG-oiM"/>
+                            <constraint firstItem="A5F-RF-xi0" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" id="poh-xm-xes"/>
                             <constraint firstItem="LUc-vg-xrf" firstAttribute="top" secondItem="2H2-L6-uaR" secondAttribute="bottom" constant="80" id="stC-2X-Cpq"/>
+                            <constraint firstItem="A5F-RF-xi0" firstAttribute="trailing" secondItem="TzZ-wj-eBT" secondAttribute="trailingMargin" id="yvU-Fp-A7r"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FHk-Dd-313"/>
                     <connections>
+                        <outlet property="messageTextField" destination="fn0-Q2-pea" id="Gsq-8c-OKj"/>
+                        <outlet property="toTextField" destination="64n-gJ-8k0" id="sLj-Vm-5DY"/>
                         <outlet property="usernameLabel" destination="LUc-vg-xrf" id="F96-Yf-cAr"/>
                     </connections>
                 </viewController>

@@ -80,5 +80,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
   
+  func applicationDidBecomeActive(application: UIApplication) {
+    let currentInstallation = PFInstallation.currentInstallation()
+    
+    if currentInstallation.badge != 0 {
+      currentInstallation.badge = 0
+      currentInstallation.saveEventually(nil)
+    }
+  }
+  
 }
 
