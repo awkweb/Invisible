@@ -17,12 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gmk-kW-arN">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gmk-kW-arN">
                                 <rect key="frame" x="16" y="101" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yZb-Dw-w80">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yZb-Dw-w80">
                                 <rect key="frame" x="16" y="157" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
@@ -43,18 +43,30 @@
                                     <action selector="signUpButtonPressed:" destination="ges-cX-JsQ" eventType="touchUpInside" id="e22-RL-pwF"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JP2-1I-yRv">
+                                <rect key="frame" x="16" y="315" width="568" height="30"/>
+                                <state key="normal" title="Reset Password">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetPasswordButtonPressed:" destination="ges-cX-JsQ" eventType="touchUpInside" id="jrr-Eh-eVp"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="JP2-1I-yRv" firstAttribute="trailing" secondItem="DDo-kb-Ow6" secondAttribute="trailingMargin" id="4fq-IT-jXt"/>
                             <constraint firstItem="tKQ-a8-DUd" firstAttribute="top" secondItem="yZb-Dw-w80" secondAttribute="bottom" constant="24" id="6wq-ei-Fhg"/>
                             <constraint firstItem="tKQ-a8-DUd" firstAttribute="trailing" secondItem="yZb-Dw-w80" secondAttribute="trailing" id="7Oc-Ul-rQl"/>
                             <constraint firstItem="yZb-Dw-w80" firstAttribute="leading" secondItem="tKQ-a8-DUd" secondAttribute="leading" id="CXC-l0-2aq"/>
                             <constraint firstItem="yZb-Dw-w80" firstAttribute="top" secondItem="Gmk-kW-arN" secondAttribute="bottom" constant="26" id="OOl-fF-buj"/>
                             <constraint firstItem="OJA-rL-1GI" firstAttribute="top" secondItem="tKQ-a8-DUd" secondAttribute="bottom" constant="17" id="RJV-Ys-E2T"/>
                             <constraint firstItem="yZb-Dw-w80" firstAttribute="leading" secondItem="Gmk-kW-arN" secondAttribute="leading" id="VJd-TL-OYk"/>
+                            <constraint firstItem="JP2-1I-yRv" firstAttribute="leading" secondItem="DDo-kb-Ow6" secondAttribute="leadingMargin" id="VM8-rS-qRn"/>
                             <constraint firstItem="yZb-Dw-w80" firstAttribute="trailing" secondItem="Gmk-kW-arN" secondAttribute="trailing" id="adm-1T-F0i"/>
                             <constraint firstItem="tKQ-a8-DUd" firstAttribute="trailing" secondItem="OJA-rL-1GI" secondAttribute="trailing" id="dCz-5A-VTE"/>
                             <constraint firstItem="Gmk-kW-arN" firstAttribute="top" secondItem="EaA-RI-g3x" secondAttribute="bottom" constant="81" id="ghH-1a-GzC"/>
+                            <constraint firstItem="JP2-1I-yRv" firstAttribute="top" secondItem="OJA-rL-1GI" secondAttribute="bottom" constant="27" id="mzj-a6-BPI"/>
                             <constraint firstItem="OJA-rL-1GI" firstAttribute="leading" secondItem="tKQ-a8-DUd" secondAttribute="leading" id="v4S-xZ-vHN"/>
                             <constraint firstItem="OJA-rL-1GI" firstAttribute="trailing" secondItem="DDo-kb-Ow6" secondAttribute="trailingMargin" id="x1P-Wd-Vwn"/>
                             <constraint firstItem="OJA-rL-1GI" firstAttribute="leading" secondItem="DDo-kb-Ow6" secondAttribute="leadingMargin" id="yUv-OB-Etl"/>
@@ -204,7 +216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7n-s1-96G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1598" y="334"/>
+            <point key="canvasLocation" x="282" y="-356"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="pjT-Cw-qoE">
@@ -218,7 +230,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iG9-ws-VNQ">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iG9-ws-VNQ">
                                 <rect key="frame" x="16" y="74" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
@@ -241,12 +253,12 @@
                                     <action selector="cancelButtonPressed:" destination="8iB-WR-liW" eventType="touchUpInside" id="ILY-ZQ-1fx"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="soY-LO-mKM">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="soY-LO-mKM">
                                 <rect key="frame" x="16" y="112" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XaU-0Z-LeF">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XaU-0Z-LeF">
                                 <rect key="frame" x="16" y="150" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
@@ -280,6 +292,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rh2-V9-fBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="942" y="334"/>
+        </scene>
+        <!--Reset Password View Controller-->
+        <scene sceneID="aNw-1k-jv2">
+            <objects>
+                <viewController storyboardIdentifier="ResetPasswordViewController" id="Jle-mg-NGK" customClass="ResetPasswordViewController" customModule="Invisible" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Gig-a3-e25"/>
+                        <viewControllerLayoutGuide type="bottom" id="pcH-Fp-Wrk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Zfz-yz-2pd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lCW-nc-CMR">
+                                <rect key="frame" x="16" y="66" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A4h-yP-UOg">
+                                <rect key="frame" x="16" y="132" width="568" height="30"/>
+                                <state key="normal" title="Reset Password">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetPasswordButtonPressed:" destination="Jle-mg-NGK" eventType="touchUpInside" id="zBa-NJ-stj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y7v-iZ-wzn">
+                                <rect key="frame" x="16" y="199" width="568" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="Jle-mg-NGK" eventType="touchUpInside" id="P3a-7W-kRp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="A4h-yP-UOg" firstAttribute="leading" secondItem="Zfz-yz-2pd" secondAttribute="leadingMargin" id="1hq-xt-Vd3"/>
+                            <constraint firstItem="Y7v-iZ-wzn" firstAttribute="leading" secondItem="Zfz-yz-2pd" secondAttribute="leadingMargin" id="I8O-n7-n0n"/>
+                            <constraint firstItem="Y7v-iZ-wzn" firstAttribute="trailing" secondItem="Zfz-yz-2pd" secondAttribute="trailingMargin" id="J9l-oR-2DJ"/>
+                            <constraint firstItem="lCW-nc-CMR" firstAttribute="trailing" secondItem="Zfz-yz-2pd" secondAttribute="trailingMargin" id="MED-IX-LMG"/>
+                            <constraint firstItem="lCW-nc-CMR" firstAttribute="leading" secondItem="Zfz-yz-2pd" secondAttribute="leadingMargin" id="UOK-cF-yV7"/>
+                            <constraint firstItem="Y7v-iZ-wzn" firstAttribute="top" secondItem="A4h-yP-UOg" secondAttribute="bottom" constant="37" id="eUY-FY-Khi"/>
+                            <constraint firstItem="A4h-yP-UOg" firstAttribute="top" secondItem="lCW-nc-CMR" secondAttribute="bottom" constant="36" id="h2T-XX-pWa"/>
+                            <constraint firstItem="A4h-yP-UOg" firstAttribute="trailing" secondItem="Zfz-yz-2pd" secondAttribute="trailingMargin" id="rSc-ml-9W6"/>
+                            <constraint firstItem="lCW-nc-CMR" firstAttribute="top" secondItem="Gig-a3-e25" secondAttribute="bottom" constant="46" id="teG-IG-uFV"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="lCW-nc-CMR" id="4a3-km-ULb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x94-wn-AwK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1608" y="334"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="juE-4q-Alp">

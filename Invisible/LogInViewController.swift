@@ -55,6 +55,11 @@ class LogInViewController: UIViewController {
     }
   }
   
+  @IBAction func resetPasswordButtonPressed(sender: UIButton) {
+    let resetPasswordVC = kStoryboard.instantiateViewControllerWithIdentifier("ResetPasswordViewController") as! ResetPasswordViewController
+    presentViewController(resetPasswordVC, animated: true, completion: nil)
+  }
+  
 }
 
 // MARK: - UITextFieldDelegate

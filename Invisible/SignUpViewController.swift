@@ -34,7 +34,7 @@ class SignUpViewController: UIViewController {
       if password.isEmpty {
         println("Enter a password.")
       } else {
-        if !isValidEmail(email) {
+        if !Helpers().isValidEmail(email) {
           println("Enter a valid email.")
         } else {
           signUp(username, password: password, email: email)
@@ -69,12 +69,6 @@ class SignUpViewController: UIViewController {
         self.presentViewController(pageVC, animated: true, completion: nil)
       }
     }
-  }
-  
-  private func isValidEmail(email: String) -> Bool {
-    let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
-    let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-    return emailTest.evaluateWithObject(email)
   }
   
 }
