@@ -36,11 +36,6 @@ class LogInViewController: UIViewController {
     }
   }
   
-  @IBAction func signUpButtonPressed(sender: UIButton) {
-    let signUpVC = kStoryboard.instantiateViewControllerWithIdentifier("SignUpViewController") as! SignUpViewController
-    presentViewController(signUpVC, animated: true, completion: nil)
-  }
-  
   private func logIn(username: String, password: String) {
     PFUser.logInWithUsernameInBackground(username, password: password) {
       user, error in
@@ -54,12 +49,6 @@ class LogInViewController: UIViewController {
       }
     }
   }
-  
-  @IBAction func resetPasswordButtonPressed(sender: UIButton) {
-    let resetPasswordVC = kStoryboard.instantiateViewControllerWithIdentifier("ResetPasswordViewController") as! ResetPasswordViewController
-    presentViewController(resetPasswordVC, animated: true, completion: nil)
-  }
-  
 }
 
 // MARK: - UITextFieldDelegate
@@ -69,7 +58,7 @@ extension LogInViewController: UITextFieldDelegate {
     
     switch textField {
     case usernameTextField: passwordTextField.becomeFirstResponder()
-    case passwordTextField: textField.resignFirstResponder()
+    case passwordTextField: logInButtonPressed(UIButton())
     default: break
     }
     

@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		050974F41B00CE9000C282B6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050974F31B00CE9000C282B6 /* SettingsViewController.swift */; };
-		050974F61B00CEE500C282B6 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050974F51B00CEE500C282B6 /* PageViewController.swift */; };
-		050974F81B00D8C600C282B6 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050974F71B00D8C600C282B6 /* ContactsViewController.swift */; };
-		05101C7E1B0972AE0089E37C /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05101C7D1B0972AE0089E37C /* ResetPasswordViewController.swift */; };
+		050C98AC1B0BC504004A05CA /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AB1B0BC504004A05CA /* SettingsModel.swift */; };
+		050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AD1B0BC577004A05CA /* LogInViewController.swift */; };
+		050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AE1B0BC577004A05CA /* MessageViewController.swift */; };
+		050C98B31B0BC577004A05CA /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AF1B0BC577004A05CA /* PageViewController.swift */; };
+		050C98B41B0BC577004A05CA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98B01B0BC577004A05CA /* SettingsViewController.swift */; };
 		05101C801B09774D0089E37C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05101C7F1B09774D0089E37C /* Helpers.swift */; };
-		052620061AFF975000825C3B /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052620051AFF975000825C3B /* MessageViewController.swift */; };
-		052620081AFFA30F00825C3B /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 052620071AFFA30F00825C3B /* LogInViewController.swift */; };
 		053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */; };
 		053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B51AFE92FE00A2CA53 /* Main.storyboard */; };
 		053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B81AFE92FE00A2CA53 /* Images.xcassets */; };
@@ -33,7 +32,6 @@
 		053F42E81AFE949000A2CA53 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E71AFE949000A2CA53 /* libz.dylib */; };
 		053F42EA1AFE949C00A2CA53 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */; };
 		053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42EC1AFEA41C00A2CA53 /* Constants.swift */; };
-		053F42F11AFED7A400A2CA53 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,13 +45,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		050974F31B00CE9000C282B6 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		050974F51B00CEE500C282B6 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
-		050974F71B00D8C600C282B6 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
-		05101C7D1B0972AE0089E37C /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		050C98AB1B0BC504004A05CA /* SettingsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsModel.swift; path = Models/SettingsModel.swift; sourceTree = "<group>"; };
+		050C98AD1B0BC577004A05CA /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = ViewControllers/LogInViewController.swift; sourceTree = "<group>"; };
+		050C98AE1B0BC577004A05CA /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = ViewControllers/MessageViewController.swift; sourceTree = "<group>"; };
+		050C98AF1B0BC577004A05CA /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageViewController.swift; path = ViewControllers/PageViewController.swift; sourceTree = "<group>"; };
+		050C98B01B0BC577004A05CA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		05101C7F1B09774D0089E37C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		052620051AFF975000825C3B /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
-		052620071AFFA30F00825C3B /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		053F42AC1AFE92FE00A2CA53 /* Invisible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invisible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		053F42B01AFE92FE00A2CA53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,7 +74,6 @@
 		053F42E71AFE949000A2CA53 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		053F42EC1AFEA41C00A2CA53 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +107,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		050C98B51B0BC5DD004A05CA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				050C98AB1B0BC504004A05CA /* SettingsModel.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		053F42A31AFE92FE00A2CA53 = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +138,7 @@
 			children = (
 				053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */,
 				05EF02771B026A5A0050455C /* ViewControllers */,
+				050C98B51B0BC5DD004A05CA /* Models */,
 				053F42B51AFE92FE00A2CA53 /* Main.storyboard */,
 				053F42AF1AFE92FE00A2CA53 /* Supporting Files */,
 			);
@@ -194,13 +199,10 @@
 		05EF02771B026A5A0050455C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				052620071AFFA30F00825C3B /* LogInViewController.swift */,
-				053F42F01AFED7A400A2CA53 /* SignUpViewController.swift */,
-				05101C7D1B0972AE0089E37C /* ResetPasswordViewController.swift */,
-				050974F51B00CEE500C282B6 /* PageViewController.swift */,
-				052620051AFF975000825C3B /* MessageViewController.swift */,
-				050974F31B00CE9000C282B6 /* SettingsViewController.swift */,
-				050974F71B00D8C600C282B6 /* ContactsViewController.swift */,
+				050C98AD1B0BC577004A05CA /* LogInViewController.swift */,
+				050C98AE1B0BC577004A05CA /* MessageViewController.swift */,
+				050C98AF1B0BC577004A05CA /* PageViewController.swift */,
+				050C98B01B0BC577004A05CA /* SettingsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -307,16 +309,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05101C7E1B0972AE0089E37C /* ResetPasswordViewController.swift in Sources */,
+				050C98AC1B0BC504004A05CA /* SettingsModel.swift in Sources */,
+				050C98B31B0BC577004A05CA /* PageViewController.swift in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
-				050974F61B00CEE500C282B6 /* PageViewController.swift in Sources */,
 				05101C801B09774D0089E37C /* Helpers.swift in Sources */,
-				053F42F11AFED7A400A2CA53 /* SignUpViewController.swift in Sources */,
+				050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */,
+				050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
-				052620081AFFA30F00825C3B /* LogInViewController.swift in Sources */,
-				050974F81B00D8C600C282B6 /* ContactsViewController.swift in Sources */,
-				052620061AFF975000825C3B /* MessageViewController.swift in Sources */,
-				050974F41B00CE9000C282B6 /* SettingsViewController.swift in Sources */,
+				050C98B41B0BC577004A05CA /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +451,7 @@
 					"$(PROJECT_DIR)/Invisible",
 				);
 				INFOPLIST_FILE = Invisible/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -466,6 +467,7 @@
 					"$(PROJECT_DIR)/Invisible",
 				);
 				INFOPLIST_FILE = Invisible/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

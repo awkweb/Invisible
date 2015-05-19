@@ -11,7 +11,6 @@ import Parse
 
 class MessageViewController: UIViewController {
   
-  @IBOutlet weak var usernameLabel: UILabel!
   @IBOutlet weak var toTextField: UITextField!
   @IBOutlet weak var messageTextField: UITextField!
   
@@ -19,7 +18,7 @@ class MessageViewController: UIViewController {
     super.viewDidLoad()
     
     navigationItem.title = "New Message"
-    usernameLabel.text = PFUser.currentUser()?.username
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "goToSettingsVC:")
     
     let installation = PFInstallation.currentInstallation()
     installation["user"] = PFUser.currentUser()
@@ -32,6 +31,10 @@ class MessageViewController: UIViewController {
         println(error)
       }
     }
+  }
+  
+  func goToSettingsVC(button: UIBarButtonItem) {
+    pageController.goToPreviousVC()
   }
   
   @IBAction func sendPushButtonPressed(sender: UIButton) {

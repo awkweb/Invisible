@@ -13,7 +13,8 @@ Parse.Cloud.define("sendPush", function(request, response) {
     where: pushQuery,
     data: {
       alert: request.params.message,
-      badge: "Increment" 
+      badge: "Increment",
+      sound: "default"
     }
   }, {
     success: function() {

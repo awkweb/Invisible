@@ -8,11 +8,12 @@
 
 import UIKit
 
+let pageController = PageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+
 class PageViewController: UIPageViewController {
   
   let settingsVC = kStoryboard.instantiateViewControllerWithIdentifier("SettingsNavController") as! UIViewController
   let messageVC = kStoryboard.instantiateViewControllerWithIdentifier("MessageNavController") as! UIViewController
-  let contactsVC = kStoryboard.instantiateViewControllerWithIdentifier("ContactsNavController") as! UIViewController
   
   required init(coder aDecoder: NSCoder) {
     super.init(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
@@ -50,7 +51,6 @@ extension PageViewController: UIPageViewControllerDataSource {
     
     switch viewController {
     case messageVC: return settingsVC
-    case contactsVC: return messageVC
     default: return nil
     }
   }
@@ -59,7 +59,6 @@ extension PageViewController: UIPageViewControllerDataSource {
     
     switch viewController {
     case settingsVC: return messageVC
-    case messageVC: return contactsVC
     default: return nil
     }
   }
