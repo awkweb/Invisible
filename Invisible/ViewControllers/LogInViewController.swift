@@ -10,13 +10,13 @@ import UIKit
 import Parse
 
 class LogInViewController: UIViewController {
-  
+
   @IBOutlet weak var usernameTextField: UITextField!
   @IBOutlet weak var passwordTextField: UITextField!
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     usernameTextField.delegate = self
     passwordTextField.delegate = self
   }
@@ -66,4 +66,3 @@ extension LogInViewController: UITextFieldDelegate {
   }
   
 }
-
