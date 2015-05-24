@@ -42,8 +42,8 @@ class LogInViewController: UIViewController {
       
       if user != nil {
         println("Log in success!")
-        let pageVC = kStoryboard.instantiateViewControllerWithIdentifier("PageViewController") as! PageViewController
-        self.presentViewController(pageVC, animated: true, completion: nil)
+        let messageVC = kStoryboard.instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
+        self.presentViewController(messageVC, animated: true, completion: nil)
       } else {
         println("Log in error: \(error)")
       }

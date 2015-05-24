@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var initialViewController: UIViewController
     
     if PFUser.currentUser() != nil {
-      initialViewController = pageController
+      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
     } else {
       initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
     }

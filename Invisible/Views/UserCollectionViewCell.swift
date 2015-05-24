@@ -12,4 +12,12 @@ class UserCollectionViewCell: UICollectionViewCell {
   
   @IBOutlet weak var userImageView: UIImageView!
   @IBOutlet weak var userNameLabel: UILabel!
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    
+    userImageView.hidden = true
+    userNameLabel.hidden = true
+  }
+  
 }

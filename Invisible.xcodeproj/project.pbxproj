@@ -7,12 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		050C98AC1B0BC504004A05CA /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AB1B0BC504004A05CA /* SettingsModel.swift */; };
 		050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AD1B0BC577004A05CA /* LogInViewController.swift */; };
 		050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AE1B0BC577004A05CA /* MessageViewController.swift */; };
-		050C98B31B0BC577004A05CA /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AF1B0BC577004A05CA /* PageViewController.swift */; };
-		050C98B41B0BC577004A05CA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98B01B0BC577004A05CA /* SettingsViewController.swift */; };
 		05101C801B09774D0089E37C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05101C7F1B09774D0089E37C /* Helpers.swift */; };
+		051632F71B10E255008605CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F61B10E255008605CA /* User.swift */; };
+		051632F91B11555B008605CA /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F81B11555B008605CA /* Contact.swift */; };
 		053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */; };
 		053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B51AFE92FE00A2CA53 /* Main.storyboard */; };
 		053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B81AFE92FE00A2CA53 /* Images.xcassets */; };
@@ -46,12 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		050C98AB1B0BC504004A05CA /* SettingsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsModel.swift; path = Models/SettingsModel.swift; sourceTree = "<group>"; };
 		050C98AD1B0BC577004A05CA /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = ViewControllers/LogInViewController.swift; sourceTree = "<group>"; };
 		050C98AE1B0BC577004A05CA /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = ViewControllers/MessageViewController.swift; sourceTree = "<group>"; };
-		050C98AF1B0BC577004A05CA /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageViewController.swift; path = ViewControllers/PageViewController.swift; sourceTree = "<group>"; };
-		050C98B01B0BC577004A05CA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
 		05101C7F1B09774D0089E37C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		051632F61B10E255008605CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
+		051632F81B11555B008605CA /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Models/Contact.swift; sourceTree = "<group>"; };
 		053F42AC1AFE92FE00A2CA53 /* Invisible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invisible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		053F42B01AFE92FE00A2CA53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,7 +110,8 @@
 		050C98B51B0BC5DD004A05CA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				050C98AB1B0BC504004A05CA /* SettingsModel.swift */,
+				051632F61B10E255008605CA /* User.swift */,
+				051632F81B11555B008605CA /* Contact.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -211,9 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				050C98AD1B0BC577004A05CA /* LogInViewController.swift */,
-				050C98AF1B0BC577004A05CA /* PageViewController.swift */,
 				050C98AE1B0BC577004A05CA /* MessageViewController.swift */,
-				050C98B01B0BC577004A05CA /* SettingsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -320,15 +317,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				050C98AC1B0BC504004A05CA /* SettingsModel.swift in Sources */,
-				050C98B31B0BC577004A05CA /* PageViewController.swift in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
 				05101C801B09774D0089E37C /* Helpers.swift in Sources */,
 				050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */,
 				050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */,
+				051632F91B11555B008605CA /* Contact.swift in Sources */,
 				057457CC1B0F822B00B2D22E /* UserCollectionViewCell.swift in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
-				050C98B41B0BC577004A05CA /* SettingsViewController.swift in Sources */,
+				051632F71B10E255008605CA /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
