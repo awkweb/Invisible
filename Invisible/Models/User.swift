@@ -30,37 +30,15 @@ func pfUserToUser(user: PFUser) -> User {
   return User(id: user.objectId!, username: user.username!, pfUser: user)
 }
 
-func currentUser() -> User? {
-  if let user = PFUser.currentUser() {
-    return pfUserToUser(user)
-  }
-  return nil
-}
-
 func fetchUserByUsername(username: String, callback: (User) -> ()) {
   PFUser.query()!
-  .whereKey("username", equalTo: username).findObjectsInBackgroundWithBlock({
+  .whereKey("username", equalTo: username)
+  .getFirstObjectInBackgroundWithBlock({
     object, error in
     
-    if let pfUser = object as? [PFUser] {
-      let user = pfUserToUser(pfUser[0])
+    if let pfUser = object as? PFUser {
+      let user = pfUserToUser(pfUser)
       callback(user)
     }
   })
-}
-
-func saveContact(user: User) {
-  let contact = PFObject(className: "ContactList")
-  contact["byUser"] = PFUser.currentUser()!.objectId!
-  contact["toUser"] = user.id
-  contact["displayName"] = user.username
-  contact.saveInBackgroundWithBlock {
-    success, error in
-    
-    if success {
-      println("Contact saved!")
-    } else {
-      println("Contact not saved!")
-    }
-  }
 }

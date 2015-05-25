@@ -12,30 +12,45 @@ import Parse
 struct Contact {
   let id: String
   let user: User
+  let position: Int
 }
 
-func fetchContacts(callback: ([User] -> ())) {
+func fetchLastContactPosition(callback: (Int) -> ()) {
   PFQuery(className: "ContactList")
-    .whereKey("byUser", equalTo: PFUser.currentUser()!.objectId!)
-    .findObjectsInBackgroundWithBlock({
-      objects, error in
+    .whereKeyExists("position")
+    .orderByDescending("position")
+    .getFirstObjectInBackgroundWithBlock({
+      object, error in
       
-      let contacts = map(objects!, {$0.objectForKey("toUser")!})
-      
-      PFUser.query()!
-        .whereKey("objectId", containedIn: contacts)
-        .findObjectsInBackgroundWithBlock({
-          objects, error in
-          
-          if let pfUsers = objects as? [PFUser] {
-            let users = map(pfUsers, {pfUserToUser($0)})
-            callback(users)
-          }
-        })
+      if let contact = object as PFObject! {
+        let position = contact["position"] as! Int
+        callback(position)
+      } else {
+        callback(-1)
+      }
     })
 }
 
-func fetchMatches(callBack: ([Contact]) -> ()) {
+func saveUserAsContact(user: User, callback: (Bool) -> ()) {
+  let contact = PFObject(className: "ContactList")
+  contact["byUser"] = PFUser.currentUser()!.objectId!
+  contact["toUser"] = user.id
+  fetchLastContactPosition({
+    position in
+    let nextPosition = position + 1
+    contact["position"] = nextPosition
+    
+    contact.saveInBackgroundWithBlock {
+      success, error in
+      
+      if success {
+        callback(success)
+      }
+    }
+  })
+}
+
+func fetchContacts(callback: ([Contact]) -> ()) {
   PFQuery(className: "ContactList")
     .whereKey("byUser", equalTo: PFUser.currentUser()!.objectId!)
     .findObjectsInBackgroundWithBlock({
@@ -43,22 +58,26 @@ func fetchMatches(callBack: ([Contact]) -> ()) {
       
       if let contacts = objects as? [PFObject] {
         let contactUsers = contacts.map({
-          (object)->(contactID: String, userID: String) in
-          (object.objectId!, object.objectForKey("toUser") as! String)
+          (object)->(contactId: String, userId: String, position: Int) in
+          (object.objectId!, object["toUser"] as! String, object["position"] as! Int)
         })
-        let userIDs = contactUsers.map({$0.userID})
+        let userIds = contactUsers.map {$0.userId}
         
         PFUser.query()!
-          .whereKey("objectId", containedIn: userIDs)
+          .whereKey("objectId", containedIn: userIds)
           .findObjectsInBackgroundWithBlock({
             objects, error in
             
             if let users = objects as? [PFUser] {
               var c: [Contact] = []
+              
               for (index, user) in enumerate(users) {
-                c.append(Contact(id: contactUsers[index].contactID, user: pfUserToUser(user)))
+                let contact = Contact(id: contactUsers[index].contactId, user: pfUserToUser(user), position: contactUsers[index].position)
+                println("\(user.username) is in position \(contactUsers[index].position)\n")
+                c.append(contact)
               }
-              callBack(c)
+              c.sort {$0.position < $1.position}
+              callback(c)
             }
           })
       }

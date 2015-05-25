@@ -31,7 +31,8 @@
 		053F42E81AFE949000A2CA53 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E71AFE949000A2CA53 /* libz.dylib */; };
 		053F42EA1AFE949C00A2CA53 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */; };
 		053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42EC1AFEA41C00A2CA53 /* Constants.swift */; };
-		057457CC1B0F822B00B2D22E /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057457CB1B0F822B00B2D22E /* UserCollectionViewCell.swift */; };
+		05F7117E1B1241C70021409D /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F7117D1B1241C70021409D /* ContactCollectionViewCell.swift */; };
+		05F711801B124BF10021409D /* ActionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F7117F1B124BF10021409D /* ActionCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +74,8 @@
 		053F42E71AFE949000A2CA53 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		053F42EC1AFEA41C00A2CA53 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		057457CB1B0F822B00B2D22E /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCollectionViewCell.swift; path = Views/UserCollectionViewCell.swift; sourceTree = "<group>"; };
+		05F7117D1B1241C70021409D /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCell.swift; path = Views/ContactCollectionViewCell.swift; sourceTree = "<group>"; };
+		05F7117F1B124BF10021409D /* ActionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionCollectionViewCell.swift; path = Views/ActionCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,7 +203,8 @@
 		057457CA1B0F81CC00B2D22E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				057457CB1B0F822B00B2D22E /* UserCollectionViewCell.swift */,
+				05F7117D1B1241C70021409D /* ContactCollectionViewCell.swift */,
+				05F7117F1B124BF10021409D /* ActionCollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -322,9 +325,10 @@
 				050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */,
 				050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */,
 				051632F91B11555B008605CA /* Contact.swift in Sources */,
-				057457CC1B0F822B00B2D22E /* UserCollectionViewCell.swift in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
 				051632F71B10E255008605CA /* User.swift in Sources */,
+				05F711801B124BF10021409D /* ActionCollectionViewCell.swift in Sources */,
+				05F7117E1B1241C70021409D /* ContactCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
