@@ -63,6 +63,11 @@ func fetchContacts(callback: ([Contact]) -> ()) {
         })
         let userIds = contactUsers.map {$0.userId}
         
+        println("CORRECT")
+        for user in contactUsers {
+          println("\(user.userId)'s position is \(user.position)")
+        }
+        
         PFUser.query()!
           .whereKey("objectId", containedIn: userIds)
           .findObjectsInBackgroundWithBlock({
@@ -71,12 +76,28 @@ func fetchContacts(callback: ([Contact]) -> ()) {
             if let users = objects as? [PFUser] {
               var c: [Contact] = []
               
-              for (index, user) in enumerate(users) {
-                let contact = Contact(id: contactUsers[index].contactId, user: pfUserToUser(user), position: contactUsers[index].position)
-                println("\(user.username) is in position \(contactUsers[index].position)\n")
-                c.append(contact)
+              println("BEFORE")
+              for user in contactUsers {
+                println("\(user.userId)'s position is \(user.position)")
               }
-              c.sort {$0.position < $1.position}
+              
+              println("AFTER")
+              for user in users {
+                for cUser in contactUsers {
+                  if cUser.userId == user.objectId! {
+                    println("\(user.objectId!)'s position is \(cUser.position) - (\(cUser.userId))")
+                    let contact = Contact(id: cUser.contactId, user: pfUserToUser(user), position: cUser.position)
+                    
+                    if contact.position > c.count {
+                      c.append(contact)
+                    } else {
+                      c.insert(contact, atIndex: contact.position)
+                    }
+                    //TODO: Maybe sort instead of the above?
+                    //c.sort {$0.position < $1.position}
+                  }
+                }
+              }
               callback(c)
             }
           })

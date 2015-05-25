@@ -139,8 +139,8 @@ extension MessageViewController: UICollectionViewDataSource {
         contactCell.backgroundColor = UIColor.blackColor()
       }
       
-      if indexPath.row <= contacts.count - 1 {
-        let user = contacts[indexPath.row].user
+      if indexPath.row < contacts.count {
+        let user = contacts[contacts[indexPath.row].position].user
         contactCell.nameLabel.text = user.username
         contactCell.nameLabel.hidden = false
         user.getPhoto({
