@@ -157,15 +157,23 @@ extension MessageViewController: UICollectionViewDataSource {
       switch indexPath.row {
       case 0:
         actionCell.backgroundColor = UIColor.blueColor()
+        actionCell.imageView.image = UIImage(named: "settings")
         actionCell.nameLabel.text = "Settings"
       case 1:
         actionCell.backgroundColor = UIColor.greenColor()
+        actionCell.imageView.image = UIImage(named: "add")
         actionCell.nameLabel.text = "Add"
       case 2:
         actionCell.backgroundColor = UIColor.redColor()
+        actionCell.imageView.image = UIImage(named: "user")
         actionCell.nameLabel.text = "Contacts"
       case 3:
         actionCell.backgroundColor = UIColor.orangeColor()
+        currentUser().getPhoto({
+          image in
+          
+          actionCell.imageView.image = image
+        })
         actionCell.nameLabel.text = "You"
       default:
         break

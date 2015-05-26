@@ -17,7 +17,6 @@ class ContactCollectionViewCell: UICollectionViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    imageView.hidden = true
     nameLabel.hidden = true
     selectedImageView.hidden = true
   }

@@ -26,6 +26,10 @@ struct User {
   }
 }
 
+func currentUser() -> User {
+  return pfUserToUser(PFUser.currentUser()!)
+}
+
 func pfUserToUser(user: PFUser) -> User {
   return User(id: user.objectId!, username: user.username!, pfUser: user)
 }
