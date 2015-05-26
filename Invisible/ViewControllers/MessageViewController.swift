@@ -21,9 +21,10 @@ class MessageViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    self.setNeedsStatusBarAppearanceUpdate()
     collectionView.dataSource = self
     collectionView.delegate = self
+    
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
   }
   
   override func viewDidAppear(animated: Bool) {
@@ -42,6 +43,13 @@ class MessageViewController: UIViewController {
     return .LightContent
   }
   
+  func keyboardDidShow(notification: NSNotification) {
+    if let frameObject: AnyObject = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] {
+      let keyboardRect = frameObject.CGRectValue()
+      toolbar.frame.origin.y = keyboardRect.origin.y - toolbar.frame.height
+    }
+  }
+  
   @IBAction func sendBarButtonItemPressed(sender: UIBarButtonItem) {
     PFCloud.callFunctionInBackground("sendPush", withParameters:
       [
@@ -50,13 +58,13 @@ class MessageViewController: UIViewController {
         "message": self.messageTextField.text
       ]
       ) {
-      success, error in
-      
-      if success != nil {
-        println(success!)
-      } else {
-        println(error!)
-      }
+        success, error in
+        
+        if success != nil {
+          println(success!)
+        } else {
+          println(error!)
+        }
     }
   }
   
@@ -142,32 +150,40 @@ extension MessageViewController: UICollectionViewDataSource {
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     
-    if indexPath.section == 0 {
+    switch indexPath.section {
+    case 0:
       var actionCell = collectionView.dequeueReusableCellWithReuseIdentifier("ActionCollectionViewCell", forIndexPath: indexPath) as! ActionCollectionViewCell
       
       switch indexPath.row {
-        case 0:
-          actionCell.backgroundColor = UIColor.blueColor()
-          actionCell.nameLabel.text = "Settings"
-        case 1:
-          actionCell.backgroundColor = UIColor.greenColor()
-          actionCell.nameLabel.text = "Add"
-        case 2:
-          actionCell.backgroundColor = UIColor.redColor()
-          actionCell.nameLabel.text = "Remaining"
-        case 3:
-          actionCell.backgroundColor = UIColor.orangeColor()
-          actionCell.nameLabel.text = "You"
-        default:
-          break
-        }
+      case 0:
+        actionCell.backgroundColor = UIColor.blueColor()
+        actionCell.nameLabel.text = "Settings"
+      case 1:
+        actionCell.backgroundColor = UIColor.greenColor()
+        actionCell.nameLabel.text = "Add"
+      case 2:
+        actionCell.backgroundColor = UIColor.redColor()
+        actionCell.nameLabel.text = "Contacts"
+      case 3:
+        actionCell.backgroundColor = UIColor.orangeColor()
+        actionCell.nameLabel.text = "You"
+      default:
+        break
+      }
       
       return actionCell
-    } else {
+    case 1:
+      var pushCell = collectionView.dequeueReusableCellWithReuseIdentifier("PushCollectionViewCell", forIndexPath: indexPath) as! PushCollectionViewCell
+      
+      pushCell.backgroundColor = UIColor.yellowColor()
+      pushCell.messageLabel.text = "Tom: The quick brown fox jumped over the lazy dogs."
+      
+      return pushCell
+    default:
       var contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
       
       switch indexPath.row {
-      case 0, 2, 5, 7, 8, 10:
+      case 0, 2, 5, 7, 8:
         contactCell.backgroundColor = UIColor.grayColor()
       default:
         contactCell.backgroundColor = UIColor.blackColor()
@@ -199,7 +215,7 @@ extension MessageViewController: UICollectionViewDataSource {
   }
   
   func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-    return 2
+    return 3
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -207,22 +223,12 @@ extension MessageViewController: UICollectionViewDataSource {
     case 0:
       return 4
     case 1:
+      return 1
+    case 2:
       return 8
     default:
       return 0
     }
-  }
-
-}
-
-extension MessageViewController: UICollectionViewDelegateFlowLayout {
-  
-  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    return CGSize(width: 95, height: 95)
-  }
-  
-  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-    return -10.0
   }
   
 }
@@ -231,7 +237,8 @@ extension MessageViewController: UICollectionViewDelegateFlowLayout {
 extension MessageViewController: UICollectionViewDelegate {
   
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    if indexPath.section == 0 {
+    switch indexPath.section {
+    case 0:
       switch indexPath.row {
       case 0:
         logOut()
@@ -240,9 +247,30 @@ extension MessageViewController: UICollectionViewDelegate {
       default:
         println("default case")
       }
-    }
-    else {
+    case 1:
+      println("section 2 touched")
+    case 2:
       selectContact(indexPath)
+    default:
+      println("default case")
+    }
+  }
+  
+}
+
+extension MessageViewController: UICollectionViewDelegateFlowLayout {
+  
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    let collectionViewHeight = collectionView.frame.height
+    let collectionViewWidth = collectionView.frame.width
+    let cellHeight = collectionViewWidth / 4
+    let messageCellHeight = collectionViewHeight - (cellHeight * 3)
+    
+    switch indexPath.section {
+    case 0, 2:
+      return CGSize(width: cellHeight, height: cellHeight)
+    default:
+      return CGSize(width: collectionViewWidth, height: messageCellHeight)
     }
   }
   

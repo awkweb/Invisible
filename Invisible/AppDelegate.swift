@@ -27,12 +27,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     window?.rootViewController = initialViewController
+    let statusBarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
+    statusBarView.backgroundColor = UIColor.purpleColor()
+    window?.rootViewController!.view.addSubview(statusBarView)
     window?.makeKeyAndVisible()
     
-    let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
-    view.backgroundColor = UIColor.purpleColor()
-    window?.rootViewController!.view.addSubview(view)
-    
+    //TODO: Register every time?
     // Register for Push Notitications
     if application.applicationState != .Background {
       // Track an app open here if we launch with a push, unless
@@ -59,6 +59,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       application.registerForRemoteNotifications()
     }
     
+    // Extract notification data from app open
+    if let notificationPayload = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+      println(notificationPayload)
+    }
+    
     return true
   }
   
@@ -82,6 +87,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if application.applicationState == .Inactive {
       PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: nil)
     }
+  }
+  
+  func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+    
+    if let info = userInfo["aps"] as? [String: AnyObject] {
+      if let alert = info["alert"] as? String {
+        let messageText = alert
+        println("App delegate \(messageText)")
+        completionHandler(.NewData)
+      }
+    }
+    completionHandler(.NoData)
   }
   
   func applicationDidBecomeActive(application: UIApplication) {
