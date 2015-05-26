@@ -15,9 +15,9 @@ struct Contact {
   let position: Int
 }
 
-func fetchLastContactPosition(callback: (Int) -> ()) {
+private func fetchLastContactPosition(callback: (Int) -> ()) {
   PFQuery(className: "ContactList")
-    .whereKeyExists("position")
+    .whereKey("byUser", equalTo: PFUser.currentUser()!.objectId!)
     .orderByDescending("position")
     .getFirstObjectInBackgroundWithBlock({
       object, error in
@@ -63,11 +63,6 @@ func fetchContacts(callback: ([Contact]) -> ()) {
         })
         let userIds = contactUsers.map {$0.userId}
         
-        println("CORRECT")
-        for user in contactUsers {
-          println("\(user.userId)'s position is \(user.position)")
-        }
-        
         PFUser.query()!
           .whereKey("objectId", containedIn: userIds)
           .findObjectsInBackgroundWithBlock({
@@ -76,16 +71,9 @@ func fetchContacts(callback: ([Contact]) -> ()) {
             if let users = objects as? [PFUser] {
               var c: [Contact] = []
               
-              println("BEFORE")
-              for user in contactUsers {
-                println("\(user.userId)'s position is \(user.position)")
-              }
-              
-              println("AFTER")
               for user in users {
                 for cUser in contactUsers {
                   if cUser.userId == user.objectId! {
-                    println("\(user.objectId!)'s position is \(cUser.position) - (\(cUser.userId))")
                     let contact = Contact(id: cUser.contactId, user: pfUserToUser(user), position: cUser.position)
                     
                     if contact.position > c.count {
@@ -93,8 +81,6 @@ func fetchContacts(callback: ([Contact]) -> ()) {
                     } else {
                       c.insert(contact, atIndex: contact.position)
                     }
-                    //TODO: Maybe sort instead of the above?
-                    //c.sort {$0.position < $1.position}
                   }
                 }
               }

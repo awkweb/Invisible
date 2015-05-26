@@ -42,6 +42,7 @@ class LogInViewController: UIViewController {
       
       if user != nil {
         println("Log in success!")
+        self.saveUserInstallation()
         let messageVC = kStoryboard.instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
         self.presentViewController(messageVC, animated: true, completion: nil)
       } else {
@@ -49,6 +50,19 @@ class LogInViewController: UIViewController {
       }
     }
   }
+  
+  private func saveUserInstallation() {
+    let installation = PFInstallation.currentInstallation()
+    installation["user"] = PFUser.currentUser()
+    installation.saveInBackgroundWithBlock {
+      success, error in
+      
+      if !success {
+        println(error)
+      }
+    }
+  }
+  
 }
 
 // MARK: UITextFieldDelegate

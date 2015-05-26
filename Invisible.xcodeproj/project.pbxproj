@@ -203,8 +203,8 @@
 		057457CA1B0F81CC00B2D22E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				05F7117D1B1241C70021409D /* ContactCollectionViewCell.swift */,
 				05F7117F1B124BF10021409D /* ActionCollectionViewCell.swift */,
+				05F7117D1B1241C70021409D /* ContactCollectionViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";

@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
   
-  
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
     
@@ -29,6 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window?.rootViewController = initialViewController
     window?.makeKeyAndVisible()
+    
+    let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
+    view.backgroundColor = UIColor.purpleColor()
+    window?.rootViewController!.view.addSubview(view)
     
     // Register for Push Notitications
     if application.applicationState != .Background {
@@ -73,6 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
   
+  //TODO: Change in-app notification here
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
     PFPush.handlePush(userInfo)
     if application.applicationState == .Inactive {

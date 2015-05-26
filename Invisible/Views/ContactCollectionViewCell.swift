@@ -12,11 +12,13 @@ class ContactCollectionViewCell: UICollectionViewCell {
   
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var nameLabel: UILabel!
+  @IBOutlet weak var selectedImageView: UIImageView!
   
   override func awakeFromNib() {
     super.awakeFromNib()
     
     imageView.hidden = true
     nameLabel.hidden = true
+    selectedImageView.hidden = true
   }
 }
