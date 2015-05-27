@@ -31,6 +31,7 @@ class MessageViewController: UIViewController {
     super.viewDidAppear(animated)
     
     messageTextField.becomeFirstResponder()
+    println("View did appear.")
     
     fetchContacts({
       fetchedContacts in
@@ -98,20 +99,22 @@ class MessageViewController: UIViewController {
       
       let contact: () = fetchUserByUsername(textField.text, {
         user in
-        saveUserAsContact(user, {
-          success in
-          
-          if success {
-            fetchContacts({
-              fetchedContacts in
-              
-              self.contacts = fetchedContacts
-              self.collectionView.reloadData()
-            })
-          } else {
-            println("Error saving user as contact.")
-          }
-        })
+        
+        let currentContacts = self.contacts.map {$0.userId}
+        if !contains(currentContacts, user.id) {
+          saveUserAsContact(user, {
+            success in
+            
+            if success {
+              fetchContacts({
+                fetchedContacts in
+                
+                self.contacts = fetchedContacts
+                self.collectionView.reloadData()
+              })
+            }
+          })
+        }
       })
     }
     
@@ -120,20 +123,20 @@ class MessageViewController: UIViewController {
       println("Just performed the cancel action")
     }
     
-    // Add actions to the alert
     alert.addAction(addAction)
     alert.addAction(cancelAction)
     
     presentViewController(alert, animated: true, completion: nil)
   }
   
+  // TODO: Don't reload data on select
   private func selectContact(indexPath: NSIndexPath) {
     if indexPath.row < contacts.count {
-      if !contains(selectedContacts, contacts[indexPath.row].user.id) {
-        selectedContacts += [contacts[indexPath.row].user.id]
+      if !contains(selectedContacts, contacts[indexPath.row].userId) {
+        selectedContacts += [contacts[indexPath.row].userId]
       } else {
         for c in 0..<selectedContacts.count {
-          if selectedContacts[c] == contacts[indexPath.row].user.id {
+          if selectedContacts[c] == contacts[indexPath.row].userId {
             selectedContacts.removeAtIndex(c)
             break
           }
@@ -184,6 +187,7 @@ extension MessageViewController: UICollectionViewDataSource {
       var pushCell = collectionView.dequeueReusableCellWithReuseIdentifier("PushCollectionViewCell", forIndexPath: indexPath) as! PushCollectionViewCell
       
       pushCell.backgroundColor = UIColor.yellowColor()
+      // TODO: Display push text
       pushCell.messageLabel.text = "Tom: The quick brown fox jumped over the lazy dogs."
       
       return pushCell
@@ -198,17 +202,21 @@ extension MessageViewController: UICollectionViewDataSource {
       }
       
       if indexPath.row < contacts.count {
-        let user = contacts[contacts[indexPath.row].position].user
-        contactCell.nameLabel.text = user.username
-        contactCell.nameLabel.hidden = false
-        
-        user.getPhoto({
-          image in
-          contactCell.imageView.image = image
-          contactCell.imageView.hidden = false
+        let contact = contacts[indexPath.row]
+        contact.getUser({
+          user in
+          
+          contactCell.nameLabel.text = user.username
+          contactCell.nameLabel.hidden = false
+          
+          user.getPhoto({
+            image in
+            contactCell.imageView.image = image
+            contactCell.imageView.hidden = false
+          })
         })
         
-        if contains(selectedContacts, contacts[indexPath.row].user.id) {
+        if contains(selectedContacts, contact.userId) {
           contactCell.selectedImageView.hidden = false
         } else {
           contactCell.selectedImageView.hidden = true
@@ -266,6 +274,7 @@ extension MessageViewController: UICollectionViewDelegate {
   
 }
 
+// MARK: UICollectionViewDelegateFlowLayout
 extension MessageViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
