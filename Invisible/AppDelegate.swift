@@ -11,7 +11,7 @@ import Parse
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+  
   var window: UIWindow?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -27,9 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     window?.rootViewController = initialViewController
-    let statusBarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.size.width, height: 20.0))
-    statusBarView.backgroundColor = UIColor.purpleColor()
-    window?.rootViewController!.view.addSubview(statusBarView)
     window?.makeKeyAndVisible()
     
     //TODO: Register every time?
@@ -86,19 +83,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     PFPush.handlePush(userInfo)
     if application.applicationState == .Inactive {
       PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: nil)
+      println(userInfo)
     }
   }
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
     
-    if let info = userInfo["aps"] as? [String: AnyObject] {
-      if let alert = info["alert"] as? String {
-        let messageText = alert
-        println("App delegate \(messageText)")
-        completionHandler(.NewData)
-      }
-    }
-    completionHandler(.NoData)
+    NSNotificationCenter.defaultCenter().postNotificationName("PushNotificationMessageReceivedNotification", object: nil, userInfo: userInfo)
+    
+    completionHandler(.NewData)
   }
   
   func applicationDidBecomeActive(application: UIApplication) {

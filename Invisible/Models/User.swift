@@ -36,8 +36,7 @@ func pfUserToUser(user: PFUser) -> User {
 
 func fetchUserById(id: String, callback: (User) -> ()) {
   PFUser.query()!
-    .whereKey("objectId", equalTo: id)
-    .getFirstObjectInBackgroundWithBlock({
+    .getObjectInBackgroundWithId(id, block: {
       object, error in
       
       if let pfUser = object as? PFUser {

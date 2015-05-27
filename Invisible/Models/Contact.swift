@@ -42,8 +42,7 @@ func saveUserAsContact(user: User, callback: (Bool) -> ()) {
 
 func deleteContact(contactId: String, callback: (Bool) -> ()) {
   PFQuery(className: "ContactList")
-    .whereKey("objectId", equalTo: contactId)
-    .getFirstObjectInBackgroundWithBlock({
+    .getObjectInBackgroundWithId(contactId, block: {
       object, error in
       
       if let contact = object as PFObject? {
@@ -60,7 +59,7 @@ func deleteContact(contactId: String, callback: (Bool) -> ()) {
 
 func fetchContacts(callback: ([Contact]) -> ()) {
   PFQuery(className: "ContactList")
-    .whereKey("byUser", equalTo: PFUser.currentUser()!.objectId!)
+    .whereKey("byUser", equalTo: currentUser().id)
     .findObjectsInBackgroundWithBlock({
       objects, error in
       

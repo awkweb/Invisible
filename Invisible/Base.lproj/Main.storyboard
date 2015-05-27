@@ -197,7 +197,7 @@
                                             <rect key="frame" x="16" y="7" width="283" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
+                                            <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="send"/>
                                         </textField>
                                     </barButtonItem>
                                     <barButtonItem title="Send" id="owO-eX-Ege">

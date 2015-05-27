@@ -17,6 +17,13 @@ class MessageViewController: UIViewController {
   
   var contacts: [Contact] = []
   var selectedContacts: [String] = []
+  var pushMessage: String?
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "remoteNotificationReceived:", name: "PushNotificationMessageReceivedNotification", object: nil)
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,7 +38,6 @@ class MessageViewController: UIViewController {
     super.viewDidAppear(animated)
     
     messageTextField.becomeFirstResponder()
-    println("View did appear.")
     
     fetchContacts({
       fetchedContacts in
@@ -40,8 +46,13 @@ class MessageViewController: UIViewController {
     })
   }
   
-  override func preferredStatusBarStyle() -> UIStatusBarStyle {
-    return .LightContent
+  // MARK: Notification Observers
+  func remoteNotificationReceived(notification: NSNotification) {
+    let userInfo = notification.userInfo!
+    let info = userInfo["aps"] as? [String: AnyObject]
+    let alert = info!["alert"] as! String
+    pushMessage = alert
+    collectionView.reloadData()
   }
   
   func keyboardDidShow(notification: NSNotification) {
@@ -54,9 +65,10 @@ class MessageViewController: UIViewController {
   @IBAction func sendBarButtonItemPressed(sender: UIBarButtonItem) {
     PFCloud.callFunctionInBackground("sendPush", withParameters:
       [
-        "from": "\(PFUser.currentUser()!.username!)",
+        "from": "\(currentUser().username)",
         "to": selectedContacts,
-        "message": self.messageTextField.text
+        "message": messageTextField.text,
+        "senderId": "\(currentUser().id)"
       ]
       ) {
         success, error in
@@ -186,9 +198,12 @@ extension MessageViewController: UICollectionViewDataSource {
     case 1:
       var pushCell = collectionView.dequeueReusableCellWithReuseIdentifier("PushCollectionViewCell", forIndexPath: indexPath) as! PushCollectionViewCell
       
-      pushCell.backgroundColor = UIColor.yellowColor()
-      // TODO: Display push text
-      pushCell.messageLabel.text = "Tom: The quick brown fox jumped over the lazy dogs."
+      pushCell.backgroundColor = UIColor.whiteColor()
+      if pushMessage != nil {
+        pushCell.messageLabel.text = pushMessage!
+      } else {
+        pushCell.messageLabel.text = ""
+      }
       
       return pushCell
     default:
