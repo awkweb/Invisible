@@ -23,6 +23,7 @@ class MessageViewController: UIViewController {
     super.viewWillAppear(animated)
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: "remoteNotificationReceived:", name: "PushNotificationMessageReceivedNotification", object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
   }
   
   override func viewDidLoad() {
@@ -30,8 +31,6 @@ class MessageViewController: UIViewController {
     
     collectionView.dataSource = self
     collectionView.delegate = self
-    
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDidShow:", name: UIKeyboardDidShowNotification, object: nil)
   }
   
   override func viewDidAppear(animated: Bool) {
@@ -55,7 +54,7 @@ class MessageViewController: UIViewController {
     collectionView.reloadData()
   }
   
-  func keyboardDidShow(notification: NSNotification) {
+  func keyboardWillShow(notification: NSNotification) {
     if let frameObject: AnyObject = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] {
       let keyboardRect = frameObject.CGRectValue()
       toolbar.frame.origin.y = keyboardRect.origin.y - toolbar.frame.height
