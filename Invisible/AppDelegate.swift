@@ -20,11 +20,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Determine initialViewController
     var initialViewController: UIViewController
     
-    if PFUser.currentUser() != nil {
-      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
-    } else {
-      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
-    }
+    initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("MessagesNavController") as! UIViewController
+    
+//    if PFUser.currentUser() != nil {
+//      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("MessagesNavController") as! UIViewController
+//    } else {
+//      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
+//    }
     
     window?.rootViewController = initialViewController
     window?.makeKeyAndVisible()

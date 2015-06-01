@@ -17,12 +17,12 @@ struct User {
   func getPhoto(callback: (UIImage) -> ()) {
     let imageFile = pfUser["picture"] as! PFFile
     
-    imageFile.getDataInBackgroundWithBlock({
+    imageFile.getDataInBackgroundWithBlock {
       data, error in
       if let data = data {
         callback(UIImage(data: data)!)
       }
-    })
+    }
   }
 }
 
@@ -36,25 +36,25 @@ func pfUserToUser(user: PFUser) -> User {
 
 func fetchUserById(id: String, callback: (User) -> ()) {
   PFUser.query()!
-    .getObjectInBackgroundWithId(id, block: {
+    .getObjectInBackgroundWithId(id) {
       object, error in
       
       if let pfUser = object as? PFUser {
         let user = pfUserToUser(pfUser)
         callback(user)
       }
-    })
+    }
 }
 
 func fetchUserByUsername(username: String, callback: (User) -> ()) {
   PFUser.query()!
   .whereKey("username", equalTo: username)
-  .getFirstObjectInBackgroundWithBlock({
+  .getFirstObjectInBackgroundWithBlock {
     object, error in
     
     if let pfUser = object as? PFUser {
       let user = pfUserToUser(pfUser)
       callback(user)
     }
-  })
+  }
 }

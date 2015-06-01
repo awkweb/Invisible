@@ -42,25 +42,25 @@ func saveUserAsContact(user: User, callback: (Bool) -> ()) {
 
 func deleteContact(contactId: String, callback: (Bool) -> ()) {
   PFQuery(className: "ContactList")
-    .getObjectInBackgroundWithId(contactId, block: {
+    .getObjectInBackgroundWithId(contactId) {
       object, error in
       
       if let contact = object as PFObject? {
-        contact.deleteInBackgroundWithBlock({
+        contact.deleteInBackgroundWithBlock {
          success, error in
           
           if success {
             callback(success)
           }
-        })
+        }
       }
-    })
+    }
 }
 
 func fetchContacts(callback: ([Contact]) -> ()) {
   PFQuery(className: "ContactList")
     .whereKey("byUser", equalTo: currentUser().id)
-    .findObjectsInBackgroundWithBlock({
+    .findObjectsInBackgroundWithBlock {
       objects, error in
       
       if let contacts = objects as? [PFObject] {
@@ -71,5 +71,5 @@ func fetchContacts(callback: ([Contact]) -> ()) {
         let userIds = contactUsers.map {Contact(id: $0.contactId, userId: $0.userId)}
         callback(userIds)
       }
-    })
+    }
 }

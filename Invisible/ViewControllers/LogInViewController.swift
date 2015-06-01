@@ -31,12 +31,12 @@ class LogInViewController: UIViewController {
       if password.isEmpty {
         println("Enter a password.")
       } else {
-        logIn(username, password: password)
+        logInWithUsername(username, password: password)
       }
     }
   }
   
-  private func logIn(username: String, password: String) {
+  private func logInWithUsername(username: String, password: String) {
     PFUser.logInWithUsernameInBackground(username, password: password) {
       user, error in
       
@@ -51,6 +51,7 @@ class LogInViewController: UIViewController {
     }
   }
   
+  // TODO: Move to SignUpVC
   private func saveUserInstallation() {
     let installation = PFInstallation.currentInstallation()
     installation["user"] = PFUser.currentUser()
