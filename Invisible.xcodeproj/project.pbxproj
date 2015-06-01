@@ -12,6 +12,8 @@
 		05101C801B09774D0089E37C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05101C7F1B09774D0089E37C /* Helpers.swift */; };
 		051632F71B10E255008605CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F61B10E255008605CA /* User.swift */; };
 		051632F91B11555B008605CA /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F81B11555B008605CA /* Contact.swift */; };
+		051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */; };
+		051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */; };
 		053387BE1B14AC4000BDD84D /* PushCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053387BD1B14AC4000BDD84D /* PushCollectionViewCell.swift */; };
 		0536BFA91B1A282400161877 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0536BFA71B1A282400161877 /* Bolts.framework */; };
 		0536BFAA1B1A282400161877 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0536BFA81B1A282400161877 /* Parse.framework */; };
@@ -53,6 +55,8 @@
 		05101C7F1B09774D0089E37C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		051632F61B10E255008605CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		051632F81B11555B008605CA /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Models/Contact.swift; sourceTree = "<group>"; };
+		051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageToolbarContentView.swift; path = Views/MessageToolbarContentView.swift; sourceTree = "<group>"; };
+		051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageToolbarContentView.xib; path = Views/MessageToolbarContentView.xib; sourceTree = "<group>"; };
 		053387BD1B14AC4000BDD84D /* PushCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushCollectionViewCell.swift; path = Views/PushCollectionViewCell.swift; sourceTree = "<group>"; };
 		0536BFA71B1A282400161877 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Invisible/Frameworks/Bolts.framework; sourceTree = "<group>"; };
 		0536BFA81B1A282400161877 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Invisible/Frameworks/Parse.framework; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 				053387BD1B14AC4000BDD84D /* PushCollectionViewCell.swift */,
 				05F7117D1B1241C70021409D /* ContactCollectionViewCell.swift */,
 				0536BFB11B1A38B700161877 /* MessageToolbar.swift */,
+				051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */,
+				051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */,
 				0536BFB61B1A77E700161877 /* MessageTextView.swift */,
 			);
 			name = Views;
@@ -311,6 +317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */,
 				053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */,
 				053F42BC1AFE92FE00A2CA53 /* LaunchScreen.xib in Resources */,
 				053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */,
@@ -339,6 +346,7 @@
 				050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */,
 				050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */,
 				051632F91B11555B008605CA /* Contact.swift in Sources */,
+				051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
 				051632F71B10E255008605CA /* User.swift in Sources */,
 				05F7117E1B1241C70021409D /* ContactCollectionViewCell.swift in Sources */,

@@ -9,12 +9,12 @@
 import UIKit
 
 @objc protocol MessageToolbarDelegate {
-  func sendBarButtonItemPressed(sender: UIBarButtonItem)
+  func sendButtonPressed(sender: UIButton)
 }
 
 class MessageToolbar: UIToolbar {
   
-  var messageTextView: MessageTextView!
+  var messageToolbarContentView: MessageToolbarContentView!
   var messageToolbarDelegate: MessageToolbarDelegate!
   
   override init(frame: CGRect) {
@@ -28,13 +28,11 @@ class MessageToolbar: UIToolbar {
   }
   
   func initialize() {
-    let screenWidth = UIScreen.mainScreen().bounds.size.width
-    
-    messageTextView = MessageTextView(frame: CGRect(x: 0, y: 0, width: screenWidth * 0.75, height: 30))
-    let messageTextViewBarButtonItem = UIBarButtonItem(customView: messageTextView)
-    let sendBarButtonItem = UIBarButtonItem(title: "Send", style: UIBarButtonItemStyle.Plain, target: messageToolbarDelegate, action: "sendBarButtonItemPressed:")
-    
-    items = [messageTextViewBarButtonItem, sendBarButtonItem]
+    let nibViews = NSBundle.mainBundle().loadNibNamed("MessageToolbarContentView", owner: self, options: nil)
+    messageToolbarContentView = nibViews[0] as! MessageToolbarContentView
+    messageToolbarContentView.frame.size.width = self.frame.size.width
+    messageToolbarContentView.sendButton.addTarget(messageToolbarDelegate, action: "sendButtonPressed:", forControlEvents: .TouchUpInside)
+    addSubview(messageToolbarContentView)
   }
 
 }

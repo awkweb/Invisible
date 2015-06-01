@@ -71,12 +71,15 @@
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q7S-9f-saw" customClass="MessageToolbar" customModule="Invisible" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="TRu-Ld-0AD"/>
+                                </constraints>
                                 <items/>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="dyP-4Q-gfa" firstAttribute="top" secondItem="q7S-9f-saw" secondAttribute="bottom" id="7QK-wW-HIw"/>
+                            <constraint firstItem="dyP-4Q-gfa" firstAttribute="top" secondItem="q7S-9f-saw" secondAttribute="bottom" id="9bF-2h-HKW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="q7S-9f-saw" secondAttribute="trailing" constant="-16" id="p8I-hn-8fj"/>
                             <constraint firstItem="q7S-9f-saw" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" constant="-16" id="rmA-xX-Cwd"/>
                         </constraints>
@@ -84,7 +87,8 @@
                     <navigationItem key="navigationItem" title="New Message" id="FHk-Dd-313"/>
                     <connections>
                         <outlet property="messageToolbar" destination="q7S-9f-saw" id="Xap-QD-XHt"/>
-                        <outlet property="messageToolbarBottomConstraint" destination="7QK-wW-HIw" id="tlk-un-gpf"/>
+                        <outlet property="messageToolbarBottomConstraint" destination="9bF-2h-HKW" id="94G-Yh-L2C"/>
+                        <outlet property="messageToolbarHeightConstraint" destination="TRu-Ld-0AD" id="uHQ-dd-jy0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qVC-tY-lix" userLabel="First Responder" sceneMemberID="firstResponder"/>

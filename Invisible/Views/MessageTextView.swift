@@ -46,26 +46,13 @@ class MessageTextView: UITextView {
     dataDetectorTypes = .None
     keyboardAppearance = .Default
     keyboardType = .Default
-    returnKeyType = .Send
+    returnKeyType = .Default
     
     text = nil
     
     //    _placeHolder = nil;
     //    _placeHolderTextColor = [UIColor lightGrayColor];
     //
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "textViewTextDidChange:", name: UITextViewTextDidChangeNotification, object: self)
-  }
-
-  
-  func textViewTextDidChange(notification: NSNotification) {
-    if let textViewHeight = notification.object?.contentSize.height {
-      if textViewHeight > 28.0 {
-        frame = CGRect(x: 0, y: 0, width: frame.width, height: 47)
-      }
-      UIView.animateWithDuration(0.25) {
-        self.layoutIfNeeded()
-      }
-    }
   }
   
 }
