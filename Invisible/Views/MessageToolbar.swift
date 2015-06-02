@@ -14,7 +14,7 @@ import UIKit
 
 class MessageToolbar: UIToolbar {
   
-  var messageToolbarContentView: MessageToolbarContentView!
+  var messageContentView: MessageToolbarContentView!
   var messageToolbarDelegate: MessageToolbarDelegate!
   
   override init(frame: CGRect) {
@@ -29,10 +29,11 @@ class MessageToolbar: UIToolbar {
   
   func initialize() {
     let nibViews = NSBundle.mainBundle().loadNibNamed("MessageToolbarContentView", owner: self, options: nil)
-    messageToolbarContentView = nibViews[0] as! MessageToolbarContentView
-    messageToolbarContentView.frame.size.width = self.frame.size.width
-    messageToolbarContentView.sendButton.addTarget(messageToolbarDelegate, action: "sendButtonPressed:", forControlEvents: .TouchUpInside)
-    addSubview(messageToolbarContentView)
+    messageContentView = nibViews[0] as! MessageToolbarContentView
+    messageContentView.frame.size.width = self.frame.size.width
+    messageContentView.placeholderLabel.text = "Type a message..."
+    messageContentView.sendButton.addTarget(messageToolbarDelegate, action: "sendButtonPressed:", forControlEvents: .TouchUpInside)
+    addSubview(messageContentView)
   }
 
 }

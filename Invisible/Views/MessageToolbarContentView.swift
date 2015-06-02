@@ -11,6 +11,7 @@ import UIKit
 class MessageToolbarContentView: UIView {
   
   @IBOutlet weak var messageTextView: MessageTextView!
+  @IBOutlet weak var placeholderLabel: UILabel!
   @IBOutlet weak var sendButton: UIButton!
   
   required init(coder aDecoder: NSCoder) {

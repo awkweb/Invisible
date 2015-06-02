@@ -26,9 +26,6 @@ class MessageTextView: UITextView {
     let cornerRadius: CGFloat = 6.0
     
     backgroundColor = UIColor.whiteColor()
-    layer.borderWidth = 0.5
-    layer.borderColor = UIColor.lightGrayColor().CGColor
-    layer.cornerRadius = cornerRadius
     
     scrollIndicatorInsets = UIEdgeInsets(top: cornerRadius, left: 0.0, bottom: cornerRadius, right: 0.0)
     textContainerInset = UIEdgeInsets(top: 4.0, left: 2.0, bottom: 4.0, right: 2.0)
@@ -46,13 +43,9 @@ class MessageTextView: UITextView {
     dataDetectorTypes = .None
     keyboardAppearance = .Default
     keyboardType = .Default
-    returnKeyType = .Default
+    returnKeyType = .Send
     
     text = nil
-    
-    //    _placeHolder = nil;
-    //    _placeHolderTextColor = [UIColor lightGrayColor];
-    //
   }
   
 }
