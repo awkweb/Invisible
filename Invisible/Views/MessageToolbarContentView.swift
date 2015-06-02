@@ -13,6 +13,7 @@ class MessageToolbarContentView: UIView {
   @IBOutlet weak var messageTextView: MessageTextView!
   @IBOutlet weak var placeholderLabel: UILabel!
   @IBOutlet weak var sendButton: UIButton!
+  @IBOutlet weak var characterCounterLabel: UILabel!
   
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)

@@ -2,7 +2,7 @@
 //  ContactCollectionViewCell.swift
 //  Invisible
 //
-//  Created by thomas on 5/24/15.
+//  Created by thomas on 6/2/15.
 //  Copyright (c) 2015 thomas. All rights reserved.
 //
 
@@ -10,12 +10,22 @@ import UIKit
 
 class ContactCollectionViewCell: UICollectionViewCell {
   
-  @IBOutlet weak var imageView: UIImageView!
-  @IBOutlet weak var nameLabel: UILabel!
+  var contactCollectionViewCellContentView: ContactCollectionViewCellContentView!
   
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    
-    nameLabel.hidden = true
+  required init(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    initialize()
   }
+  
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    initialize()
+  }
+  
+  func initialize() {
+    let nibViews = NSBundle.mainBundle().loadNibNamed("ContactCollectionViewCellContentView", owner: self, options: nil)
+    contactCollectionViewCellContentView = nibViews[0] as! ContactCollectionViewCellContentView
+    contactCollectionViewCellContentView.frame.size.width = self.frame.size.width
+  }
+  
 }

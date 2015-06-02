@@ -7,7 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MessageToolbarContentView" customModule="Invisible" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <rect key="frame" x="0.0" y="1" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k3p-iw-NKY" customClass="MessageTextView" customModule="Invisible" customModuleProvider="target">
@@ -33,12 +33,24 @@
                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="110" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3V-yV-rKE" userLabel="Character Counter Label">
+                    <rect key="frame" x="262" y="-9" width="50" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="Kh4-Wq-6ya"/>
+                        <constraint firstAttribute="height" constant="16" id="fyW-Kq-qt3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="k3p-iw-NKY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="7" id="1r0-K0-era"/>
+                <constraint firstAttribute="trailing" secondItem="Q3V-yV-rKE" secondAttribute="trailing" constant="8" id="26I-1g-R7S"/>
                 <constraint firstItem="AXE-9H-5Dy" firstAttribute="trailing" secondItem="k3p-iw-NKY" secondAttribute="trailing" id="AYN-uF-MW7"/>
                 <constraint firstItem="k3p-iw-NKY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="BNs-uP-4N4"/>
+                <constraint firstItem="vQR-u0-1tC" firstAttribute="top" secondItem="Q3V-yV-rKE" secondAttribute="bottom" id="Cnp-hr-QT0"/>
                 <constraint firstItem="vQR-u0-1tC" firstAttribute="leading" secondItem="k3p-iw-NKY" secondAttribute="trailing" constant="8" id="JQB-vl-qBm"/>
                 <constraint firstItem="AXE-9H-5Dy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="12" id="JwJ-pO-X3i"/>
                 <constraint firstItem="AXE-9H-5Dy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="KSP-Un-pK0"/>
@@ -63,10 +75,12 @@
                 </mask>
             </variation>
             <connections>
+                <outlet property="characterCounterLabel" destination="Q3V-yV-rKE" id="Cq2-By-jLX"/>
                 <outlet property="messageTextView" destination="k3p-iw-NKY" id="Ipz-VV-lnV"/>
                 <outlet property="placeholderLabel" destination="AXE-9H-5Dy" id="KNI-QJ-9Nx"/>
                 <outlet property="sendButton" destination="vQR-u0-1tC" id="mVR-Ro-anG"/>
             </connections>
+            <point key="canvasLocation" x="268" y="284"/>
         </view>
     </objects>
 </document>
