@@ -63,6 +63,7 @@ class MessageViewController: UIViewController {
     notificationCenter.addObserverForName(UITextViewTextDidChangeNotification, object: messageToolbar.messageContentView.messageTextView, queue: mainQueue) {
       notification in
       if let contentSize = notification.object?.contentSize {
+        println("posted \(contentSize)")
         let newContentSize = contentSize.height
         let dy = newContentSize - self.oldContentSize
         self.oldContentSize = newContentSize
@@ -155,7 +156,7 @@ extension MessageViewController: UICollectionViewDataSource {
       contact.getUser({
         user in
         
-        contactCell.contactCollectionViewCellContentView.displayNameLabel.text = user.username
+        contactCell.contactCollectionViewCellContentView.displayNameLabel.text = user.displayName
         
         user.getPhoto({
           image in
@@ -181,6 +182,19 @@ extension MessageViewController: UICollectionViewDelegate {
   
 }
 
+// MARK: Contact collection view delegate flow layout
+
+extension MessageViewController: UICollectionViewDelegateFlowLayout {
+  
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    let collectionViewHeight = collectionView.frame.height
+    let collectionViewWidth = collectionView.frame.width
+    let cellHeight = collectionViewWidth / 4
+    return CGSize(width: cellHeight, height: cellHeight)
+  }
+  
+}
+
 // MARK: Message toolbar delegate
 
 extension MessageViewController: MessageToolbarDelegate {
@@ -188,6 +202,7 @@ extension MessageViewController: MessageToolbarDelegate {
   func sendButtonPressed(sender: UIButton) {
     if count(messageToolbar.messageContentView.messageTextView.text) <= pushCharacterLimit {
       messageToolbar.messageContentView.messageTextView.text = ""
+      NSNotificationCenter.defaultCenter().postNotificationName("UITextViewTextDidChangeNotification", object: nil)
       messageToolbar.messageContentView.placeholderLabel.hidden = false // Put in completion handler
       println("Hello :)")
     }
@@ -217,7 +232,6 @@ extension MessageViewController: UITextViewDelegate {
     }
   }
 }
-
 
 // MARK: Utilities
 
@@ -250,7 +264,7 @@ extension MessageViewController {
                 fetchedContacts in
                 
                 self.contacts = fetchedContacts
-                self.contactCollectionView.reloadData()
+                self.contactCollectionView.reloadData() // reload only the new cell
               })
             }
           })

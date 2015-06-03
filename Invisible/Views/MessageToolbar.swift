@@ -30,7 +30,7 @@ class MessageToolbar: UIToolbar {
   func initialize() {
     let nibViews = NSBundle.mainBundle().loadNibNamed("MessageToolbarContentView", owner: self, options: nil)
     messageContentView = nibViews[0] as! MessageToolbarContentView
-    messageContentView.frame.size.width = self.frame.size.width
+    messageContentView.frame.size.width = frame.size.width
     messageContentView.placeholderLabel.text = "Type a message..."
     messageContentView.sendButton.addTarget(messageToolbarDelegate, action: "sendButtonPressed:", forControlEvents: .TouchUpInside)
     addSubview(messageContentView)

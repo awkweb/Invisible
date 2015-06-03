@@ -10,34 +10,34 @@
             <rect key="frame" x="0.0" y="0.0" width="85" height="85"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jFu-i1-vvC">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RCe-IQ-4EW">
                     <rect key="frame" x="0.0" y="0.0" width="85" height="85"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YcV-49-LsI" userLabel="Display Name Label">
-                    <rect key="frame" x="0.0" y="60" width="85" height="24"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91g-mA-Jae" userLabel="Display Name Label">
+                    <rect key="frame" x="0.0" y="60" width="85" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="24" id="s3q-z0-FO3"/>
+                        <constraint firstAttribute="height" constant="21" id="Aa9-SQ-FQn"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="YcV-49-LsI" secondAttribute="trailing" id="0Cp-5Q-seq"/>
-                <constraint firstItem="YcV-49-LsI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8VO-9V-hL1"/>
-                <constraint firstItem="jFu-i1-vvC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="AMx-mv-gb1"/>
-                <constraint firstAttribute="bottom" secondItem="YcV-49-LsI" secondAttribute="bottom" constant="1" id="AQf-Dz-AJi"/>
-                <constraint firstAttribute="trailing" secondItem="jFu-i1-vvC" secondAttribute="trailing" id="Gsi-Oi-PzZ"/>
-                <constraint firstAttribute="bottom" secondItem="jFu-i1-vvC" secondAttribute="bottom" id="NZl-wl-cED"/>
-                <constraint firstItem="jFu-i1-vvC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Wr2-a0-wNr"/>
+                <constraint firstAttribute="bottom" secondItem="91g-mA-Jae" secondAttribute="bottom" constant="4" id="Pah-rB-Jr8"/>
+                <constraint firstAttribute="trailing" secondItem="RCe-IQ-4EW" secondAttribute="trailing" id="XjN-Wg-96t"/>
+                <constraint firstItem="RCe-IQ-4EW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZUp-eN-pWQ"/>
+                <constraint firstAttribute="trailing" secondItem="91g-mA-Jae" secondAttribute="trailing" id="ioF-rS-3eE"/>
+                <constraint firstItem="91g-mA-Jae" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="k5c-ay-kwg"/>
+                <constraint firstItem="RCe-IQ-4EW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="n7I-nn-ddy"/>
+                <constraint firstAttribute="bottom" secondItem="RCe-IQ-4EW" secondAttribute="bottom" id="sxn-J9-tCb"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="displayNameLabel" destination="YcV-49-LsI" id="OYO-00-EaY"/>
-                <outlet property="imageView" destination="jFu-i1-vvC" id="cma-mG-GYY"/>
+                <outlet property="displayNameLabel" destination="91g-mA-Jae" id="ljf-ia-TW7"/>
+                <outlet property="imageView" destination="RCe-IQ-4EW" id="z4y-RJ-0Cl"/>
             </connections>
             <point key="canvasLocation" x="267.5" y="354.5"/>
         </view>

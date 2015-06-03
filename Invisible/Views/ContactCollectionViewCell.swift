@@ -25,7 +25,8 @@ class ContactCollectionViewCell: UICollectionViewCell {
   func initialize() {
     let nibViews = NSBundle.mainBundle().loadNibNamed("ContactCollectionViewCellContentView", owner: self, options: nil)
     contactCollectionViewCellContentView = nibViews[0] as! ContactCollectionViewCellContentView
-    contactCollectionViewCellContentView.frame.size.width = self.frame.size.width
+    contactCollectionViewCellContentView.frame.size = frame.size
+    addSubview(contactCollectionViewCellContentView)
   }
   
 }

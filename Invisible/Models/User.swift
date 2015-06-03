@@ -12,6 +12,7 @@ import Parse
 struct User {
   let id: String
   let username: String
+  let displayName: String
   private let pfUser: PFUser
   
   func getPhoto(callback: (UIImage) -> ()) {
@@ -31,7 +32,7 @@ func currentUser() -> User {
 }
 
 func pfUserToUser(user: PFUser) -> User {
-  return User(id: user.objectId!, username: user.username!, pfUser: user)
+  return User(id: user.objectId!, username: user.username!, displayName: user["displayName"]! as! String, pfUser: user)
 }
 
 func fetchUserById(id: String, callback: (User) -> ()) {
