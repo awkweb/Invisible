@@ -40,7 +40,7 @@ func saveUserAsContact(user: User, callback: (Bool) -> ()) {
   }
 }
 
-func deleteContact(contactId: String, callback: (Bool) -> ()) {
+func deleteContact(contactId: String, callback: (Bool, NSError?) -> ()) {
   PFQuery(className: "ContactList")
     .getObjectInBackgroundWithId(contactId) {
       object, error in
@@ -50,7 +50,7 @@ func deleteContact(contactId: String, callback: (Bool) -> ()) {
          success, error in
           
           if success {
-            callback(success)
+            callback(success, error)
           }
         }
       }

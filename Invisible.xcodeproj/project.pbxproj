@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050BD2991B1F6751008BABC0 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050BD2981B1F6751008BABC0 /* AddCollectionViewCell.swift */; };
+		050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050BD29A1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift */; };
+		050BD29D1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 050BD29C1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib */; };
 		050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AD1B0BC577004A05CA /* LogInViewController.swift */; };
 		050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AE1B0BC577004A05CA /* MessageViewController.swift */; };
 		05101C801B09774D0089E37C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05101C7F1B09774D0089E37C /* Helpers.swift */; };
@@ -52,6 +55,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		050BD2981B1F6751008BABC0 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddCollectionViewCell.swift; path = Views/AddCollectionViewCell.swift; sourceTree = "<group>"; };
+		050BD29A1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddCollectionViewCellContentView.swift; path = Views/AddCollectionViewCellContentView.swift; sourceTree = "<group>"; };
+		050BD29C1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddCollectionViewCellContentView.xib; path = Views/AddCollectionViewCellContentView.xib; sourceTree = "<group>"; };
 		050C98AD1B0BC577004A05CA /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = ViewControllers/LogInViewController.swift; sourceTree = "<group>"; };
 		050C98AE1B0BC577004A05CA /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = ViewControllers/MessageViewController.swift; sourceTree = "<group>"; };
 		05101C7F1B09774D0089E37C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -121,6 +127,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		050BD29E1B1F6980008BABC0 /* AddCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				050BD2981B1F6751008BABC0 /* AddCollectionViewCell.swift */,
+				050BD29A1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift */,
+				050BD29C1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib */,
+			);
+			name = AddCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		050BD29F1B1F6997008BABC0 /* ContactCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */,
+				05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */,
+				05F322F11B1E442800BED665 /* ContactCollectionViewCellContentView.xib */,
+			);
+			name = ContactCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		050C98B51B0BC5DD004A05CA /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,9 +242,8 @@
 			isa = PBXGroup;
 			children = (
 				05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */,
-				05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */,
-				05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */,
-				05F322F11B1E442800BED665 /* ContactCollectionViewCellContentView.xib */,
+				050BD29F1B1F6997008BABC0 /* ContactCollectionViewCell */,
+				050BD29E1B1F6980008BABC0 /* AddCollectionViewCell */,
 				0536BFB11B1A38B700161877 /* MessageToolbar.swift */,
 				051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */,
 				051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */,
@@ -326,6 +351,7 @@
 				051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */,
 				053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */,
 				053F42BC1AFE92FE00A2CA53 /* LaunchScreen.xib in Resources */,
+				050BD29D1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib in Resources */,
 				05F322F31B1E442800BED665 /* ContactCollectionViewCellContentView.xib in Resources */,
 				053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */,
 			);
@@ -345,9 +371,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				050BD2991B1F6751008BABC0 /* AddCollectionViewCell.swift in Sources */,
 				05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */,
 				05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */,
 				0536BFB21B1A38B700161877 /* MessageToolbar.swift in Sources */,
+				050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
 				05101C801B09774D0089E37C /* Helpers.swift in Sources */,
 				0536BFB71B1A77E700161877 /* MessageTextView.swift in Sources */,

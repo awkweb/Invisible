@@ -9,7 +9,7 @@
 import UIKit
 
 class MessageViewController: UIViewController {
-    
+  
   @IBOutlet weak var contactCollectionView: ContactCollectionView!
   @IBOutlet weak var messageToolbar: MessageToolbar!
   @IBOutlet weak var messageToolbarBottomConstraint: NSLayoutConstraint!
@@ -29,6 +29,8 @@ class MessageViewController: UIViewController {
     super.viewWillAppear(animated)
     addNotificationCenterObservers()
     messageToolbar.messageContentView.messageTextView.becomeFirstResponder()
+    let longPress = UILongPressGestureRecognizer(target: self, action: "performLongPressGestureRecognizer:")
+    contactCollectionView.addGestureRecognizer(longPress)
   }
   
   override func viewDidLoad() {
@@ -37,11 +39,11 @@ class MessageViewController: UIViewController {
     messageToolbar.messageContentView.messageTextView.delegate = self
     contactCollectionView.dataSource = self
     contactCollectionView.delegate = self
-    fetchContacts({
+    fetchContacts {
       fetchedContacts in
       self.contacts = fetchedContacts
       self.contactCollectionView.reloadData()
-    })
+    }
   }
   
   // MARK: Notification center
@@ -63,18 +65,27 @@ class MessageViewController: UIViewController {
     notificationCenter.addObserverForName(UITextViewTextDidChangeNotification, object: messageToolbar.messageContentView.messageTextView, queue: mainQueue) {
       notification in
       if let contentSize = notification.object?.contentSize {
-        println("posted \(contentSize)")
         let newContentSize = contentSize.height
         let dy = newContentSize - self.oldContentSize
         self.oldContentSize = newContentSize
         self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
-        UIView.animateWithDuration(0.5) {
-          self.messageToolbar.messageContentView.sendButton.enabled = count(self.messageToolbar.messageContentView.messageTextView.text) <= self.pushCharacterLimit
-          self.messageToolbar.messageContentView.characterCounterLabel.hidden = newContentSize <= self.baseContentSize
-        }
+        self.updatePlaceholderAndCharacterCounterForMessageTextView()
       }
     }
     
+  }
+  
+  // MARK: Gesture recognizer
+  
+  func performLongPressGestureRecognizer(sender: UILongPressGestureRecognizer) {
+    let longPress = sender
+    let gestureState = sender.state
+    let location = longPress.locationInView(contactCollectionView)
+    let indexPath = contactCollectionView.indexPathForItemAtPoint(location)
+    
+    if gestureState == .Began && indexPath!.row != 0 && indexPath!.row <= contacts.count {
+      presentDeleteContactAlertControllerForIndexPath(indexPath!)
+    }
   }
   
   // MARK: Message toolbar
@@ -134,63 +145,19 @@ class MessageViewController: UIViewController {
     })
   }
   
-  func messageToolbarHasReachedMaximumHeight() -> Bool { // Differs - should be ==, not <=
+  private func messageToolbarHasReachedMaximumHeight() -> Bool { // Differs - should be ==, not <=
     return CGRectGetMinY(messageToolbar.frame) <= (topLayoutGuide.length + topContentAdditionalInset)
   }
   
-}
-
-// MARK: Contact collection view data source
-
-extension MessageViewController: UICollectionViewDataSource {
-  
-  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 12
-  }
-  
-  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
-    
-    if indexPath.row < contacts.count {
-      let contact = contacts[indexPath.row]
-      contact.getUser({
-        user in
-        
-        contactCell.contactCollectionViewCellContentView.displayNameLabel.text = user.displayName
-        
-        user.getPhoto({
-          image in
-          contactCell.contactCollectionViewCellContentView.imageView.image = image
-        })
-      })
-    } else if indexPath.row == contacts.count {
-      contactCell.contactCollectionViewCellContentView.displayNameLabel.text = "Add"
+  private func updatePlaceholderAndCharacterCounterForMessageTextView() {
+    let contentView = messageToolbar.messageContentView
+    contentView.placeholderLabel.hidden = count(contentView.messageTextView.text) != 0
+    let characterCount = pushCharacterLimit - count(contentView.messageTextView.text)
+    contentView.characterCounterLabel.text = "\(characterCount)"
+    UIView.animateWithDuration(0.5) {
+      contentView.sendButton.enabled = count(contentView.messageTextView.text) <= self.pushCharacterLimit && count(contentView.messageTextView.text) != 0
+      contentView.characterCounterLabel.hidden = self.oldContentSize <= self.baseContentSize
     }
-    return contactCell
-  }
-}
-
-// MARK: Contact collection view data source
-
-extension MessageViewController: UICollectionViewDelegate {
-  
-  func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    if indexPath.row == contacts.count {
-      presentAddContactAlertController()
-    }
-  }
-  
-}
-
-// MARK: Contact collection view delegate flow layout
-
-extension MessageViewController: UICollectionViewDelegateFlowLayout {
-  
-  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let collectionViewHeight = collectionView.frame.height
-    let collectionViewWidth = collectionView.frame.width
-    let cellHeight = collectionViewWidth / 4
-    return CGSize(width: cellHeight, height: cellHeight)
   }
   
 }
@@ -200,10 +167,12 @@ extension MessageViewController: UICollectionViewDelegateFlowLayout {
 extension MessageViewController: MessageToolbarDelegate {
   
   func sendButtonPressed(sender: UIButton) {
-    if count(messageToolbar.messageContentView.messageTextView.text) <= pushCharacterLimit {
-      messageToolbar.messageContentView.messageTextView.text = ""
-      NSNotificationCenter.defaultCenter().postNotificationName("UITextViewTextDidChangeNotification", object: nil)
-      messageToolbar.messageContentView.placeholderLabel.hidden = false // Put in completion handler
+    let textView = messageToolbar.messageContentView.messageTextView
+    if count(textView.text) <= pushCharacterLimit && count(textView.text) != 0 {
+      textView.text = ""
+      adjustMessageToolbarForMessageTextViewContentSizeChange(baseContentSize - oldContentSize)
+      oldContentSize = baseContentSize
+      updatePlaceholderAndCharacterCounterForMessageTextView()
       println("Hello :)")
     }
   }
@@ -224,13 +193,63 @@ extension MessageViewController: UITextViewDelegate {
     return true
   }
   
-  func textViewDidChange(textView: UITextView) {
-    if textView == messageToolbar.messageContentView.messageTextView {
-      messageToolbar.messageContentView.placeholderLabel.hidden = count(textView.text) != 0
-      let characterCount = pushCharacterLimit - count(textView.text)
-      messageToolbar.messageContentView.characterCounterLabel.text = "\(characterCount)"
+}
+
+// MARK: Contact collection view data source
+
+extension MessageViewController: UICollectionViewDataSource {
+  
+  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 12
+  }
+  
+  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    let addCell = collectionView.dequeueReusableCellWithReuseIdentifier("AddCollectionViewCell", forIndexPath: indexPath) as! AddCollectionViewCell
+    let contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
+    
+    if indexPath.row == 0 {
+      return addCell
+    }
+    
+    if indexPath.row <= contacts.count {
+      let contact = contacts[indexPath.row - 1]
+      contact.getUser {
+        user in
+        contactCell.contactCollectionViewCellContentView.displayNameLabel.text = user.displayName
+        user.getPhoto {contactCell.contactCollectionViewCellContentView.imageView.image = $0}
+      }
+      return contactCell
+    } else {
+      return contactCell
     }
   }
+  
+}
+
+
+// MARK: Contact collection view data source
+
+extension MessageViewController: UICollectionViewDelegate {
+  
+  func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    if indexPath.row == 0 {
+      presentAddContactAlertController()
+    }
+    
+  }
+  
+}
+
+// MARK: Contact collection view delegate flow layout
+
+extension MessageViewController: UICollectionViewDelegateFlowLayout {
+  
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    let collectionViewWidth = collectionView.frame.width
+    let cellLength = collectionViewWidth / 4
+    return CGSize(width: cellLength, height: cellLength)
+  }
+  
 }
 
 // MARK: Utilities
@@ -238,7 +257,7 @@ extension MessageViewController: UITextViewDelegate {
 extension MessageViewController {
   
   private func presentAddContactAlertController() {
-    let alert = UIAlertController(title: "Add contact", message: "Please type an username.", preferredStyle: .Alert)
+    let alert = UIAlertController(title: "Add Contact", message: "Type an username", preferredStyle: .Alert)
     
     alert.addTextFieldWithConfigurationHandler {
       textField in
@@ -251,36 +270,58 @@ extension MessageViewController {
     let addAction = UIAlertAction(title: "Add", style: .Default) {
       action in
       
-      let contact: () = fetchUserByUsername(textField.text, {
+      let contact: () = fetchUserByUsername(textField.text) {
         user in
         
         let currentContacts = self.contacts.map {$0.userId}
         if !contains(currentContacts, user.id) {
-          saveUserAsContact(user, {
+          saveUserAsContact(user) {
             success in
-            
+
             if success {
-              fetchContacts({
+              fetchContacts {
                 fetchedContacts in
-                
                 self.contacts = fetchedContacts
                 self.contactCollectionView.reloadData() // reload only the new cell
-              })
+              }
             }
-          })
+          }
         }
-      })
+      }
     }
-    
-    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {
-      action in
-      println("Just performed the cancel action")
-    }
+    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {$0}
     
     alert.addAction(addAction)
     alert.addAction(cancelAction)
-    
     presentViewController(alert, animated: true, completion: nil)
+  }
+  
+  private func presentDeleteContactAlertControllerForIndexPath(indexPath: NSIndexPath) {
+    let contact = contacts[indexPath.row - 1]
+    var contactDisplayName: String!
+    contact.getUser {
+      contactDisplayName = $0.displayName
+      let alert = UIAlertController(title: "Remove Contact", message: "Are you sure you want to remove \(contactDisplayName) from your contacts?", preferredStyle: .ActionSheet)
+      
+      let deleteAction = UIAlertAction(title: "Remove \(contactDisplayName)", style: .Destructive) {
+        action in
+        
+        deleteContact(contact.id) {
+          success, error in
+          
+          if success {
+            self.contactCollectionView.reloadData()
+          } else {
+            println(error!)
+          }
+        }
+      }
+      let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {$0}
+      
+      alert.addAction(deleteAction)
+      alert.addAction(cancelAction)
+      self.presentViewController(alert, animated: true, completion: nil)
+    }
   }
   
 }

@@ -16,7 +16,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQR-u0-1tC">
+                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQR-u0-1tC">
                     <rect key="frame" x="262" y="7" width="50" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="7tc-Pb-Ptr"/>
@@ -34,7 +34,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="110" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3V-yV-rKE" userLabel="Character Counter Label">
-                    <rect key="frame" x="262" y="-9" width="50" height="16"/>
+                    <rect key="frame" x="262" y="-4" width="50" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="Kh4-Wq-6ya"/>
                         <constraint firstAttribute="height" constant="16" id="fyW-Kq-qt3"/>
@@ -60,6 +60,7 @@
                 <constraint firstAttribute="bottom" secondItem="vQR-u0-1tC" secondAttribute="bottom" constant="5" id="dlj-at-TNG"/>
                 <constraint firstItem="AXE-9H-5Dy" firstAttribute="top" secondItem="k3p-iw-NKY" secondAttribute="top" id="dv7-e5-HzR"/>
                 <constraint firstAttribute="trailing" secondItem="vQR-u0-1tC" secondAttribute="trailing" constant="8" id="nAe-zt-3ER"/>
+                <constraint firstItem="vQR-u0-1tC" firstAttribute="top" secondItem="Q3V-yV-rKE" secondAttribute="bottom" constant="-5" id="oey-SJ-ork"/>
                 <constraint firstItem="AXE-9H-5Dy" firstAttribute="leading" secondItem="k3p-iw-NKY" secondAttribute="trailing" constant="-244" id="tzh-Tp-5Po"/>
                 <constraint firstItem="AXE-9H-5Dy" firstAttribute="bottom" secondItem="k3p-iw-NKY" secondAttribute="bottom" id="wMQ-NV-aFO"/>
             </constraints>
@@ -72,6 +73,7 @@
                     <exclude reference="KSP-Un-pK0"/>
                     <exclude reference="Keg-ee-B6g"/>
                     <exclude reference="tzh-Tp-5Po"/>
+                    <exclude reference="Cnp-hr-QT0"/>
                 </mask>
             </variation>
             <connections>
