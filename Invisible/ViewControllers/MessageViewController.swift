@@ -207,18 +207,18 @@ extension MessageViewController: UICollectionViewDataSource {
     let addCell = collectionView.dequeueReusableCellWithReuseIdentifier("AddCollectionViewCell", forIndexPath: indexPath) as! AddCollectionViewCell
     let contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
     
-    if indexPath.row == 0 {
-      return addCell
-    }
-    
     if indexPath.row <= contacts.count {
-      let contact = contacts[indexPath.row - 1]
-      contact.getUser {
-        user in
-        contactCell.contactCollectionViewCellContentView.displayNameLabel.text = user.displayName
-        user.getPhoto {contactCell.contactCollectionViewCellContentView.imageView.image = $0}
+      if indexPath.row == 0 {
+        return addCell
+      } else {
+        let contact = contacts[indexPath.row - 1]
+        contact.getUser {
+          user in
+          contactCell.contactCollectionViewCellContentView.displayNameLabel.text = user.displayName
+          user.getPhoto {contactCell.contactCollectionViewCellContentView.imageView.image = $0}
+        }
+        return contactCell
       }
-      return contactCell
     } else {
       return contactCell
     }
@@ -282,7 +282,8 @@ extension MessageViewController {
               fetchContacts {
                 fetchedContacts in
                 self.contacts = fetchedContacts
-                self.contactCollectionView.reloadData() // reload only the new cell
+                let newContactIndexPath = NSIndexPath(forItem: self.contacts.count, inSection: 0)
+                self.contactCollectionView.reloadItemsAtIndexPaths([newContactIndexPath])
               }
             }
           }
@@ -310,7 +311,20 @@ extension MessageViewController {
           success, error in
           
           if success {
-            self.contactCollectionView.reloadData()
+            fetchContacts {
+              fetchedContacts in
+              self.contacts = fetchedContacts
+              var reloadIndexPaths: [NSIndexPath] = []
+              if indexPath.row == self.contacts.count + 1 {
+                reloadIndexPaths += [NSIndexPath(forItem: indexPath.row, inSection: 0)]
+              } else {
+                for i in indexPath.row...self.contacts.count + 1 {
+                  println(i)
+                  reloadIndexPaths += [NSIndexPath(forItem: i, inSection: 0)]
+                }
+              }
+              self.contactCollectionView.reloadItemsAtIndexPaths(reloadIndexPaths)
+            }
           } else {
             println(error!)
           }
