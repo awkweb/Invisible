@@ -41,8 +41,7 @@ func fetchUserById(id: String, callback: (User) -> ()) {
       object, error in
       
       if let pfUser = object as? PFUser {
-        let user = pfUserToUser(pfUser)
-        callback(user)
+        callback(pfUserToUser(pfUser))
       }
     }
 }
@@ -54,8 +53,7 @@ func fetchUserByUsername(username: String, callback: (User) -> ()) {
     object, error in
     
     if let pfUser = object as? PFUser {
-      let user = pfUserToUser(pfUser)
-      callback(user)
+      callback(pfUserToUser(pfUser))
     }
   }
 }

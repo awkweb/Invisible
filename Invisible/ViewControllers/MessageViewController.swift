@@ -40,8 +40,7 @@ class MessageViewController: UIViewController {
     contactCollectionView.dataSource = self
     contactCollectionView.delegate = self
     fetchContacts {
-      fetchedContacts in
-      self.contacts = fetchedContacts
+      self.contacts = $0
       self.contactCollectionView.reloadData()
     }
   }
@@ -70,6 +69,7 @@ class MessageViewController: UIViewController {
         self.oldContentSize = newContentSize
         self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
         self.updatePlaceholderAndCharacterCounterForMessageTextView()
+        self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
       }
     }
     
@@ -139,10 +139,7 @@ class MessageViewController: UIViewController {
     }
     UIView.animateWithDuration(0.01, delay: 0.01, options: .CurveLinear, animations: {
       textView.setContentOffset(contentOffsetToShowLastLine, animated: false)
-      }, completion: {
-        bool in
-        return bool
-    })
+      }, completion: {return $0})
   }
   
   private func messageToolbarHasReachedMaximumHeight() -> Bool { // Differs - should be ==, not <=
@@ -157,6 +154,18 @@ class MessageViewController: UIViewController {
     UIView.animateWithDuration(0.5) {
       contentView.sendButton.enabled = count(contentView.messageTextView.text) <= self.pushCharacterLimit && count(contentView.messageTextView.text) != 0
       contentView.characterCounterLabel.hidden = self.oldContentSize <= self.baseContentSize
+    }
+  }
+  
+  // MARK: Contact collection view
+  
+  func adjustContactCollectionViewForMessageTextViewContentSizeChange(dy: CGFloat) {
+    let contentSizeIsIncreasing = (dy > 0)
+    let collectionViewFrameHeight = contactCollectionView.frame.size.height
+    
+    if contentSizeIsIncreasing {
+      contactCollectionView.reloadData()
+      println("contentSize increased, collectionViewHeight now \(collectionViewFrameHeight)")
     }
   }
   
@@ -204,28 +213,25 @@ extension MessageViewController: UICollectionViewDataSource {
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let addCell = collectionView.dequeueReusableCellWithReuseIdentifier("AddCollectionViewCell", forIndexPath: indexPath) as! AddCollectionViewCell
-    let contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
+    var addCell = collectionView.dequeueReusableCellWithReuseIdentifier("AddCollectionViewCell", forIndexPath: indexPath) as! AddCollectionViewCell
+    var contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
+    let contactContentView = contactCell.contactCollectionViewCellContentView
     
-    if indexPath.row <= contacts.count {
-      if indexPath.row == 0 {
-        return addCell
-      } else {
+    if indexPath.row == 0 {
+      return addCell
+    } else {
+      if indexPath.row <= contacts.count {
         let contact = contacts[indexPath.row - 1]
         contact.getUser {
-          user in
-          contactCell.contactCollectionViewCellContentView.displayNameLabel.text = user.displayName
-          user.getPhoto {contactCell.contactCollectionViewCellContentView.imageView.image = $0}
+          contactContentView.displayNameLabel.text = $0.displayName
+          $0.getPhoto {contactContentView.imageView.image = $0}
         }
-        return contactCell
       }
-    } else {
       return contactCell
     }
   }
   
 }
-
 
 // MARK: Contact collection view data source
 
@@ -245,9 +251,15 @@ extension MessageViewController: UICollectionViewDelegate {
 extension MessageViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let collectionViewWidth = collectionView.frame.width
-    let cellLength = collectionViewWidth / 4
-    return CGSize(width: cellLength, height: cellLength)
+    let screenWidth = UIScreen.mainScreen().bounds.size.width
+    let collectionViewHeight = collectionView.frame.size.height
+    if collectionViewHeight > 327.0 {
+      let cellLength = screenWidth / 4
+      return CGSize(width: cellLength, height: cellLength)
+    } else {
+      let cellLength = screenWidth / 6
+      return CGSize(width: cellLength, height: cellLength)
+    }
   }
   
 }
@@ -263,6 +275,7 @@ extension MessageViewController {
       textField in
       textField.placeholder = "username"
       textField.secureTextEntry = false
+      textField.textAlignment = .Center
     }
     
     let textField = alert.textFields![0] as! UITextField
@@ -276,15 +289,16 @@ extension MessageViewController {
         let currentContacts = self.contacts.map {$0.userId}
         if !contains(currentContacts, user.id) {
           saveUserAsContact(user) {
-            success in
+            success, error in
 
             if success {
               fetchContacts {
-                fetchedContacts in
-                self.contacts = fetchedContacts
+                self.contacts = $0
                 let newContactIndexPath = NSIndexPath(forItem: self.contacts.count, inSection: 0)
                 self.contactCollectionView.reloadItemsAtIndexPaths([newContactIndexPath])
               }
+            } else {
+              println(error!)
             }
           }
         }
@@ -312,14 +326,12 @@ extension MessageViewController {
           
           if success {
             fetchContacts {
-              fetchedContacts in
-              self.contacts = fetchedContacts
+              self.contacts = $0
               var reloadIndexPaths: [NSIndexPath] = []
               if indexPath.row == self.contacts.count + 1 {
                 reloadIndexPaths += [NSIndexPath(forItem: indexPath.row, inSection: 0)]
               } else {
                 for i in indexPath.row...self.contacts.count + 1 {
-                  println(i)
                   reloadIndexPaths += [NSIndexPath(forItem: i, inSection: 0)]
                 }
               }

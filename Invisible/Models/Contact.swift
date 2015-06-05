@@ -14,17 +14,11 @@ struct Contact {
   let userId: String
   
   func getUser(callback: (User) -> ()) {
-    fetchUserById(userId, {
-      user in
-      
-      if let user = user as User? {
-        callback(user)
-      }
-    })
+    fetchUserById(userId) { if let user = $0 as User? {callback(user)} }
   }
 }
 
-func saveUserAsContact(user: User, callback: (Bool) -> ()) {
+func saveUserAsContact(user: User, callback: (Bool, NSError?) -> ()) {
   if user.id != currentUser().id {
     let contact = PFObject(className: "ContactList")
     contact["byUser"] = currentUser().id
@@ -34,7 +28,7 @@ func saveUserAsContact(user: User, callback: (Bool) -> ()) {
       success, error in
       
       if success {
-        callback(success)
+        callback(success, error)
       }
     }
   }
