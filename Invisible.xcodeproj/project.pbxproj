@@ -21,6 +21,10 @@
 		0536BFAA1B1A282400161877 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0536BFA81B1A282400161877 /* Parse.framework */; };
 		0536BFB21B1A38B700161877 /* MessageToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0536BFB11B1A38B700161877 /* MessageToolbar.swift */; };
 		0536BFB71B1A77E700161877 /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0536BFB61B1A77E700161877 /* MessageTextView.swift */; };
+		053883C11B22389400690AB5 /* Click.wav in Resources */ = {isa = PBXBuildFile; fileRef = 053883C01B22389400690AB5 /* Click.wav */; };
+		053883C31B223A2E00690AB5 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053883C21B223A2E00690AB5 /* MessageCollectionViewCell.swift */; };
+		053883C51B223A6F00690AB5 /* MessageCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053883C41B223A6F00690AB5 /* MessageCollectionViewCellContentView.swift */; };
+		053883C71B223A9800690AB5 /* MessageCollectionViewCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 053883C61B223A9800690AB5 /* MessageCollectionViewCellContentView.xib */; };
 		053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */; };
 		053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B51AFE92FE00A2CA53 /* Main.storyboard */; };
 		053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B81AFE92FE00A2CA53 /* Images.xcassets */; };
@@ -69,6 +73,10 @@
 		0536BFA81B1A282400161877 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Invisible/Frameworks/Parse.framework; sourceTree = "<group>"; };
 		0536BFB11B1A38B700161877 /* MessageToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageToolbar.swift; path = Views/MessageToolbar.swift; sourceTree = "<group>"; };
 		0536BFB61B1A77E700161877 /* MessageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageTextView.swift; path = Views/MessageTextView.swift; sourceTree = "<group>"; };
+		053883C01B22389400690AB5 /* Click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Click.wav; path = Sounds/Click.wav; sourceTree = "<group>"; };
+		053883C21B223A2E00690AB5 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCell.swift; path = Views/MessageCollectionViewCell.swift; sourceTree = "<group>"; };
+		053883C41B223A6F00690AB5 /* MessageCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCellContentView.swift; path = Views/MessageCollectionViewCellContentView.swift; sourceTree = "<group>"; };
+		053883C61B223A9800690AB5 /* MessageCollectionViewCellContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageCollectionViewCellContentView.xib; path = Views/MessageCollectionViewCellContentView.xib; sourceTree = "<group>"; };
 		053F42AC1AFE92FE00A2CA53 /* Invisible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invisible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		053F42B01AFE92FE00A2CA53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +164,24 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		053883BF1B22385C00690AB5 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				053883C01B22389400690AB5 /* Click.wav */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		053883C81B223AA400690AB5 /* MessageCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				053883C21B223A2E00690AB5 /* MessageCollectionViewCell.swift */,
+				053883C41B223A6F00690AB5 /* MessageCollectionViewCellContentView.swift */,
+				053883C61B223A9800690AB5 /* MessageCollectionViewCellContentView.xib */,
+			);
+			name = MessageCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		053F42A31AFE92FE00A2CA53 = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +220,7 @@
 				05101C7F1B09774D0089E37C /* Helpers.swift */,
 				053F42B81AFE92FE00A2CA53 /* Images.xcassets */,
 				053F42BA1AFE92FE00A2CA53 /* LaunchScreen.xib */,
+				053883BF1B22385C00690AB5 /* Sounds */,
 				053F42EB1AFE94B000A2CA53 /* Frameworks */,
 				053F42B01AFE92FE00A2CA53 /* Info.plist */,
 			);
@@ -242,8 +269,9 @@
 			isa = PBXGroup;
 			children = (
 				05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */,
-				050BD29F1B1F6997008BABC0 /* ContactCollectionViewCell */,
 				050BD29E1B1F6980008BABC0 /* AddCollectionViewCell */,
+				050BD29F1B1F6997008BABC0 /* ContactCollectionViewCell */,
+				053883C81B223AA400690AB5 /* MessageCollectionViewCell */,
 				0536BFB11B1A38B700161877 /* MessageToolbar.swift */,
 				051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */,
 				051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */,
@@ -351,7 +379,9 @@
 				051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */,
 				053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */,
 				053F42BC1AFE92FE00A2CA53 /* LaunchScreen.xib in Resources */,
+				053883C71B223A9800690AB5 /* MessageCollectionViewCellContentView.xib in Resources */,
 				050BD29D1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib in Resources */,
+				053883C11B22389400690AB5 /* Click.wav in Resources */,
 				05F322F31B1E442800BED665 /* ContactCollectionViewCellContentView.xib in Resources */,
 				053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */,
 			);
@@ -373,10 +403,12 @@
 			files = (
 				050BD2991B1F6751008BABC0 /* AddCollectionViewCell.swift in Sources */,
 				05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */,
+				053883C51B223A6F00690AB5 /* MessageCollectionViewCellContentView.swift in Sources */,
 				05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */,
 				0536BFB21B1A38B700161877 /* MessageToolbar.swift in Sources */,
 				050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
+				053883C31B223A2E00690AB5 /* MessageCollectionViewCell.swift in Sources */,
 				05101C801B09774D0089E37C /* Helpers.swift in Sources */,
 				0536BFB71B1A77E700161877 /* MessageTextView.swift in Sources */,
 				05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */,

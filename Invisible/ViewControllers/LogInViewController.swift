@@ -43,7 +43,7 @@ class LogInViewController: UIViewController {
       if user != nil {
         println("Log in success!")
         self.saveUserInstallation()
-        let messageVC = kStoryboard.instantiateViewControllerWithIdentifier("MessageViewController") as! MessageViewController
+        let messageVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MessagesNavController") as! UIViewController
         self.presentViewController(messageVC, animated: true, completion: nil)
       } else {
         println("Log in error: \(error)")

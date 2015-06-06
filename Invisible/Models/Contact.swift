@@ -12,7 +12,7 @@ import Parse
 struct Contact {
   let id: String
   let userId: String
-  
+  // TODO fetch users here and not in collection view data source
   func getUser(callback: (User) -> ()) {
     fetchUserById(userId) { if let user = $0 as User? {callback(user)} }
   }

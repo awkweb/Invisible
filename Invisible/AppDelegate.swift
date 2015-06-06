@@ -17,25 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     Parse.setApplicationId(kParseApplicationId, clientKey: kParseClientKey)
     
-    // Determine initialViewController
-    var initialViewController: UIViewController
-        
-    if PFUser.currentUser() != nil {
-      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("MessagesNavController") as! UIViewController
-    } else {
-      initialViewController = kStoryboard.instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
-    }
-    
-    window?.rootViewController = initialViewController
-    window?.makeKeyAndVisible()
-    
-    //TODO: Register every time?
     // Register for Push Notitications
     if application.applicationState != .Background {
-      // Track an app open here if we launch with a push, unless
-      // "content_available" was used to trigger a background push (introduced in iOS 7).
-      // In that case, we skip tracking here to avoid double counting the app-open.
-      
       let preBackgroundPush = !application.respondsToSelector("backgroundRefreshStatus")
       let oldPushHandlerOnly = !self.respondsToSelector("application:didReceiveRemoteNotification:fetchCompletionHandler:")
       var pushPayload = false
@@ -61,6 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       println(notificationPayload)
     }
     
+    // Determine initialViewController
+    var initialViewController: UIViewController
+    if PFUser.currentUser() != nil {
+      initialViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MessagesNavController") as! UIViewController
+    } else {
+      initialViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LogInViewController") as! LogInViewController
+    }
+    window?.rootViewController = initialViewController
+    window?.makeKeyAndVisible()
+    
     return true
   }
   
@@ -78,25 +71,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
   
-  //TODO: Change in-app notification here
-  func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-    PFPush.handlePush(userInfo)
+  func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+    println(userInfo)
+    
+    // Track app open
     if application.applicationState == .Inactive {
       PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: nil)
-      println(userInfo)
     }
-  }
-  
-  func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-    
-    NSNotificationCenter.defaultCenter().postNotificationName("PushNotificationMessageReceivedNotification", object: nil, userInfo: userInfo)
-    
     completionHandler(.NewData)
   }
   
   func applicationDidBecomeActive(application: UIApplication) {
     let currentInstallation = PFInstallation.currentInstallation()
-    
     if currentInstallation.badge != 0 {
       currentInstallation.badge = 0
       currentInstallation.saveEventually(nil)
