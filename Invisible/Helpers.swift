@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit
+import AVFoundation
 
 class Helpers {
   
@@ -22,6 +22,15 @@ class Helpers {
     dateStringFormatter.dateFormat = "E MMM d yyyy hh:mm"
     let dateString = dateStringFormatter.stringFromDate(date)
     return dateString
+  }
+  
+  class func setupAudioPlayerWithFile(file: NSString, type: NSString) -> AVAudioPlayer  {
+    var path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
+    var url = NSURL.fileURLWithPath(path!)
+    var error: NSError?
+    var audioPlayer: AVAudioPlayer?
+    audioPlayer = AVAudioPlayer(contentsOfURL: url, error: &error)
+    return audioPlayer!
   }
   
 }

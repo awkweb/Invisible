@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Parse
+import AVFoundation
 
 class MessageViewController: UIViewController {
   
@@ -20,10 +20,16 @@ class MessageViewController: UIViewController {
   let baseContentSize: CGFloat = 28.0
   let topContentAdditionalInset: CGFloat = 0.0
   
+  var contactGridNumberItemsPerLineForSectionAtIndex: Int!
+  var contactGridInteritemSpacingForSectionAtIndex: CGFloat!
+  var contactGridLineSpacingForSectionAtIndex: CGFloat!
+  
   var pushCharacterLimit = 140
   
   var contacts: [Contact] = []
   var selectedContactUserIds: [String] = []
+  
+  var ringRingSound = AVAudioPlayer()
   
   // MARK: View life cycle
   
@@ -33,6 +39,7 @@ class MessageViewController: UIViewController {
     messageToolbar.messageContentView.messageTextView.becomeFirstResponder()
     let longPress = UILongPressGestureRecognizer(target: self, action: "performLongPressGestureRecognizer:")
     contactCollectionView.addGestureRecognizer(longPress)
+    initializeContactCollectionViewLayout(UIScreen.mainScreen().bounds.width)
   }
   
   override func viewDidLoad() {
@@ -45,6 +52,7 @@ class MessageViewController: UIViewController {
       self.contacts = $0
       self.contactCollectionView.reloadSections(NSIndexSet(index: 0))
     }
+    ringRingSound = Helpers.setupAudioPlayerWithFile("Ring Ring", type: "wav")
   }
   
   // MARK: Notification center
@@ -169,15 +177,41 @@ class MessageViewController: UIViewController {
   
   // MARK: Contact collection view
   
+  func initializeContactCollectionViewLayout(screenWidth: CGFloat) {
+    switch screenWidth {
+    case 320.0:
+      contactGridNumberItemsPerLineForSectionAtIndex = 6
+      contactGridInteritemSpacingForSectionAtIndex = 0
+      contactGridLineSpacingForSectionAtIndex = 0
+    default:
+      contactGridNumberItemsPerLineForSectionAtIndex = 4
+      contactGridInteritemSpacingForSectionAtIndex = 1
+      contactGridLineSpacingForSectionAtIndex = 1
+    }
+  }
+  
   func adjustContactCollectionViewForMessageTextViewContentSizeChange(dy: CGFloat) {
-    let contentSizeIsIncreasing = (dy > 0)
-    let collectionViewFrameHeight = contactCollectionView.frame.size.height
-    if dy != 0 {
-      println("\ncontentSize changed by \(dy)")
-      println("collectionViewHeight now \(collectionViewFrameHeight)")
-      println("collectionView frame \(contactCollectionView.frame)")
-      println("messageToolbar min y \(messageToolbar.frame.minY)")
-      println("messageToolbar y \(messageToolbar.frame.origin.y)")
+    let screenWidth = UIScreen.mainScreen().bounds.width
+    if dy != 0 && screenWidth != 320 {
+      let contentSizeIsIncreasing = (dy > 0)
+      
+      if contentSizeIsIncreasing && contactGridNumberItemsPerLineForSectionAtIndex != 6 {
+        println("contentSize increased by \(dy)")
+        contactGridNumberItemsPerLineForSectionAtIndex = 6
+        contactGridInteritemSpacingForSectionAtIndex = 0
+        contactGridLineSpacingForSectionAtIndex = 0
+      }
+      
+      if !contentSizeIsIncreasing && contactGridNumberItemsPerLineForSectionAtIndex != 4 {
+        println("contentSize decreased by \(dy)")
+        contactGridNumberItemsPerLineForSectionAtIndex = 4
+        contactGridInteritemSpacingForSectionAtIndex = 1
+        contactGridLineSpacingForSectionAtIndex = 1
+      }
+      contactCollectionView.performBatchUpdates({
+        self.contactCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        self.contactCollectionView.reloadData()
+        }, completion: {return $0})
     }
   }
   
@@ -199,6 +233,7 @@ extension MessageViewController: MessageToolbarDelegate {
           "senderId": "\(currentUser().id)"]) {
           success, error in
           if success != nil {
+            self.ringRingSound.play()
             textView.text = ""
             self.adjustMessageToolbarForMessageTextViewContentSizeChange(self.baseContentSize - self.oldContentSize)
             // TODO: self.adjustContactCollectionViewForMessageTextViewContentSizeChange(self.baseContentSize - self.oldContentSize)
@@ -274,7 +309,7 @@ extension MessageViewController: UICollectionViewDataSource {
   
 }
 
-// MARK: Contact collection view data source
+// MARK: Contact collection view delegate
 
 extension MessageViewController: UICollectionViewDelegate {
   
@@ -300,29 +335,40 @@ extension MessageViewController: UICollectionViewDelegate {
 
 // MARK: Contact collection view delegate flow layout
 
-extension MessageViewController: UICollectionViewDelegateFlowLayout {
+extension MessageViewController: KRLCollectionViewDelegateGridLayout {
   
-  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let screenWidth = UIScreen.mainScreen().bounds.size.width
-    let collectionViewHeight = collectionView.frame.size.height
-    switch indexPath.section {
-    case 0:
-      if collectionViewHeight > 319.0 {
-        let cellLength = screenWidth / 4
-        return CGSize(width: cellLength, height: cellLength)
-      } else {
-        let cellLength = screenWidth / 6
-        return CGSize(width: cellLength, height: cellLength)
-      }
-    default:
-      return CGSize(width: screenWidth, height: 100)
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, numberItemsPerLineForSectionAtIndex section: Int) -> Int {
+    switch section {
+    case 0: return contactGridNumberItemsPerLineForSectionAtIndex
+    default: return 1
     }
-    
+  }
+  
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, aspectRatioForItemsInSectionAtIndex section: Int) -> CGFloat {
+    switch section {
+    case 0: return 1
+    default: return 2.75
+    }
+  }
+  
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, interitemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    return contactGridInteritemSpacingForSectionAtIndex
+  }
+  
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, lineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    return contactGridLineSpacingForSectionAtIndex
   }
   
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-    let leftRightInsetSize: CGFloat = 0.0 // -4.0 for 6 plus
-    return UIEdgeInsets(top: 0.0, left: leftRightInsetSize, bottom: 0.0, right: leftRightInsetSize)
+    return UIEdgeInsetsZero
+  }
+  
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceLengthForHeaderInSection section: Int) -> CGFloat {
+    return 0.0
+  }
+  
+  func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceLengthForFooterInSection section: Int) -> CGFloat {
+    return 0.0
   }
   
 }
