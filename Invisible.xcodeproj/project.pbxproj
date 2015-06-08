@@ -41,8 +41,8 @@
 		053F42E81AFE949000A2CA53 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E71AFE949000A2CA53 /* libz.dylib */; };
 		053F42EA1AFE949C00A2CA53 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */; };
 		053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42EC1AFEA41C00A2CA53 /* Constants.swift */; };
-		05E377231B232A4F007A0B83 /* Ring Ring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E377221B232A4F007A0B83 /* Ring Ring.wav */; };
 		05E377281B23317D007A0B83 /* KRLCollectionViewGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */; };
+		05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E377291B2362C3007A0B83 /* ringring.wav */; };
 		05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */; };
 		05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */; };
 		05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */; };
@@ -98,10 +98,10 @@
 		053F42E71AFE949000A2CA53 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		053F42EC1AFEA41C00A2CA53 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		05E377221B232A4F007A0B83 /* Ring Ring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Ring Ring.wav"; path = "Sounds/Ring Ring.wav"; sourceTree = "<group>"; };
 		05E377241B232F22007A0B83 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		05E377261B23317D007A0B83 /* KRLCollectionViewGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRLCollectionViewGridLayout.h; sourceTree = "<group>"; };
 		05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRLCollectionViewGridLayout.m; sourceTree = "<group>"; };
+		05E377291B2362C3007A0B83 /* ringring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ringring.wav; path = Sounds/ringring.wav; sourceTree = "<group>"; };
 		05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionView.swift; path = Views/ContactCollectionView.swift; sourceTree = "<group>"; };
 		05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCell.swift; path = Views/ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCellContentView.swift; path = Views/ContactCollectionViewCellContentView.swift; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 		053883BF1B22385C00690AB5 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				05E377221B232A4F007A0B83 /* Ring Ring.wav */,
+				05E377291B2362C3007A0B83 /* ringring.wav */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -391,13 +391,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */,
 				051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */,
 				053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */,
 				053F42BC1AFE92FE00A2CA53 /* LaunchScreen.xib in Resources */,
 				053883C71B223A9800690AB5 /* MessageCollectionViewCellContentView.xib in Resources */,
 				050BD29D1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib in Resources */,
 				05F322F31B1E442800BED665 /* ContactCollectionViewCellContentView.xib in Resources */,
-				05E377231B232A4F007A0B83 /* Ring Ring.wav in Resources */,
 				053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

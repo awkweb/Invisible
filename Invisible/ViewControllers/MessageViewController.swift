@@ -18,7 +18,7 @@ class MessageViewController: UIViewController {
   
   var oldContentSize: CGFloat!
   let baseContentSize: CGFloat = 28.0
-  let topContentAdditionalInset: CGFloat = 0.0
+  let topContentAdditionalInset: CGFloat = 200.0
   
   var contactGridNumberItemsPerLineForSectionAtIndex: Int!
   var contactGridInteritemSpacingForSectionAtIndex: CGFloat!
@@ -52,7 +52,7 @@ class MessageViewController: UIViewController {
       self.contacts = $0
       self.contactCollectionView.reloadSections(NSIndexSet(index: 0))
     }
-    ringRingSound = Helpers.setupAudioPlayerWithFile("Ring Ring", type: "wav")
+    ringRingSound = Helpers.setupAudioPlayerWithFile("ringring", type: "wav")
   }
   
   // MARK: Notification center
@@ -84,9 +84,9 @@ class MessageViewController: UIViewController {
       if let contentSize = notification.object?.contentSize {
         let newContentSize = contentSize.height
         let dy = newContentSize - self.oldContentSize
-        self.oldContentSize = newContentSize
         self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
         self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
+        self.oldContentSize = newContentSize
         self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     }
@@ -123,6 +123,7 @@ class MessageViewController: UIViewController {
     let newToolbarOriginY = toolbarOriginY - dy
     
     if newToolbarOriginY <= topLayoutGuide.length + topContentAdditionalInset {
+      // TODO: Part of messageToolbarHasReachedMaximumHeight()
       var dy = toolbarOriginY - (topLayoutGuide.length + topContentAdditionalInset)
       scrollMessageTextViewToBottomAnimated(true)
     }
@@ -177,7 +178,7 @@ class MessageViewController: UIViewController {
   
   // MARK: Contact collection view
   
-  func initializeContactCollectionViewLayout(screenWidth: CGFloat) {
+  private func initializeContactCollectionViewLayout(screenWidth: CGFloat) {
     switch screenWidth {
     case 320.0:
       contactGridNumberItemsPerLineForSectionAtIndex = 6
@@ -190,20 +191,18 @@ class MessageViewController: UIViewController {
     }
   }
   
-  func adjustContactCollectionViewForMessageTextViewContentSizeChange(dy: CGFloat) {
+  private func adjustContactCollectionViewForMessageTextViewContentSizeChange(dy: CGFloat) {
     let screenWidth = UIScreen.mainScreen().bounds.width
     if dy != 0 && screenWidth != 320 {
       let contentSizeIsIncreasing = (dy > 0)
       
       if contentSizeIsIncreasing && contactGridNumberItemsPerLineForSectionAtIndex != 6 {
-        println("contentSize increased by \(dy)")
         contactGridNumberItemsPerLineForSectionAtIndex = 6
         contactGridInteritemSpacingForSectionAtIndex = 0
         contactGridLineSpacingForSectionAtIndex = 0
       }
       
-      if !contentSizeIsIncreasing && contactGridNumberItemsPerLineForSectionAtIndex != 4 {
-        println("contentSize decreased by \(dy)")
+      if !contentSizeIsIncreasing && messageToolbar.messageContentView.messageTextView.contentSize.height == baseContentSize {
         contactGridNumberItemsPerLineForSectionAtIndex = 4
         contactGridInteritemSpacingForSectionAtIndex = 1
         contactGridLineSpacingForSectionAtIndex = 1
@@ -231,19 +230,18 @@ extension MessageViewController: MessageToolbarDelegate {
           "date_time": Helpers.dateToPrettyString(NSDate()),
           "message": textView.text,
           "senderId": "\(currentUser().id)"]) {
-          success, error in
-          if success != nil {
-            self.ringRingSound.play()
-            textView.text = ""
-            self.adjustMessageToolbarForMessageTextViewContentSizeChange(self.baseContentSize - self.oldContentSize)
-            // TODO: self.adjustContactCollectionViewForMessageTextViewContentSizeChange(self.baseContentSize - self.oldContentSize)
-            self.oldContentSize = self.baseContentSize
-            self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
-            // TODO: Deselect contacts
-            println(success!)
-          } else {
-            println(error!)
-          }
+            success, error in
+            if success != nil {
+              textView.text = ""
+              self.deselectAllSelectedContacts()
+              let dy = self.baseContentSize - self.oldContentSize
+              self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
+              self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
+              self.oldContentSize = self.baseContentSize
+              self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
+            } else {
+              println(error!)
+            }
       }
     }
   }
@@ -317,7 +315,11 @@ extension MessageViewController: UICollectionViewDelegate {
     switch indexPath.section {
     case 0:
       if indexPath.row == 0 {
-        presentAddContactAlertController()
+        if contacts.count < 11 {
+          presentAddContactAlertController()
+        } else {
+          presentAlertControllerWithHeaderText("Your grid is full!", message: "Delete a contact before adding another.", actionMessage: "Okay")
+        }
       } else if indexPath.row <= contacts.count {
         if !contains(selectedContactUserIds, contacts[indexPath.row - 1].userId) {
           selectContactForIndexPath(indexPath)
@@ -378,7 +380,7 @@ extension MessageViewController: KRLCollectionViewDelegateGridLayout {
 extension MessageViewController {
   
   private func selectContactForIndexPath(indexPath: NSIndexPath) {
-    selectedContactUserIds += [contacts[indexPath.row - 1].userId]
+    selectedContactUserIds.append(contacts[indexPath.row - 1].userId)
     contactCollectionView.reloadItemsAtIndexPaths([indexPath])
   }
   
@@ -390,6 +392,17 @@ extension MessageViewController {
         break
       }
     }
+  }
+  
+  private func deselectAllSelectedContacts() {
+    var selectedContactIndexPaths: [NSIndexPath] = []
+    for i in 0..<contacts.count {
+      if contains(selectedContactUserIds, contacts[i].userId) {
+        selectedContactIndexPaths.append(NSIndexPath(forItem: i + 1, inSection: 0))
+      }
+    }
+    selectedContactUserIds = []
+    contactCollectionView.reloadItemsAtIndexPaths(selectedContactIndexPaths)
   }
   
   private func presentAddContactAlertController() {
@@ -414,7 +427,7 @@ extension MessageViewController {
         if !contains(currentContacts, user.id) {
           saveUserAsContact(user) {
             success, error in
-
+            
             if success {
               fetchContacts {
                 self.contacts = $0
@@ -428,7 +441,7 @@ extension MessageViewController {
         }
       }
     }
-    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {$0}
+    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
     
     alert.addAction(addAction)
     alert.addAction(cancelAction)
@@ -466,12 +479,18 @@ extension MessageViewController {
           }
         }
       }
-      let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {$0}
+      let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
       
       alert.addAction(deleteAction)
       alert.addAction(cancelAction)
       self.presentViewController(alert, animated: true, completion: nil)
     }
+  }
+  
+  private func presentAlertControllerWithHeaderText(header: String, message: String, actionMessage: String) {
+    let alert = UIAlertController(title: header, message: message, preferredStyle: .Alert)
+    alert.addAction(UIAlertAction(title: actionMessage, style: .Default, handler: nil))
+    presentViewController(alert, animated: true, completion: nil)
   }
   
 }

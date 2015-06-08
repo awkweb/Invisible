@@ -20,7 +20,7 @@ Parse.Cloud.define("sendPush", function(request, response) {
     data: {
       alert: from + ": " + message,
       badge: "Increment",
-      sound: "default",
+      sound: "ringring.wav",
       sender: senderId,
       date_time: time
     }
