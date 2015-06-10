@@ -16,15 +16,15 @@ class MessageViewController: UIViewController {
   @IBOutlet weak var messageToolbarBottomConstraint: NSLayoutConstraint!
   @IBOutlet weak var messageToolbarHeightConstraint: NSLayoutConstraint!
   
-  var oldContentSize: CGFloat!
-  let baseContentSize: CGFloat = 28.0
-  let topContentAdditionalInset: CGFloat = 200.0
+  var oldMessageTextViewContentSize: CGFloat!
+  let baseMessageTextViewContentSize: CGFloat = 28.0
   
   var contactGridNumberItemsPerLineForSectionAtIndex: Int!
   var contactGridInteritemSpacingForSectionAtIndex: CGFloat!
   var contactGridLineSpacingForSectionAtIndex: CGFloat!
   
-  var pushCharacterLimit = 140
+  let messageCharacterLimit = 140
+  var numberOfCharactersRemaining: Int!
   
   var contacts: [Contact] = []
   var selectedContactUserIds: [String] = []
@@ -44,7 +44,6 @@ class MessageViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    oldContentSize = baseContentSize
     messageToolbar.messageContentView.messageTextView.delegate = self
     contactCollectionView.dataSource = self
     contactCollectionView.delegate = self
@@ -52,6 +51,8 @@ class MessageViewController: UIViewController {
       self.contacts = $0
       self.contactCollectionView.reloadSections(NSIndexSet(index: 0))
     }
+    oldMessageTextViewContentSize = baseMessageTextViewContentSize
+    numberOfCharactersRemaining = messageCharacterLimit
     ringRingSound = Helpers.setupAudioPlayerWithFile("ringring", type: "wav")
   }
   
@@ -82,11 +83,11 @@ class MessageViewController: UIViewController {
     notificationCenter.addObserverForName(UITextViewTextDidChangeNotification, object: messageToolbar.messageContentView.messageTextView, queue: mainQueue) {
       notification in
       if let contentSize = notification.object?.contentSize {
-        let newContentSize = contentSize.height
-        let dy = newContentSize - self.oldContentSize
+        let newMessageTextViewContentSize = contentSize.height
+        let dy = newMessageTextViewContentSize - self.oldMessageTextViewContentSize
+        self.oldMessageTextViewContentSize = newMessageTextViewContentSize
         self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
         self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
-        self.oldContentSize = newContentSize
         self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     }
@@ -117,21 +118,14 @@ class MessageViewController: UIViewController {
         scrollMessageTextViewToBottomAnimated(true)
         return
       }
-    }
-    
-    let toolbarOriginY = CGRectGetMinY(messageToolbar.frame)
-    let newToolbarOriginY = toolbarOriginY - dy
-    
-    if newToolbarOriginY <= topLayoutGuide.length + topContentAdditionalInset {
-      // TODO: Part of messageToolbarHasReachedMaximumHeight()
-      var dy = toolbarOriginY - (topLayoutGuide.length + topContentAdditionalInset)
       scrollMessageTextViewToBottomAnimated(true)
+      return
     }
     
     adjustMessageToolbarHeightConstraintByDelta(dy)
-    if dy < 0 {
+    if !contentSizeIsIncreasing {
       scrollMessageTextViewToBottomAnimated(false)
-    } else if dy > 0 {
+    } else if contentSizeIsIncreasing {
       scrollMessageTextViewToBottomAnimated(true)
     }
   }
@@ -158,21 +152,21 @@ class MessageViewController: UIViewController {
     }
     UIView.animateWithDuration(0.01, delay: 0.01, options: .CurveLinear, animations: {
       textView.setContentOffset(contentOffsetToShowLastLine, animated: false)
-      }, completion: {return $0})
+      }, completion: nil)
   }
   
-  private func messageToolbarHasReachedMaximumHeight() -> Bool { // TODO: Leave some room up top; differs - should be ==, not <=
-    return CGRectGetMinY(messageToolbar.frame) <= (topLayoutGuide.length + topContentAdditionalInset)
+  private func messageToolbarHasReachedMaximumHeight() -> Bool {
+    return numberOfCharactersRemaining < 0
   }
   
   private func updatePlaceholderLabelCharacterCounterLabelAndSendButton() {
     let contentView = messageToolbar.messageContentView
-    contentView.placeholderLabel.hidden = count(contentView.messageTextView.text) != 0
-    let characterCount = pushCharacterLimit - count(contentView.messageTextView.text)
-    contentView.characterCounterLabel.text = "\(characterCount)"
+    numberOfCharactersRemaining = messageCharacterLimit - count(contentView.messageTextView.text)
+    contentView.characterCounterLabel.text = "\(numberOfCharactersRemaining)"
     UIView.animateWithDuration(0.5) {
-      contentView.sendButton.enabled = count(contentView.messageTextView.text) <= self.pushCharacterLimit && count(contentView.messageTextView.text) != 0 && !self.selectedContactUserIds.isEmpty
-      contentView.characterCounterLabel.hidden = self.oldContentSize <= self.baseContentSize
+      contentView.placeholderLabel.hidden = contentView.messageTextView.text.isEmpty
+      contentView.sendButton.enabled = !contentView.messageTextView.text.isEmpty && !self.selectedContactUserIds.isEmpty
+      contentView.characterCounterLabel.hidden = self.oldMessageTextViewContentSize <= self.baseMessageTextViewContentSize
     }
   }
   
@@ -202,7 +196,7 @@ class MessageViewController: UIViewController {
         contactGridLineSpacingForSectionAtIndex = 0
       }
       
-      if !contentSizeIsIncreasing && messageToolbar.messageContentView.messageTextView.contentSize.height == baseContentSize {
+      if !contentSizeIsIncreasing && messageToolbar.messageContentView.messageTextView.contentSize.height == baseMessageTextViewContentSize {
         contactGridNumberItemsPerLineForSectionAtIndex = 4
         contactGridInteritemSpacingForSectionAtIndex = 1
         contactGridLineSpacingForSectionAtIndex = 1
@@ -210,7 +204,7 @@ class MessageViewController: UIViewController {
       contactCollectionView.performBatchUpdates({
         self.contactCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .Top, animated: true)
         self.contactCollectionView.reloadData()
-        }, completion: {return $0})
+        }, completion: nil)
     }
   }
   
@@ -222,23 +216,26 @@ extension MessageViewController: MessageToolbarDelegate {
   
   func sendButtonPressed(sender: UIButton) {
     let textView = messageToolbar.messageContentView.messageTextView
-    if count(textView.text) <= pushCharacterLimit && count(textView.text) != 0 && !selectedContactUserIds.isEmpty {
-      PFCloud.callFunctionInBackground("sendPush",
-        withParameters: [
-          "from": "\(currentUser().displayName)",
-          "to": selectedContactUserIds,
-          "date_time": Helpers.dateToPrettyString(NSDate()),
-          "message": textView.text,
-          "senderId": "\(currentUser().id)"]) {
+    if !textView.text.isEmpty && !selectedContactUserIds.isEmpty {
+      let sendParameters: [NSObject : AnyObject] = [
+        "from": "\(currentUser().displayName)",
+        "to": selectedContactUserIds,
+        "date_time": Helpers.dateToPrettyString(NSDate()),
+        "message": textView.text,
+        "senderId": "\(currentUser().id)"
+      ]
+      
+      PFCloud.callFunctionInBackground("sendPush", withParameters: sendParameters) {
             success, error in
             if success != nil {
-              textView.text = ""
+              textView.text = nil
               self.deselectAllSelectedContacts()
-              let dy = self.baseContentSize - self.oldContentSize
+              let dy = self.baseMessageTextViewContentSize - self.oldMessageTextViewContentSize
+              self.oldMessageTextViewContentSize = self.baseMessageTextViewContentSize
               self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
               self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
-              self.oldContentSize = self.baseContentSize
               self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
+              println(success!)
             } else {
               println(error!)
             }
@@ -284,13 +281,13 @@ extension MessageViewController: UICollectionViewDataSource {
     case 0:
       var addCell = collectionView.dequeueReusableCellWithReuseIdentifier("AddCollectionViewCell", forIndexPath: indexPath) as! AddCollectionViewCell
       var contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
-      let contactContentView = contactCell.contactCollectionViewCellContentView
       
       if indexPath.row == 0 {
         return addCell
       } else {
         if indexPath.row <= contacts.count {
           let contact = contacts[indexPath.row - 1]
+          let contactContentView = contactCell.contactCollectionViewCellContentView
           contact.getUser {
             contactContentView.displayNameLabel.text = $0.displayName
             $0.getPhoto {contactContentView.imageView.image = $0}
@@ -321,11 +318,7 @@ extension MessageViewController: UICollectionViewDelegate {
           presentAlertControllerWithHeaderText("Your grid is full!", message: "Delete a contact before adding another.", actionMessage: "Okay")
         }
       } else if indexPath.row <= contacts.count {
-        if !contains(selectedContactUserIds, contacts[indexPath.row - 1].userId) {
-          selectContactForIndexPath(indexPath)
-        } else {
-          deselectContactForIndexPath(indexPath)
-        }
+        selectDeselectContactForIndexPath(indexPath)
         updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     default:
@@ -379,17 +372,17 @@ extension MessageViewController: KRLCollectionViewDelegateGridLayout {
 
 extension MessageViewController {
   
-  private func selectContactForIndexPath(indexPath: NSIndexPath) {
-    selectedContactUserIds.append(contacts[indexPath.row - 1].userId)
-    contactCollectionView.reloadItemsAtIndexPaths([indexPath])
-  }
-  
-  private func deselectContactForIndexPath(indexPath: NSIndexPath) {
-    for c in 0..<selectedContactUserIds.count {
-      if selectedContactUserIds[c] == contacts[indexPath.row - 1].userId {
-        selectedContactUserIds.removeAtIndex(c)
-        contactCollectionView.reloadItemsAtIndexPaths([indexPath])
-        break
+  private func selectDeselectContactForIndexPath(indexPath: NSIndexPath) {
+    if !contains(selectedContactUserIds, contacts[indexPath.row - 1].userId) {
+      selectedContactUserIds.append(contacts[indexPath.row - 1].userId)
+      contactCollectionView.reloadItemsAtIndexPaths([indexPath])
+    } else {
+      for c in 0..<selectedContactUserIds.count {
+        if selectedContactUserIds[c] == contacts[indexPath.row - 1].userId {
+          selectedContactUserIds.removeAtIndex(c)
+          contactCollectionView.reloadItemsAtIndexPaths([indexPath])
+          break
+        }
       }
     }
   }
