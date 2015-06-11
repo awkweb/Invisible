@@ -8,3 +8,4 @@
 
 #import <Parse/Parse.h>
 #import "KRLCollectionViewGridLayout.h"
+#import "SwipeView.h"

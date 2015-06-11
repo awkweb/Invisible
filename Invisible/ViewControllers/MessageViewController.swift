@@ -31,6 +31,9 @@ class MessageViewController: UIViewController {
   
   var ringRingSound = AVAudioPlayer()
   
+  var swipeView: SwipeView!
+  var items: [Int] = []
+  
   // MARK: View life cycle
   
   override func viewWillAppear(animated: Bool) {
@@ -54,6 +57,11 @@ class MessageViewController: UIViewController {
     oldMessageTextViewContentSize = baseMessageTextViewContentSize
     numberOfCharactersRemaining = messageCharacterLimit
     ringRingSound = Helpers.setupAudioPlayerWithFile("ringring", type: "wav")
+    swipeView = SwipeView()
+    swipeView.dataSource = self
+    swipeView.delegate = self
+    swipeView.pagingEnabled = true
+    for i in 0...100 {items.append(i)}
   }
   
   // MARK: Notification center
@@ -164,7 +172,7 @@ class MessageViewController: UIViewController {
     numberOfCharactersRemaining = messageCharacterLimit - count(contentView.messageTextView.text)
     contentView.characterCounterLabel.text = "\(numberOfCharactersRemaining)"
     UIView.animateWithDuration(0.5) {
-      contentView.placeholderLabel.hidden = contentView.messageTextView.text.isEmpty
+      contentView.placeholderLabel.hidden = !contentView.messageTextView.text.isEmpty
       contentView.sendButton.enabled = !contentView.messageTextView.text.isEmpty && !self.selectedContactUserIds.isEmpty
       contentView.characterCounterLabel.hidden = self.oldMessageTextViewContentSize <= self.baseMessageTextViewContentSize
     }
@@ -210,6 +218,54 @@ class MessageViewController: UIViewController {
   
 }
 
+// MARK: Swipe view data source
+
+extension MessageViewController: SwipeViewDataSource {
+  
+  func numberOfItemsInSwipeView(swipeView: SwipeView!) -> Int {
+    return selectedContactUserIds.count
+  }
+  
+  func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
+    
+    var label: UILabel! = nil
+    var newView = view
+    
+    if newView == nil {
+      newView = UIView()
+      newView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+      
+      label = UILabel(frame: newView.bounds)
+      label.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+      label.backgroundColor = UIColor.clearColor()
+      label.textAlignment = NSTextAlignment.Center
+      label.font = label.font.fontWithSize(50)
+      label.tag = 1
+      newView.addSubview(label)
+    } else {
+      label = newView.viewWithTag(1) as! UILabel!
+    }
+    var red:CGFloat = CGFloat(Float(arc4random()) / Float(INT_MAX))
+    var green:CGFloat = CGFloat(Float(arc4random()) / Float(INT_MAX))
+    var blue:CGFloat = CGFloat(Float(arc4random()) / Float(INT_MAX))
+    newView.backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
+    
+    label.text = String(self.items[index])
+    return newView
+  }
+  
+}
+
+// MARK: Swipe view delegate
+
+extension MessageViewController: SwipeViewDelegate {
+  
+  func swipeViewItemSize(swipeView: SwipeView!) -> CGSize {
+    return swipeView.bounds.size
+  }
+  
+}
+
 // MARK: Message toolbar delegate
 
 extension MessageViewController: MessageToolbarDelegate {
@@ -226,19 +282,19 @@ extension MessageViewController: MessageToolbarDelegate {
       ]
       
       PFCloud.callFunctionInBackground("sendPush", withParameters: sendParameters) {
-            success, error in
-            if success != nil {
-              textView.text = nil
-              self.deselectAllSelectedContacts()
-              let dy = self.baseMessageTextViewContentSize - self.oldMessageTextViewContentSize
-              self.oldMessageTextViewContentSize = self.baseMessageTextViewContentSize
-              self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
-              self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
-              self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
-              println(success!)
-            } else {
-              println(error!)
-            }
+        success, error in
+        if success != nil {
+          textView.text = nil
+          self.deselectAllSelectedContacts()
+          let dy = self.baseMessageTextViewContentSize - self.oldMessageTextViewContentSize
+          self.oldMessageTextViewContentSize = self.baseMessageTextViewContentSize
+          self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
+          self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
+          self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
+          println(success!)
+        } else {
+          println(error!)
+        }
       }
     }
   }
@@ -298,6 +354,8 @@ extension MessageViewController: UICollectionViewDataSource {
       }
     default:
       var messageCell = collectionView.dequeueReusableCellWithReuseIdentifier("MessageCollectionViewCell", forIndexPath: indexPath) as! MessageCollectionViewCell
+      swipeView.frame.size = messageCell.frame.size
+      messageCell.addSubview(swipeView)
       return messageCell
     }
   }
@@ -319,6 +377,7 @@ extension MessageViewController: UICollectionViewDelegate {
         }
       } else if indexPath.row <= contacts.count {
         selectDeselectContactForIndexPath(indexPath)
+        swipeView.reloadData()
         updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     default:
