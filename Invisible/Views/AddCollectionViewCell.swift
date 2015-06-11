@@ -22,7 +22,7 @@ class AddCollectionViewCell: UICollectionViewCell {
     initialize()
   }
   
-  func initialize() {
+  private func initialize() {
     let nibViews = NSBundle.mainBundle().loadNibNamed("AddCollectionViewCellContentView", owner: self, options: nil)
     addCollectionViewCellContentView = nibViews[0] as! AddCollectionViewCellContentView
     addCollectionViewCellContentView.frame.size = frame.size

@@ -15,6 +15,10 @@
 		05101C801B09774D0089E37C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05101C7F1B09774D0089E37C /* Helpers.swift */; };
 		051632F71B10E255008605CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F61B10E255008605CA /* User.swift */; };
 		051632F91B11555B008605CA /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F81B11555B008605CA /* Contact.swift */; };
+		051765561B29BCD400F632AA /* MessageCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051765551B29BCD400F632AA /* MessageCollectionViewCellContentView.swift */; };
+		051765581B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */; };
+		0517655A1B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */; };
+		0517655D1B2A04EE00F632AA /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517655C1B2A04EE00F632AA /* ColorConstants.swift */; };
 		051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */; };
 		051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */; };
 		0536BFA91B1A282400161877 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0536BFA71B1A282400161877 /* Bolts.framework */; };
@@ -45,7 +49,6 @@
 		05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */; };
 		05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */; };
 		05F322F31B1E442800BED665 /* ContactCollectionViewCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 05F322F11B1E442800BED665 /* ContactCollectionViewCellContentView.xib */; };
-		05FCC99D1B28E54700EF7E03 /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05FCC99C1B28E54600EF7E03 /* SwipeView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +70,10 @@
 		05101C7F1B09774D0089E37C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		051632F61B10E255008605CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		051632F81B11555B008605CA /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Models/Contact.swift; sourceTree = "<group>"; };
+		051765551B29BCD400F632AA /* MessageCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCellContentView.swift; path = Views/MessageCollectionViewCellContentView.swift; sourceTree = "<group>"; };
+		051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageCollectionViewCellContentView.xib; path = Views/MessageCollectionViewCellContentView.xib; sourceTree = "<group>"; };
+		051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCellContentViewTextView.swift; path = Views/MessageCollectionViewCellContentViewTextView.swift; sourceTree = "<group>"; };
+		0517655C1B2A04EE00F632AA /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageToolbarContentView.swift; path = Views/MessageToolbarContentView.swift; sourceTree = "<group>"; };
 		051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageToolbarContentView.xib; path = Views/MessageToolbarContentView.xib; sourceTree = "<group>"; };
 		0536BFA71B1A282400161877 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Invisible/Frameworks/Bolts.framework; sourceTree = "<group>"; };
@@ -103,8 +110,6 @@
 		05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCell.swift; path = Views/ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCellContentView.swift; path = Views/ContactCollectionViewCellContentView.swift; sourceTree = "<group>"; };
 		05F322F11B1E442800BED665 /* ContactCollectionViewCellContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContactCollectionViewCellContentView.xib; path = Views/ContactCollectionViewCellContentView.xib; sourceTree = "<group>"; };
-		05FCC99B1B28E54600EF7E03 /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwipeView.h; path = SwipeView/SwipeView.h; sourceTree = "<group>"; };
-		05FCC99C1B28E54600EF7E03 /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwipeView.m; path = SwipeView/SwipeView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +172,17 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		0517655B1B29D94C00F632AA /* MessageToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				0536BFB11B1A38B700161877 /* MessageToolbar.swift */,
+				051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */,
+				051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */,
+				0536BFB61B1A77E700161877 /* MessageTextView.swift */,
+			);
+			name = MessageToolbar;
+			sourceTree = "<group>";
+		};
 		053883BF1B22385C00690AB5 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +195,9 @@
 			isa = PBXGroup;
 			children = (
 				053883C21B223A2E00690AB5 /* MessageCollectionViewCell.swift */,
+				051765551B29BCD400F632AA /* MessageCollectionViewCellContentView.swift */,
+				051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */,
+				051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */,
 			);
 			name = MessageCollectionViewCell;
 			sourceTree = "<group>";
@@ -218,12 +237,12 @@
 			isa = PBXGroup;
 			children = (
 				053F42EC1AFEA41C00A2CA53 /* Constants.swift */,
+				0517655C1B2A04EE00F632AA /* ColorConstants.swift */,
 				05101C7F1B09774D0089E37C /* Helpers.swift */,
 				05E377241B232F22007A0B83 /* Bridging-Header.h */,
 				053F42B81AFE92FE00A2CA53 /* Images.xcassets */,
 				053F42BA1AFE92FE00A2CA53 /* LaunchScreen.xib */,
 				053883BF1B22385C00690AB5 /* Sounds */,
-				05FCC99E1B28E54E00EF7E03 /* SwipeView */,
 				05E377251B23317D007A0B83 /* KRLCollectionViewGridLayout */,
 				053F42EB1AFE94B000A2CA53 /* Frameworks */,
 				053F42B01AFE92FE00A2CA53 /* Info.plist */,
@@ -276,10 +295,7 @@
 				050BD29E1B1F6980008BABC0 /* AddCollectionViewCell */,
 				050BD29F1B1F6997008BABC0 /* ContactCollectionViewCell */,
 				053883C81B223AA400690AB5 /* MessageCollectionViewCell */,
-				0536BFB11B1A38B700161877 /* MessageToolbar.swift */,
-				051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */,
-				051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */,
-				0536BFB61B1A77E700161877 /* MessageTextView.swift */,
+				0517655B1B29D94C00F632AA /* MessageToolbar */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -300,15 +316,6 @@
 				050C98AE1B0BC577004A05CA /* MessageViewController.swift */,
 			);
 			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		05FCC99E1B28E54E00EF7E03 /* SwipeView */ = {
-			isa = PBXGroup;
-			children = (
-				05FCC99B1B28E54600EF7E03 /* SwipeView.h */,
-				05FCC99C1B28E54600EF7E03 /* SwipeView.m */,
-			);
-			name = SwipeView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,6 +408,7 @@
 				05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */,
 				051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */,
 				053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */,
+				051765581B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib in Resources */,
 				053F42BC1AFE92FE00A2CA53 /* LaunchScreen.xib in Resources */,
 				050BD29D1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib in Resources */,
 				05F322F31B1E442800BED665 /* ContactCollectionViewCellContentView.xib in Resources */,
@@ -423,7 +431,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				050BD2991B1F6751008BABC0 /* AddCollectionViewCell.swift in Sources */,
+				051765561B29BCD400F632AA /* MessageCollectionViewCellContentView.swift in Sources */,
 				05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */,
+				0517655D1B2A04EE00F632AA /* ColorConstants.swift in Sources */,
 				05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */,
 				0536BFB21B1A38B700161877 /* MessageToolbar.swift in Sources */,
 				050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */,
@@ -436,8 +446,8 @@
 				05E377281B23317D007A0B83 /* KRLCollectionViewGridLayout.m in Sources */,
 				050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */,
 				051632F91B11555B008605CA /* Contact.swift in Sources */,
+				0517655A1B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift in Sources */,
 				051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */,
-				05FCC99D1B28E54700EF7E03 /* SwipeView.m in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
 				051632F71B10E255008605CA /* User.swift in Sources */,
 			);

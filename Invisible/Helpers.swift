@@ -19,7 +19,7 @@ class Helpers {
   
   class func dateToPrettyString(date: NSDate) -> String {
     let dateStringFormatter = NSDateFormatter()
-    dateStringFormatter.dateFormat = "E MMM d yyyy hh:mm"
+    dateStringFormatter.dateFormat = "E MMM d h:mm"
     let dateString = dateStringFormatter.stringFromDate(date)
     return dateString
   }

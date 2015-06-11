@@ -15,12 +15,11 @@ class MessageToolbarContentView: UIView {
   @IBOutlet weak var sendButton: UIButton!
   @IBOutlet weak var characterCounterLabel: UILabel!
   
-  required init(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
-  
-  override init(frame: CGRect) {
-    super.init(frame: frame)
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    placeholderLabel.textColor = UIColor.gray()
+    placeholderLabel.text = "Type a message..."
+    characterCounterLabel.textColor = UIColor.gray()
   }
 
 }

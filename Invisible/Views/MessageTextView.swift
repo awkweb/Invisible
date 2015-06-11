@@ -12,15 +12,15 @@ class MessageTextView: UITextView {
   
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
-    configureTextField()
+    configureTextView()
   }
   
   override init(frame: CGRect, textContainer: NSTextContainer?) {
     super.init(frame: frame, textContainer: textContainer)
-    configureTextField()
+    configureTextView()
   }
   
-  private func configureTextField() {
+  private func configureTextView() {
     setTranslatesAutoresizingMaskIntoConstraints(false)
     
     let cornerRadius: CGFloat = 6.0
@@ -36,7 +36,7 @@ class MessageTextView: UITextView {
     userInteractionEnabled = true
     
     font = UIFont.systemFontOfSize(16.0)
-    textColor = UIColor.blackColor()
+    textColor = UIColor.grayD()
     textAlignment = .Natural
     
     contentMode = .Redraw

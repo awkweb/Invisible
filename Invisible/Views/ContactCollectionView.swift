@@ -9,5 +9,10 @@
 import UIKit
 
 class ContactCollectionView: UICollectionView {
-
+  
+  override func awakeFromNib() {
+    super.awakeFromNib()
+    showsVerticalScrollIndicator = false
+  }
+  
 }

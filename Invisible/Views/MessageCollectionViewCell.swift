@@ -10,12 +10,23 @@ import UIKit
 
 class MessageCollectionViewCell: UICollectionViewCell {
    
+  var messageCollectionViewCellContentView: MessageCollectionViewCellContentView!
+  
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
+    initialize()
   }
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    initialize()
+  }
+  
+  private func initialize() {
+    let nibViews = NSBundle.mainBundle().loadNibNamed("MessageCollectionViewCellContentView", owner: self, options: nil)
+    messageCollectionViewCellContentView = nibViews[0] as! MessageCollectionViewCellContentView
+    messageCollectionViewCellContentView.frame.size = frame.size
+    addSubview(messageCollectionViewCellContentView)
   }
   
 }

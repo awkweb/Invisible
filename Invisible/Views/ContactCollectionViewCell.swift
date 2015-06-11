@@ -22,7 +22,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
     initialize()
   }
   
-  func initialize() {
+  private func initialize() {
     let nibViews = NSBundle.mainBundle().loadNibNamed("ContactCollectionViewCellContentView", owner: self, options: nil)
     contactCollectionViewCellContentView = nibViews[0] as! ContactCollectionViewCellContentView
     contactCollectionViewCellContentView.frame.size = frame.size

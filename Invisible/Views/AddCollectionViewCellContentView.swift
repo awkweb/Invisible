@@ -11,5 +11,8 @@ import UIKit
 class AddCollectionViewCellContentView: UIView {
   
   @IBOutlet weak var imageView: UIImageView!
-
+  
+  override func awakeFromNib() {
+    backgroundColor = UIColor.grayL()
+  }
 }

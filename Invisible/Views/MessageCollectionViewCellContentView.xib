@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MessageCollectionViewCellContentView" customModule="Invisible" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thu June 11, 2015" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="09F-TD-Ucd" userLabel="Date Time Label">
+                    <rect key="frame" x="8" y="10" width="304" height="15"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YUW-tw-2nv" userLabel="Sender Image View">
+                    <rect key="frame" x="8" y="50" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="PrI-da-q8G"/>
+                        <constraint firstAttribute="width" constant="35" id="g4A-ac-OxV"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thomas" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nat-Qg-pT5" userLabel="Sender Display Name Label">
+                    <rect key="frame" x="71" y="30" width="241" height="15"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I97-LU-Qcd" userLabel="Message Text View" customClass="MessageCollectionViewCellContentViewTextView" customModule="Invisible" customModuleProvider="target">
+                    <rect key="frame" x="53" y="50" width="259" height="35"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="MCc-j7-6W6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Nat-Qg-pT5" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="71" id="3Yl-T4-Hn7"/>
+                <constraint firstItem="09F-TD-Ucd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="5y0-i0-IKd"/>
+                <constraint firstItem="YUW-tw-2nv" firstAttribute="bottom" secondItem="I97-LU-Qcd" secondAttribute="bottom" id="Ks7-Ac-ey8"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YUW-tw-2nv" secondAttribute="bottom" constant="15" id="QOp-LU-NcV"/>
+                <constraint firstAttribute="trailing" secondItem="09F-TD-Ucd" secondAttribute="trailing" constant="8" id="Xa0-Q4-Da3"/>
+                <constraint firstItem="Nat-Qg-pT5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="a12-q8-ulg"/>
+                <constraint firstAttribute="trailing" secondItem="Nat-Qg-pT5" secondAttribute="trailing" constant="8" id="fLy-07-sGs"/>
+                <constraint firstItem="I97-LU-Qcd" firstAttribute="leading" secondItem="YUW-tw-2nv" secondAttribute="trailing" constant="10" id="neh-ul-R68"/>
+                <constraint firstItem="09F-TD-Ucd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="pH9-jM-1qm"/>
+                <constraint firstItem="YUW-tw-2nv" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="rhP-2C-bVC"/>
+                <constraint firstItem="I97-LU-Qcd" firstAttribute="top" secondItem="Nat-Qg-pT5" secondAttribute="bottom" constant="5" id="vky-Gp-3zF"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="QOp-LU-NcV"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="dateTimeLabel" destination="09F-TD-Ucd" id="uOf-aW-0Sn"/>
+                <outlet property="messageTextView" destination="I97-LU-Qcd" id="lx9-dP-ILf"/>
+                <outlet property="messageTextViewWidthConstraint" destination="MCc-j7-6W6" id="5ZI-IZ-sZZ"/>
+                <outlet property="senderDisplayNameLabel" destination="Nat-Qg-pT5" id="Scw-pm-PAn"/>
+                <outlet property="senderImageView" destination="YUW-tw-2nv" id="X82-GO-rQO"/>
+            </connections>
+            <point key="canvasLocation" x="280" y="329"/>
+        </view>
+    </objects>
+</document>

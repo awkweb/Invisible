@@ -22,6 +22,7 @@ class MessageViewController: UIViewController {
   var contactGridNumberItemsPerLineForSectionAtIndex: Int!
   var contactGridInteritemSpacingForSectionAtIndex: CGFloat!
   var contactGridLineSpacingForSectionAtIndex: CGFloat!
+  var messageAspectRatioForItemsInSectionAtIndex: CGFloat!
   
   let messageCharacterLimit = 140
   var numberOfCharactersRemaining: Int!
@@ -31,9 +32,6 @@ class MessageViewController: UIViewController {
   
   var ringRingSound = AVAudioPlayer()
   
-  var swipeView: SwipeView!
-  var items: [Int] = []
-  
   // MARK: View life cycle
   
   override func viewWillAppear(animated: Bool) {
@@ -42,7 +40,7 @@ class MessageViewController: UIViewController {
     messageToolbar.messageContentView.messageTextView.becomeFirstResponder()
     let longPress = UILongPressGestureRecognizer(target: self, action: "performLongPressGestureRecognizer:")
     contactCollectionView.addGestureRecognizer(longPress)
-    initializeContactCollectionViewLayout(UIScreen.mainScreen().bounds.width)
+    initializeContactCollectionViewLayout(UIScreen.mainScreen().bounds.size.width)
   }
   
   override func viewDidLoad() {
@@ -57,11 +55,6 @@ class MessageViewController: UIViewController {
     oldMessageTextViewContentSize = baseMessageTextViewContentSize
     numberOfCharactersRemaining = messageCharacterLimit
     ringRingSound = Helpers.setupAudioPlayerWithFile("ringring", type: "wav")
-    swipeView = SwipeView()
-    swipeView.dataSource = self
-    swipeView.delegate = self
-    swipeView.pagingEnabled = true
-    for i in 0...100 {items.append(i)}
   }
   
   // MARK: Notification center
@@ -95,7 +88,7 @@ class MessageViewController: UIViewController {
         let dy = newMessageTextViewContentSize - self.oldMessageTextViewContentSize
         self.oldMessageTextViewContentSize = newMessageTextViewContentSize
         self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
-        self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
+        self.adjustContactCollectionViewLayoutForMessageTextViewContentSizeChange(dy)
         self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     }
@@ -186,15 +179,17 @@ class MessageViewController: UIViewController {
       contactGridNumberItemsPerLineForSectionAtIndex = 6
       contactGridInteritemSpacingForSectionAtIndex = 0
       contactGridLineSpacingForSectionAtIndex = 0
+      messageAspectRatioForItemsInSectionAtIndex = 1.9
     default:
       contactGridNumberItemsPerLineForSectionAtIndex = 4
       contactGridInteritemSpacingForSectionAtIndex = 1
       contactGridLineSpacingForSectionAtIndex = 1
+      messageAspectRatioForItemsInSectionAtIndex = 2.35
     }
   }
   
-  private func adjustContactCollectionViewForMessageTextViewContentSizeChange(dy: CGFloat) {
-    let screenWidth = UIScreen.mainScreen().bounds.width
+  private func adjustContactCollectionViewLayoutForMessageTextViewContentSizeChange(dy: CGFloat) {
+    let screenWidth = UIScreen.mainScreen().bounds.size.width
     if dy != 0 && screenWidth != 320 {
       let contentSizeIsIncreasing = (dy > 0)
       
@@ -214,54 +209,6 @@ class MessageViewController: UIViewController {
         self.contactCollectionView.reloadData()
         }, completion: nil)
     }
-  }
-  
-}
-
-// MARK: Swipe view data source
-
-extension MessageViewController: SwipeViewDataSource {
-  
-  func numberOfItemsInSwipeView(swipeView: SwipeView!) -> Int {
-    return selectedContactUserIds.count
-  }
-  
-  func swipeView(swipeView: SwipeView!, viewForItemAtIndex index: Int, reusingView view: UIView!) -> UIView! {
-    
-    var label: UILabel! = nil
-    var newView = view
-    
-    if newView == nil {
-      newView = UIView()
-      newView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
-      
-      label = UILabel(frame: newView.bounds)
-      label.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
-      label.backgroundColor = UIColor.clearColor()
-      label.textAlignment = NSTextAlignment.Center
-      label.font = label.font.fontWithSize(50)
-      label.tag = 1
-      newView.addSubview(label)
-    } else {
-      label = newView.viewWithTag(1) as! UILabel!
-    }
-    var red:CGFloat = CGFloat(Float(arc4random()) / Float(INT_MAX))
-    var green:CGFloat = CGFloat(Float(arc4random()) / Float(INT_MAX))
-    var blue:CGFloat = CGFloat(Float(arc4random()) / Float(INT_MAX))
-    newView.backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1.0)
-    
-    label.text = String(self.items[index])
-    return newView
-  }
-  
-}
-
-// MARK: Swipe view delegate
-
-extension MessageViewController: SwipeViewDelegate {
-  
-  func swipeViewItemSize(swipeView: SwipeView!) -> CGSize {
-    return swipeView.bounds.size
   }
   
 }
@@ -289,7 +236,7 @@ extension MessageViewController: MessageToolbarDelegate {
           let dy = self.baseMessageTextViewContentSize - self.oldMessageTextViewContentSize
           self.oldMessageTextViewContentSize = self.baseMessageTextViewContentSize
           self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
-          self.adjustContactCollectionViewForMessageTextViewContentSizeChange(dy)
+          self.adjustContactCollectionViewLayoutForMessageTextViewContentSizeChange(dy)
           self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
           println(success!)
         } else {
@@ -335,12 +282,11 @@ extension MessageViewController: UICollectionViewDataSource {
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     switch indexPath.section {
     case 0:
-      var addCell = collectionView.dequeueReusableCellWithReuseIdentifier("AddCollectionViewCell", forIndexPath: indexPath) as! AddCollectionViewCell
-      var contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
-      
       if indexPath.row == 0 {
+        let addCell = collectionView.dequeueReusableCellWithReuseIdentifier("AddCollectionViewCell", forIndexPath: indexPath) as! AddCollectionViewCell
         return addCell
       } else {
+        let contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
         if indexPath.row <= contacts.count {
           let contact = contacts[indexPath.row - 1]
           let contactContentView = contactCell.contactCollectionViewCellContentView
@@ -353,9 +299,17 @@ extension MessageViewController: UICollectionViewDataSource {
         return contactCell
       }
     default:
-      var messageCell = collectionView.dequeueReusableCellWithReuseIdentifier("MessageCollectionViewCell", forIndexPath: indexPath) as! MessageCollectionViewCell
-      swipeView.frame.size = messageCell.frame.size
-      messageCell.addSubview(swipeView)
+      let messageCell = collectionView.dequeueReusableCellWithReuseIdentifier("MessageCollectionViewCell", forIndexPath: indexPath) as! MessageCollectionViewCell
+      if !selectedContactUserIds.isEmpty {
+        let messageContentView = messageCell.messageCollectionViewCellContentView
+        messageContentView.dateTimeLabel.text = Helpers.dateToPrettyString(NSDate())
+        currentUser().getPhoto {messageContentView.senderImageView.image = $0}
+        let shortString = "My name is Tom."
+        let mediumString = "The quick brown fox jumped over the lazy dogs."
+        let longString = "The quick brown fox jumped over the lazy dogs. This sentence contains every letter in the English alphabet. The character limit is 140 char."
+        messageContentView.messageTextView.text = shortString
+      }
+      messageCell.hidden = selectedContactUserIds.isEmpty
       return messageCell
     }
   }
@@ -377,7 +331,7 @@ extension MessageViewController: UICollectionViewDelegate {
         }
       } else if indexPath.row <= contacts.count {
         selectDeselectContactForIndexPath(indexPath)
-        swipeView.reloadData()
+        collectionView.reloadSections(NSIndexSet(index: 1))
         updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     default:
@@ -401,7 +355,7 @@ extension MessageViewController: KRLCollectionViewDelegateGridLayout {
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, aspectRatioForItemsInSectionAtIndex section: Int) -> CGFloat {
     switch section {
     case 0: return 1
-    default: return 2.75
+    default: return messageAspectRatioForItemsInSectionAtIndex
     }
   }
   
