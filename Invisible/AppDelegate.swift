@@ -71,7 +71,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-    println(userInfo)
+    
+    if application.applicationState == .Active {
+      let options = [
+        kCRToastTextKey: "Hello",
+        kCRToastFontKey: UIFont.systemFontOfSize(16.0),
+        kCRToastTextAlignmentKey: NSTextAlignment.Left.rawValue,
+        kCRToastBackgroundColorKey: UIColor.blue(),
+        kCRToastNotificationTypeKey: CRToastType.NavigationBar.rawValue,
+        kCRToastNotificationPresentationTypeKey: CRToastPresentationType.Cover.rawValue,
+        kCRToastAnimationInTypeKey: CRToastAnimationType.Linear.rawValue,
+        kCRToastAnimationOutTypeKey: CRToastAnimationType.Linear.rawValue,
+        kCRToastAnimationInDirectionKey: CRToastAnimationDirection.Left.rawValue,
+        kCRToastAnimationOutDirectionKey: CRToastAnimationDirection.Right.rawValue,
+        kCRToastTimeIntervalKey: DBL_MAX,
+        kCRToastInteractionRespondersKey: [CRToastInteractionResponder(interactionType: .SwipeRight, automaticallyDismiss: true, block: nil)]
+      ]
+      CRToastManager.showNotificationWithOptions(options, completionBlock: nil)
+    }
     
     // Track app open
     if application.applicationState == .Inactive {

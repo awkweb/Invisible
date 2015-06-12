@@ -19,6 +19,11 @@
 		051765581B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */; };
 		0517655A1B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */; };
 		0517655D1B2A04EE00F632AA /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517655C1B2A04EE00F632AA /* ColorConstants.swift */; };
+		0517656A1B2A35D500F632AA /* CRToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765601B2A35D500F632AA /* CRToast.m */; };
+		0517656B1B2A35D500F632AA /* CRToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765631B2A35D500F632AA /* CRToastManager.m */; };
+		0517656C1B2A35D500F632AA /* CRToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765651B2A35D500F632AA /* CRToastView.m */; };
+		0517656D1B2A35D500F632AA /* CRToastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765671B2A35D500F632AA /* CRToastViewController.m */; };
+		0517656E1B2A35D500F632AA /* CRToastWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765691B2A35D500F632AA /* CRToastWindow.m */; };
 		051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */; };
 		051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */; };
 		0536BFA91B1A282400161877 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0536BFA71B1A282400161877 /* Bolts.framework */; };
@@ -74,6 +79,17 @@
 		051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageCollectionViewCellContentView.xib; path = Views/MessageCollectionViewCellContentView.xib; sourceTree = "<group>"; };
 		051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCellContentViewTextView.swift; path = Views/MessageCollectionViewCellContentViewTextView.swift; sourceTree = "<group>"; };
 		0517655C1B2A04EE00F632AA /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
+		0517655F1B2A35D500F632AA /* CRToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToast.h; sourceTree = "<group>"; };
+		051765601B2A35D500F632AA /* CRToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToast.m; sourceTree = "<group>"; };
+		051765611B2A35D500F632AA /* CRToastLayoutHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastLayoutHelpers.h; sourceTree = "<group>"; };
+		051765621B2A35D500F632AA /* CRToastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastManager.h; sourceTree = "<group>"; };
+		051765631B2A35D500F632AA /* CRToastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastManager.m; sourceTree = "<group>"; };
+		051765641B2A35D500F632AA /* CRToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastView.h; sourceTree = "<group>"; };
+		051765651B2A35D500F632AA /* CRToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastView.m; sourceTree = "<group>"; };
+		051765661B2A35D500F632AA /* CRToastViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastViewController.h; sourceTree = "<group>"; };
+		051765671B2A35D500F632AA /* CRToastViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastViewController.m; sourceTree = "<group>"; };
+		051765681B2A35D500F632AA /* CRToastWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastWindow.h; sourceTree = "<group>"; };
+		051765691B2A35D500F632AA /* CRToastWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastWindow.m; sourceTree = "<group>"; };
 		051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageToolbarContentView.swift; path = Views/MessageToolbarContentView.swift; sourceTree = "<group>"; };
 		051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageToolbarContentView.xib; path = Views/MessageToolbarContentView.xib; sourceTree = "<group>"; };
 		0536BFA71B1A282400161877 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Invisible/Frameworks/Bolts.framework; sourceTree = "<group>"; };
@@ -183,6 +199,24 @@
 			name = MessageToolbar;
 			sourceTree = "<group>";
 		};
+		0517655E1B2A35D500F632AA /* CRToast */ = {
+			isa = PBXGroup;
+			children = (
+				0517655F1B2A35D500F632AA /* CRToast.h */,
+				051765601B2A35D500F632AA /* CRToast.m */,
+				051765611B2A35D500F632AA /* CRToastLayoutHelpers.h */,
+				051765621B2A35D500F632AA /* CRToastManager.h */,
+				051765631B2A35D500F632AA /* CRToastManager.m */,
+				051765641B2A35D500F632AA /* CRToastView.h */,
+				051765651B2A35D500F632AA /* CRToastView.m */,
+				051765661B2A35D500F632AA /* CRToastViewController.h */,
+				051765671B2A35D500F632AA /* CRToastViewController.m */,
+				051765681B2A35D500F632AA /* CRToastWindow.h */,
+				051765691B2A35D500F632AA /* CRToastWindow.m */,
+			);
+			path = CRToast;
+			sourceTree = "<group>";
+		};
 		053883BF1B22385C00690AB5 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +277,7 @@
 				053F42B81AFE92FE00A2CA53 /* Images.xcassets */,
 				053F42BA1AFE92FE00A2CA53 /* LaunchScreen.xib */,
 				053883BF1B22385C00690AB5 /* Sounds */,
+				0517655E1B2A35D500F632AA /* CRToast */,
 				05E377251B23317D007A0B83 /* KRLCollectionViewGridLayout */,
 				053F42EB1AFE94B000A2CA53 /* Frameworks */,
 				053F42B01AFE92FE00A2CA53 /* Info.plist */,
@@ -431,6 +466,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				050BD2991B1F6751008BABC0 /* AddCollectionViewCell.swift in Sources */,
+				0517656D1B2A35D500F632AA /* CRToastViewController.m in Sources */,
+				0517656C1B2A35D500F632AA /* CRToastView.m in Sources */,
 				051765561B29BCD400F632AA /* MessageCollectionViewCellContentView.swift in Sources */,
 				05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */,
 				0517655D1B2A04EE00F632AA /* ColorConstants.swift in Sources */,
@@ -445,8 +482,11 @@
 				050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */,
 				05E377281B23317D007A0B83 /* KRLCollectionViewGridLayout.m in Sources */,
 				050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */,
+				0517656E1B2A35D500F632AA /* CRToastWindow.m in Sources */,
 				051632F91B11555B008605CA /* Contact.swift in Sources */,
 				0517655A1B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift in Sources */,
+				0517656A1B2A35D500F632AA /* CRToast.m in Sources */,
+				0517656B1B2A35D500F632AA /* CRToastManager.m in Sources */,
 				051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
 				051632F71B10E255008605CA /* User.swift in Sources */,

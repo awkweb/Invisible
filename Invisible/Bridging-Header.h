@@ -8,3 +8,9 @@
 
 #import <Parse/Parse.h>
 #import "KRLCollectionViewGridLayout.h"
+#import "CRToast.h"
+#import "CRToastLayoutHelpers.h"
+#import "CRToastManager.h"
+#import "CRToastView.h"
+#import "CRToastViewController.h"
+#import "CRToastWindow.h"

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 class MessageViewController: UIViewController {
   
@@ -29,8 +28,6 @@ class MessageViewController: UIViewController {
   
   var contacts: [Contact] = []
   var selectedContactUserIds: [String] = []
-  
-  var ringRingSound = AVAudioPlayer()
   
   // MARK: View life cycle
   
@@ -54,7 +51,6 @@ class MessageViewController: UIViewController {
     }
     oldMessageTextViewContentSize = baseMessageTextViewContentSize
     numberOfCharactersRemaining = messageCharacterLimit
-    ringRingSound = Helpers.setupAudioPlayerWithFile("ringring", type: "wav")
   }
   
   // MARK: Notification center
@@ -223,9 +219,7 @@ extension MessageViewController: MessageToolbarDelegate {
       let sendParameters: [NSObject : AnyObject] = [
         "from": "\(currentUser().displayName)",
         "to": selectedContactUserIds,
-        "date_time": Helpers.dateToPrettyString(NSDate()),
         "message": textView.text,
-        "senderId": "\(currentUser().id)"
       ]
       
       PFCloud.callFunctionInBackground("sendPush", withParameters: sendParameters) {
@@ -300,16 +294,17 @@ extension MessageViewController: UICollectionViewDataSource {
       }
     default:
       let messageCell = collectionView.dequeueReusableCellWithReuseIdentifier("MessageCollectionViewCell", forIndexPath: indexPath) as! MessageCollectionViewCell
+      let messageContentView = messageCell.messageCollectionViewCellContentView
       if !selectedContactUserIds.isEmpty {
-        let messageContentView = messageCell.messageCollectionViewCellContentView
         messageContentView.dateTimeLabel.text = Helpers.dateToPrettyString(NSDate())
+        messageContentView.senderDisplayNameLabel.text = currentUser().displayName
         currentUser().getPhoto {messageContentView.senderImageView.image = $0}
-        let shortString = "My name is Tom."
-        let mediumString = "The quick brown fox jumped over the lazy dogs."
         let longString = "The quick brown fox jumped over the lazy dogs. This sentence contains every letter in the English alphabet. The character limit is 140 char."
-        messageContentView.messageTextView.text = shortString
+        messageContentView.messageTextView.text = longString
       }
-      messageCell.hidden = selectedContactUserIds.isEmpty
+      messageContentView.visualEffectView.hidden = !selectedContactUserIds.isEmpty
+      messageContentView.dateTimeLabel.hidden = selectedContactUserIds.isEmpty
+      messageContentView.senderDisplayNameLabel.hidden = selectedContactUserIds.isEmpty
       return messageCell
     }
   }

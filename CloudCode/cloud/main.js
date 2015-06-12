@@ -2,9 +2,7 @@
 Parse.Cloud.define("sendPush", function(request, response) {
   var to = request.params.to
   var from = request.params.from
-  var time = request.params.date_time
   var message = request.params.message
-  var senderId = request.params.senderId
 
   // Find users from input array
   var userQuery = new Parse.Query(Parse.User);
@@ -21,8 +19,6 @@ Parse.Cloud.define("sendPush", function(request, response) {
       alert: from + ": " + message,
       badge: "Increment",
       sound: "ringring.wav",
-      sender: senderId,
-      date_time: time
     }
   }, {
     success: function() {
