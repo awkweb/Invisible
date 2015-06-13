@@ -76,19 +76,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
     
     if application.applicationState == .Active {
+      let alertSound = "ringring.wav"
+      let soundPlayer = SoundPlayer()
+      soundPlayer.playSound(alertSound)
+      
+      var pushText = userInfo["aps"]!["alert"] as! String
+      if count(pushText) > 72 {
+        pushText = pushText.substringToIndex(advance(pushText.startIndex, 72))
+        pushText += "..."
+      }
+      pushText = pushText.stringByTrimmingCharactersInSet(.whitespaceAndNewlineCharacterSet())
+      
       let options = [
-        kCRToastTextKey: userInfo["aps"]!["alert"] as! String,
+        kCRToastTextKey: pushText,
         kCRToastFontKey: UIFont.systemFontOfSize(16.0),
         kCRToastTextAlignmentKey: NSTextAlignment.Left.rawValue,
         kCRToastTextMaxNumberOfLinesKey: 2,
+        kCRToastSubtitleTextKey: "slide to view",
+        kCRToastSubtitleFontKey: UIFont.systemFontOfSize(12.0),
+        kCRToastSubtitleTextMaxNumberOfLinesKey: 1,
+        kCRToastSubtitleTextAlignmentKey: NSTextAlignment.Left.rawValue,
         kCRToastImageKey: UIImage(named: "bell") as! AnyObject,
         kCRToastImageAlignmentKey: CRToastAccessoryViewAlignment.Left.rawValue,
         kCRToastImageContentModeKey: UIViewContentMode.Center.rawValue,
         kCRToastBackgroundColorKey: UIColor.red(),
         kCRToastNotificationTypeKey: CRToastType.NavigationBar.rawValue,
         kCRToastNotificationPresentationTypeKey: CRToastPresentationType.Cover.rawValue,
-        kCRToastAnimationInTypeKey: CRToastAnimationType.Linear.rawValue,
-        kCRToastAnimationOutTypeKey: CRToastAnimationType.Linear.rawValue,
+        kCRToastAnimationInTypeKey: CRToastAnimationType.Spring.rawValue,
+        kCRToastAnimationOutTypeKey: CRToastAnimationType.Spring.rawValue,
         kCRToastAnimationInDirectionKey: CRToastAnimationDirection.Left.rawValue,
         kCRToastAnimationOutDirectionKey: CRToastAnimationDirection.Right.rawValue,
         kCRToastTimeIntervalKey: DBL_MAX,
