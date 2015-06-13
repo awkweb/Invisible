@@ -37,7 +37,7 @@ class MessageViewController: UIViewController {
     messageToolbar.messageContentView.messageTextView.becomeFirstResponder()
     let longPress = UILongPressGestureRecognizer(target: self, action: "performLongPressGestureRecognizer:")
     contactCollectionView.addGestureRecognizer(longPress)
-    initializeContactCollectionViewLayout(UIScreen.mainScreen().bounds.size.width)
+    initializeContactCollectionViewLayoutForScreenWidth(UIScreen.mainScreen().bounds.size.width)
   }
   
   override func viewDidLoad() {
@@ -79,16 +79,24 @@ class MessageViewController: UIViewController {
     
     notificationCenter.addObserverForName(UITextViewTextDidChangeNotification, object: messageToolbar.messageContentView.messageTextView, queue: mainQueue) {
       notification in
-      if let contentSize = notification.object?.contentSize {
-        let newMessageTextViewContentSize = contentSize.height
+      if let contentSizeHeight = notification.object?.contentSize.height {
+        let isFromSendButtonPressed = notification.userInfo?["fromSendButtonPressed"] != nil
+        let newMessageTextViewContentSize = isFromSendButtonPressed ? self.baseMessageTextViewContentSize : contentSizeHeight
         let dy = newMessageTextViewContentSize - self.oldMessageTextViewContentSize
         self.oldMessageTextViewContentSize = newMessageTextViewContentSize
         self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
-        self.adjustContactCollectionViewLayoutForMessageTextViewContentSizeChange(dy)
+        self.adjustContactCollectionViewLayoutForMessageTextViewTextChange()
         self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     }
     
+  }
+  
+  private func removeNotificationCenterObservers() {
+    let notificationCenter = NSNotificationCenter.defaultCenter()
+    notificationCenter.removeObserver(UIKeyboardWillShowNotification)
+    notificationCenter.removeObserver(UIKeyboardWillHideNotification)
+    notificationCenter.removeObserver(UITextViewTextDidChangeNotification)
   }
   
   // MARK: Gesture recognizer
@@ -169,7 +177,7 @@ class MessageViewController: UIViewController {
   
   // MARK: Contact collection view
   
-  private func initializeContactCollectionViewLayout(screenWidth: CGFloat) {
+  private func initializeContactCollectionViewLayoutForScreenWidth(screenWidth: CGFloat) {
     switch screenWidth {
     case 320.0:
       contactGridNumberItemsPerLineForSectionAtIndex = 6
@@ -184,25 +192,15 @@ class MessageViewController: UIViewController {
     }
   }
   
-  private func adjustContactCollectionViewLayoutForMessageTextViewContentSizeChange(dy: CGFloat) {
+  private func adjustContactCollectionViewLayoutForMessageTextViewTextChange() {
     let screenWidth = UIScreen.mainScreen().bounds.size.width
-    if dy != 0 && screenWidth != 320 {
-      let contentSizeIsIncreasing = (dy > 0)
-      
-      if contentSizeIsIncreasing && contactGridNumberItemsPerLineForSectionAtIndex != 6 {
-        contactGridNumberItemsPerLineForSectionAtIndex = 6
-        contactGridInteritemSpacingForSectionAtIndex = 0
-        contactGridLineSpacingForSectionAtIndex = 0
-      }
-      
-      if !contentSizeIsIncreasing && messageToolbar.messageContentView.messageTextView.contentSize.height == baseMessageTextViewContentSize {
-        contactGridNumberItemsPerLineForSectionAtIndex = 4
-        contactGridInteritemSpacingForSectionAtIndex = 1
-        contactGridLineSpacingForSectionAtIndex = 1
-      }
+    if screenWidth != 320 {
+      let isMessageToolbarTextViewEmpty = messageToolbar.messageContentView.messageTextView.text.isEmpty
+      contactGridNumberItemsPerLineForSectionAtIndex = isMessageToolbarTextViewEmpty ? 4 : 6
+      contactGridInteritemSpacingForSectionAtIndex = isMessageToolbarTextViewEmpty ? 1 : 0
+      contactGridLineSpacingForSectionAtIndex = isMessageToolbarTextViewEmpty ? 1 : 0
       contactCollectionView.performBatchUpdates({
         self.contactCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .Top, animated: true)
-        self.contactCollectionView.reloadData()
         }, completion: nil)
     }
   }
@@ -227,11 +225,8 @@ extension MessageViewController: MessageToolbarDelegate {
         if success != nil {
           textView.text = nil
           self.deselectAllSelectedContacts()
-          let dy = self.baseMessageTextViewContentSize - self.oldMessageTextViewContentSize
-          self.oldMessageTextViewContentSize = self.baseMessageTextViewContentSize
-          self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
-          self.adjustContactCollectionViewLayoutForMessageTextViewContentSizeChange(dy)
-          self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
+          self.contactCollectionView.reloadSections(NSIndexSet(index: 1))
+          NSNotificationCenter.defaultCenter().postNotificationName("UITextViewTextDidChangeNotification", object: textView, userInfo: ["fromSendButtonPressed": true])
           println(success!)
         } else {
           println(error!)
@@ -288,7 +283,7 @@ extension MessageViewController: UICollectionViewDataSource {
             contactContentView.displayNameLabel.text = $0.displayName
             $0.getPhoto {contactContentView.imageView.image = $0}
           }
-          contactContentView.displayNameLabel.backgroundColor = contains(selectedContactUserIds, contact.userId) ?  UIColor.redColor() : UIColor.clearColor()
+          contactContentView.displayNameLabel.backgroundColor = contains(selectedContactUserIds, contact.userId) ?  UIColor.red() : UIColor.clearColor()
         }
         return contactCell
       }

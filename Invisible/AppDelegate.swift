@@ -43,6 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       println(notificationPayload)
     }
     
+    // UI
+    UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.grayD()]
+    
     // Determine initialViewController
     var initialViewController: UIViewController
     if PFUser.currentUser() != nil {
@@ -74,10 +77,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     if application.applicationState == .Active {
       let options = [
-        kCRToastTextKey: "Hello",
+        kCRToastTextKey: userInfo["aps"]!["alert"] as! String,
         kCRToastFontKey: UIFont.systemFontOfSize(16.0),
         kCRToastTextAlignmentKey: NSTextAlignment.Left.rawValue,
-        kCRToastBackgroundColorKey: UIColor.blue(),
+        kCRToastTextMaxNumberOfLinesKey: 2,
+        kCRToastImageKey: UIImage(named: "bell") as! AnyObject,
+        kCRToastImageAlignmentKey: CRToastAccessoryViewAlignment.Left.rawValue,
+        kCRToastImageContentModeKey: UIViewContentMode.Center.rawValue,
+        kCRToastBackgroundColorKey: UIColor.red(),
         kCRToastNotificationTypeKey: CRToastType.NavigationBar.rawValue,
         kCRToastNotificationPresentationTypeKey: CRToastPresentationType.Cover.rawValue,
         kCRToastAnimationInTypeKey: CRToastAnimationType.Linear.rawValue,
