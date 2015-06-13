@@ -1,28 +1,23 @@
-// Send push notification
-Parse.Cloud.define("sendPush", function(request, response) {
-  var to = request.params.to
-  var from = request.params.from
-  var message = request.params.message
+// CloudCode
 
-  // Find users from input array
-  var userQuery = new Parse.Query(Parse.User);
-  userQuery.containedIn("objectId", to);
-
-  // Find devices associated with these users
-  var pushQuery = new Parse.Query(Parse.Installation);
-  pushQuery.matchesQuery("user", userQuery);
+Parse.Cloud.define("sendMessage", function(request, response) {
+  var senderId = request.params.sender_id
+  var senderName = request.params.sender_name
+  var recipientIds = request.params.recipient_ids
+  var messageText = request.params.message_text
+  var messageTime = request.params.date_time
 
   // Send push notification to query
   Parse.Push.send({
-    where: pushQuery,
+    where: findUsersFromRecipientIds(recipientIds),
     data: {
-      alert: from + ": " + message,
+      alert: senderName + ": " + messageText,
       badge: "Increment",
-      sound: "ringring.wav",
+      sound: "ringring.wav"
     }
   }, {
     success: function() {
-      response.success("Cloud Code push worked!");
+      response.success("Cloud Code push sent.");
     },
     error: function(error) {
       response.error(error);
@@ -30,8 +25,16 @@ Parse.Cloud.define("sendPush", function(request, response) {
   });
 });
 
+// Helpers
 
+function findUsersFromRecipientIds(recipientIds) {
+  // Find users from recipient ids
+  var userQuery = new Parse.Query(Parse.User);
+  userQuery.containedIn("objectId", recipientIds);
 
+   // Find devices associated with these users
+  var pushQuery = new Parse.Query(Parse.Installation);
+  pushQuery.matchesQuery("user", userQuery);
 
-
-
+  return pushQuery
+}

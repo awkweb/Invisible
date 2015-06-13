@@ -14,7 +14,6 @@
 		050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AE1B0BC577004A05CA /* MessageViewController.swift */; };
 		05101C801B09774D0089E37C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05101C7F1B09774D0089E37C /* Helpers.swift */; };
 		051632F71B10E255008605CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F61B10E255008605CA /* User.swift */; };
-		051632F91B11555B008605CA /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F81B11555B008605CA /* Contact.swift */; };
 		051765561B29BCD400F632AA /* MessageCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051765551B29BCD400F632AA /* MessageCollectionViewCellContentView.swift */; };
 		051765581B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */; };
 		0517655A1B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */; };
@@ -32,6 +31,7 @@
 		0536BFB71B1A77E700161877 /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0536BFB61B1A77E700161877 /* MessageTextView.swift */; };
 		053883C31B223A2E00690AB5 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053883C21B223A2E00690AB5 /* MessageCollectionViewCell.swift */; };
 		053B4FD61B2C6610008290C8 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B4FD51B2C6610008290C8 /* SoundPlayer.swift */; };
+		053B4FD81B2CDCDF008290C8 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053B4FD71B2CDCDF008290C8 /* Conversation.swift */; };
 		053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */; };
 		053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B51AFE92FE00A2CA53 /* Main.storyboard */; };
 		053F42B91AFE92FE00A2CA53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 053F42B81AFE92FE00A2CA53 /* Images.xcassets */; };
@@ -75,7 +75,6 @@
 		050C98AE1B0BC577004A05CA /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = ViewControllers/MessageViewController.swift; sourceTree = "<group>"; };
 		05101C7F1B09774D0089E37C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		051632F61B10E255008605CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
-		051632F81B11555B008605CA /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Contact.swift; path = Models/Contact.swift; sourceTree = "<group>"; };
 		051765551B29BCD400F632AA /* MessageCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCellContentView.swift; path = Views/MessageCollectionViewCellContentView.swift; sourceTree = "<group>"; };
 		051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageCollectionViewCellContentView.xib; path = Views/MessageCollectionViewCellContentView.xib; sourceTree = "<group>"; };
 		051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCellContentViewTextView.swift; path = Views/MessageCollectionViewCellContentViewTextView.swift; sourceTree = "<group>"; };
@@ -99,6 +98,7 @@
 		0536BFB61B1A77E700161877 /* MessageTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageTextView.swift; path = Views/MessageTextView.swift; sourceTree = "<group>"; };
 		053883C21B223A2E00690AB5 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCell.swift; path = Views/MessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		053B4FD51B2C6610008290C8 /* SoundPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		053B4FD71B2CDCDF008290C8 /* Conversation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Conversation.swift; path = Models/Conversation.swift; sourceTree = "<group>"; };
 		053F42AC1AFE92FE00A2CA53 /* Invisible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Invisible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		053F42B01AFE92FE00A2CA53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		053F42B11AFE92FE00A2CA53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				051632F61B10E255008605CA /* User.swift */,
-				051632F81B11555B008605CA /* Contact.swift */,
+				053B4FD71B2CDCDF008290C8 /* Conversation.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -480,6 +480,7 @@
 				050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
 				053883C31B223A2E00690AB5 /* MessageCollectionViewCell.swift in Sources */,
+				053B4FD81B2CDCDF008290C8 /* Conversation.swift in Sources */,
 				05101C801B09774D0089E37C /* Helpers.swift in Sources */,
 				0536BFB71B1A77E700161877 /* MessageTextView.swift in Sources */,
 				05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */,
@@ -487,7 +488,6 @@
 				05E377281B23317D007A0B83 /* KRLCollectionViewGridLayout.m in Sources */,
 				050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */,
 				0517656E1B2A35D500F632AA /* CRToastWindow.m in Sources */,
-				051632F91B11555B008605CA /* Contact.swift in Sources */,
 				0517655A1B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift in Sources */,
 				0517656A1B2A35D500F632AA /* CRToast.m in Sources */,
 				0517656B1B2A35D500F632AA /* CRToastManager.m in Sources */,

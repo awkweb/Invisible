@@ -26,7 +26,7 @@ class MessageViewController: UIViewController {
   let messageCharacterLimit = 140
   var numberOfCharactersRemaining: Int!
   
-  var contacts: [Contact] = []
+  var contacts: [String] = []
   var selectedContactUserIds: [String] = []
   
   // MARK: View life cycle
@@ -45,10 +45,7 @@ class MessageViewController: UIViewController {
     messageToolbar.messageContentView.messageTextView.delegate = self
     contactCollectionView.dataSource = self
     contactCollectionView.delegate = self
-    fetchContacts {
-      self.contacts = $0
-      self.contactCollectionView.reloadSections(NSIndexSet(index: 0))
-    }
+    contacts = currentUser().contacts!
     oldMessageTextViewContentSize = baseMessageTextViewContentSize
     numberOfCharactersRemaining = messageCharacterLimit
   }
@@ -215,12 +212,23 @@ extension MessageViewController: MessageToolbarDelegate {
     let textView = messageToolbar.messageContentView.messageTextView
     if !textView.text.isEmpty && !selectedContactUserIds.isEmpty {
       let sendParameters: [NSObject : AnyObject] = [
-        "from": "\(currentUser().displayName)",
-        "to": selectedContactUserIds,
-        "message": textView.text,
+        "sender_id": currentUser().id,
+        "sender_name": currentUser().displayName,
+        "recipient_ids": selectedContactUserIds,
+        "message_text": textView.text,
+        "date_time": Helpers.dateToPrettyString(NSDate())
       ]
       
-      PFCloud.callFunctionInBackground("sendPush", withParameters: sendParameters) {
+      fetchConversationForParticipantIds(currentUser().id, selectedContactUserIds) {
+        conversation, error in
+        if error != nil {
+          println(error!)
+        } else {
+          println(conversation)
+        }
+      }
+      
+      PFCloud.callFunctionInBackground("sendMessage", withParameters: sendParameters) {
         success, error in
         if success != nil {
           textView.text = nil
@@ -277,13 +285,13 @@ extension MessageViewController: UICollectionViewDataSource {
       } else {
         let contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
         if indexPath.row <= contacts.count {
-          let contact = contacts[indexPath.row - 1]
+          let userId = contacts[indexPath.row - 1]
           let contactContentView = contactCell.contactCollectionViewCellContentView
-          contact.getUser {
+          fetchUserFromId(userId) {
             contactContentView.displayNameLabel.text = $0.displayName
             $0.getPhoto {contactContentView.imageView.image = $0}
           }
-          contactContentView.displayNameLabel.backgroundColor = contains(selectedContactUserIds, contact.userId) ?  UIColor.red() : UIColor.clearColor()
+          contactContentView.displayNameLabel.backgroundColor = contains(selectedContactUserIds, userId) ?  UIColor.red() : UIColor.clearColor()
         }
         return contactCell
       }
@@ -376,12 +384,12 @@ extension MessageViewController: KRLCollectionViewDelegateGridLayout {
 extension MessageViewController {
   
   private func selectDeselectContactForIndexPath(indexPath: NSIndexPath) {
-    if !contains(selectedContactUserIds, contacts[indexPath.row - 1].userId) {
-      selectedContactUserIds.append(contacts[indexPath.row - 1].userId)
+    if !contains(selectedContactUserIds, contacts[indexPath.row - 1]) {
+      selectedContactUserIds.append(contacts[indexPath.row - 1])
       contactCollectionView.reloadItemsAtIndexPaths([indexPath])
     } else {
       for c in 0..<selectedContactUserIds.count {
-        if selectedContactUserIds[c] == contacts[indexPath.row - 1].userId {
+        if selectedContactUserIds[c] == contacts[indexPath.row - 1] {
           selectedContactUserIds.removeAtIndex(c)
           contactCollectionView.reloadItemsAtIndexPaths([indexPath])
           break
@@ -393,7 +401,7 @@ extension MessageViewController {
   private func deselectAllSelectedContacts() {
     var selectedContactIndexPaths: [NSIndexPath] = []
     for i in 0..<contacts.count {
-      if contains(selectedContactUserIds, contacts[i].userId) {
+      if contains(selectedContactUserIds, contacts[i]) {
         selectedContactIndexPaths.append(NSIndexPath(forItem: i + 1, inSection: 0))
       }
     }
@@ -402,42 +410,44 @@ extension MessageViewController {
   }
   
   private func presentAddContactAlertController() {
-    let alert = UIAlertController(title: "Add Contact", message: "Type an username", preferredStyle: .Alert)
+    let notificationCenter = NSNotificationCenter.defaultCenter()
+    let mainQueue = NSOperationQueue.mainQueue()
     
+    let alert = UIAlertController(title: "Add Contact", message: "Type an username", preferredStyle: .Alert)
     alert.addTextFieldWithConfigurationHandler {
       textField in
       textField.placeholder = "username"
       textField.secureTextEntry = false
       textField.textAlignment = .Center
+      textField.returnKeyType = .Done
     }
-    
     let textField = alert.textFields![0] as! UITextField
     
     let addAction = UIAlertAction(title: "Add", style: .Default) {
       action in
-      
-      let contact: () = fetchUserByUsername(textField.text) {
-        user in
-        
-        let currentContacts = self.contacts.map {$0.userId}
-        if !contains(currentContacts, user.id) {
-          saveUserAsContact(user) {
-            success, error in
-            
-            if success {
-              fetchContacts {
-                self.contacts = $0
-                let newContactIndexPath = NSIndexPath(forItem: self.contacts.count, inSection: 0)
-                self.contactCollectionView.reloadItemsAtIndexPaths([newContactIndexPath])
-              }
-            } else {
-              println(error!)
-            }
-          }
+      let user: () = fetchUserIdFromUsername(textField.text) {
+        saveUserToContactsForUserId($0) {
+          success, error in
+          if success {
+            self.contacts = currentUser().contacts!
+            let newContactIndexPath = NSIndexPath(forItem: currentUser().contacts!.count, inSection: 0)
+            self.contactCollectionView.reloadItemsAtIndexPaths([newContactIndexPath])
+          } else {println(error!)}
+          notificationCenter.removeObserver(UITextFieldTextDidChangeNotification, name: nil, object: textField)
         }
       }
     }
-    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+    addAction.enabled = false
+    
+    notificationCenter.addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: mainQueue) {
+      notification in
+      addAction.enabled = !textField.text.isEmpty
+    }
+    
+    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {
+      action in
+      notificationCenter.removeObserver(UITextFieldTextDidChangeNotification, name: nil, object: textField)
+    }
     
     alert.addAction(addAction)
     alert.addAction(cancelAction)
@@ -445,31 +455,28 @@ extension MessageViewController {
   }
   
   private func presentDeleteContactAlertControllerForIndexPath(indexPath: NSIndexPath) {
-    let contact = contacts[indexPath.row - 1]
-    var contactDisplayName: String!
-    contact.getUser {
-      contactDisplayName = $0.displayName
-      let alert = UIAlertController(title: "Remove Contact", message: "Are you sure you want to remove \(contactDisplayName) from your contacts?", preferredStyle: .ActionSheet)
-      
-      let deleteAction = UIAlertAction(title: "Remove \(contactDisplayName)", style: .Destructive) {
+    let userId = contacts[indexPath.row - 1]
+    var userDisplayName: String!
+    fetchUserFromId(userId) {
+      userDisplayName = $0.displayName
+      let alert = UIAlertController(title: "Remove Contact", message: "Are you sure you want to remove \(userDisplayName) from your contacts?", preferredStyle: .ActionSheet)
+      let deleteAction = UIAlertAction(title: "Remove \(userDisplayName)", style: .Destructive) {
         action in
-        
-        deleteContact(contact.id) {
+        deleteUserFromContactsForUserId(userId) {
           success, error in
-          
           if success {
-            fetchContacts {
-              self.contacts = $0
-              var reloadIndexPaths: [NSIndexPath] = []
-              if indexPath.row == self.contacts.count + 1 {
-                reloadIndexPaths += [NSIndexPath(forItem: indexPath.row, inSection: 0)]
-              } else {
-                for i in indexPath.row...self.contacts.count + 1 {
-                  reloadIndexPaths += [NSIndexPath(forItem: i, inSection: 0)]
-                }
+            self.contacts = currentUser().contacts!
+            var reloadIndexPaths: [NSIndexPath] = []
+            if indexPath.row == self.contacts.count + 1 {
+              reloadIndexPaths += [NSIndexPath(forItem: indexPath.row, inSection: 0)]
+            } else {
+              for i in indexPath.row...self.contacts.count + 1 {
+                reloadIndexPaths += [NSIndexPath(forItem: i, inSection: 0)]
               }
-              self.contactCollectionView.reloadItemsAtIndexPaths(reloadIndexPaths)
             }
+            self.contactCollectionView.performBatchUpdates({
+              self.contactCollectionView.reloadItemsAtIndexPaths(reloadIndexPaths)
+            }, completion: nil)
           } else {
             println(error!)
           }

@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import Parse
 
 struct User {
   let id: String
   let username: String
   let displayName: String
+  let contacts: [String]?
   private let pfUser: PFUser
   
   func getPhoto(callback: (UIImage) -> ()) {
@@ -32,28 +32,50 @@ func currentUser() -> User {
 }
 
 func pfUserToUser(user: PFUser) -> User {
-  return User(id: user.objectId!, username: user.username!, displayName: user["displayName"]! as! String, pfUser: user)
+  return User(id: user.objectId!, username: user.username!, displayName: user["displayName"]! as! String, contacts: user["contacts"] as? [String], pfUser: user)
 }
 
-func fetchUserById(id: String, callback: (User) -> ()) {
+func fetchUserFromId(id: String, callback: (User) -> ()) {
   PFUser.query()!
     .getObjectInBackgroundWithId(id) {
       object, error in
-      
       if let pfUser = object as? PFUser {
         callback(pfUserToUser(pfUser))
       }
     }
 }
 
-func fetchUserByUsername(username: String, callback: (User) -> ()) {
+func fetchUserIdFromUsername(username: String, callback: (String) -> ()) {
   PFUser.query()!
   .whereKey("username", equalTo: username)
   .getFirstObjectInBackgroundWithBlock {
     object, error in
-    
     if let pfUser = object as? PFUser {
-      callback(pfUserToUser(pfUser))
+      callback(pfUser.objectId!)
+    }
+  }
+}
+
+func saveUserToContactsForUserId(userId: String, callback: (Bool, NSError?) -> ()) {
+  if userId != currentUser().id && !contains(currentUser().contacts!, userId) {
+    let user = currentUser().pfUser
+    user["contacts"] = currentUser().contacts! + [userId]
+    user.saveInBackgroundWithBlock {
+      success, error in
+      if success {
+        callback(success, error)
+      }
+    }
+  }
+}
+
+func deleteUserFromContactsForUserId(userId: String, callback: (Bool, NSError?) -> ()) {
+  let user = currentUser().pfUser
+  user["contacts"] = currentUser().contacts!.filter {$0 != userId}
+  user.saveInBackgroundWithBlock {
+    success, error in
+    if success {
+      callback(success, error)
     }
   }
 }
