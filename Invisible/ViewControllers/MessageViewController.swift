@@ -28,6 +28,7 @@ class MessageViewController: UIViewController {
   
   var contacts: [String] = []
   var selectedContactUserIds: [String] = []
+  var conversation: Conversation?
   
   // MARK: View life cycle
   
@@ -82,7 +83,6 @@ class MessageViewController: UIViewController {
         let dy = newMessageTextViewContentSize - self.oldMessageTextViewContentSize
         self.oldMessageTextViewContentSize = newMessageTextViewContentSize
         self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
-        self.adjustContactCollectionViewLayoutForMessageTextViewTextChange()
         self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     }
@@ -185,17 +185,17 @@ class MessageViewController: UIViewController {
       contactGridNumberItemsPerLineForSectionAtIndex = 4
       contactGridInteritemSpacingForSectionAtIndex = 1
       contactGridLineSpacingForSectionAtIndex = 1
-      messageAspectRatioForItemsInSectionAtIndex = 2.35
+      messageAspectRatioForItemsInSectionAtIndex = 5
     }
   }
   
-  private func adjustContactCollectionViewLayoutForMessageTextViewTextChange() {
+  private func adjustContactCollectionViewLayoutForArray(array: [String]) {
     let screenWidth = UIScreen.mainScreen().bounds.size.width
     if screenWidth != 320 {
-      let isMessageToolbarTextViewEmpty = messageToolbar.messageContentView.messageTextView.text.isEmpty
-      contactGridNumberItemsPerLineForSectionAtIndex = isMessageToolbarTextViewEmpty ? 4 : 6
-      contactGridInteritemSpacingForSectionAtIndex = isMessageToolbarTextViewEmpty ? 1 : 0
-      contactGridLineSpacingForSectionAtIndex = isMessageToolbarTextViewEmpty ? 1 : 0
+      contactGridNumberItemsPerLineForSectionAtIndex = array.isEmpty ? 4 : 6
+      contactGridInteritemSpacingForSectionAtIndex = array.isEmpty ? 1 : 0
+      contactGridLineSpacingForSectionAtIndex = array.isEmpty ? 1 : 0
+      messageAspectRatioForItemsInSectionAtIndex = array.isEmpty ? 5 : 2.35
       contactCollectionView.performBatchUpdates({
         self.contactCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .Top, animated: true)
         }, completion: nil)
@@ -219,20 +219,12 @@ extension MessageViewController: MessageToolbarDelegate {
         "date_time": Helpers.dateToPrettyString(NSDate())
       ]
       
-      fetchConversationForParticipantIds(currentUser().id, selectedContactUserIds) {
-        conversation, error in
-        if error != nil {
-          println(error!)
-        } else {
-          println(conversation)
-        }
-      }
-      
       PFCloud.callFunctionInBackground("sendMessage", withParameters: sendParameters) {
         success, error in
         if success != nil {
           textView.text = nil
           self.deselectAllSelectedContacts()
+          self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
           self.contactCollectionView.reloadSections(NSIndexSet(index: 1))
           NSNotificationCenter.defaultCenter().postNotificationName("UITextViewTextDidChangeNotification", object: textView, userInfo: ["fromSendButtonPressed": true])
           println(success!)
@@ -298,16 +290,20 @@ extension MessageViewController: UICollectionViewDataSource {
     default:
       let messageCell = collectionView.dequeueReusableCellWithReuseIdentifier("MessageCollectionViewCell", forIndexPath: indexPath) as! MessageCollectionViewCell
       let messageContentView = messageCell.messageCollectionViewCellContentView
-      if !selectedContactUserIds.isEmpty {
-        messageContentView.dateTimeLabel.text = Helpers.dateToPrettyString(NSDate())
-        messageContentView.senderDisplayNameLabel.text = currentUser().displayName
-        currentUser().getPhoto {messageContentView.senderImageView.image = $0}
-        let longString = "The quick brown fox jumped over the lazy dogs. This sentence contains every letter in the English alphabet. The character limit is 140 char."
-        messageContentView.messageTextView.text = longString
+      if conversation != nil {
+        messageContentView.dateTimeLabel.text = conversation!.messageTime
+        messageContentView.messageTextView.text = conversation!.messageText
+        fetchUserFromId(conversation!.senderId) {
+          messageContentView.senderDisplayNameLabel.text = self.conversation!.senderId == currentUser().id ? "You" : $0.displayName
+          $0.getPhoto {messageContentView.senderImageView.image = $0}
+        }
+        messageContentView.messageTextView.backgroundColor = conversation!.senderId == currentUser().id ? UIColor.blue() : UIColor.grayL()
+        messageContentView.messageTextView.textColor = conversation!.senderId == currentUser().id ? UIColor.whiteColor() : UIColor.grayD()
       }
-      messageContentView.visualEffectView.hidden = !selectedContactUserIds.isEmpty
-      messageContentView.dateTimeLabel.hidden = selectedContactUserIds.isEmpty
-      messageContentView.senderDisplayNameLabel.hidden = selectedContactUserIds.isEmpty
+      messageContentView.dateTimeLabel.hidden = conversation == nil // Same type of thing for contactCell
+      messageContentView.senderDisplayNameLabel.hidden = conversation == nil
+      messageContentView.senderImageView.hidden = conversation == nil
+      messageContentView.messageTextView.hidden = conversation == nil
       return messageCell
     }
   }
@@ -329,7 +325,19 @@ extension MessageViewController: UICollectionViewDelegate {
         }
       } else if indexPath.row <= contacts.count {
         selectDeselectContactForIndexPath(indexPath)
-        collectionView.reloadSections(NSIndexSet(index: 1))
+        adjustContactCollectionViewLayoutForArray(selectedContactUserIds)
+        if !selectedContactUserIds.isEmpty {
+          let participantIds = selectedContactUserIds + [currentUser().id]
+          fetchConversationForParticipantIds(participantIds) {
+            conversation, error in
+            self.conversation = conversation
+            println(self.conversation)
+            collectionView.reloadSections(NSIndexSet(index: 1))
+          }
+        } else {
+          conversation = nil
+          collectionView.reloadSections(NSIndexSet(index: 1))
+        }
         updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     default:

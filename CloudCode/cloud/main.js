@@ -7,6 +7,8 @@ Parse.Cloud.define("sendMessage", function(request, response) {
   var messageText = request.params.message_text
   var messageTime = request.params.date_time
 
+  // Fetch conversation for participant ids
+
   // Send push notification to query
   Parse.Push.send({
     where: findUsersFromRecipientIds(recipientIds),
@@ -26,6 +28,9 @@ Parse.Cloud.define("sendMessage", function(request, response) {
 });
 
 // Helpers
+
+// Create conversation
+// Update conversation
 
 function findUsersFromRecipientIds(recipientIds) {
   // Find users from recipient ids

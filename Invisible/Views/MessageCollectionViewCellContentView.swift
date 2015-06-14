@@ -15,8 +15,6 @@ class MessageCollectionViewCellContentView: UIView {
   @IBOutlet weak var senderImageView: UIImageView!
   @IBOutlet weak var messageTextView: MessageCollectionViewCellContentViewTextView!
   @IBOutlet weak var messageTextViewWidthConstraint: NSLayoutConstraint!
-  @IBOutlet weak var visualEffectView: UIVisualEffectView!
-  @IBOutlet weak var visualEffectViewPlaceholderLabel: UILabel!
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -25,7 +23,6 @@ class MessageCollectionViewCellContentView: UIView {
     senderImageView.layer.masksToBounds = true
     senderImageView.layer.cornerRadius = senderImageView.frame.size.width / 2
     messageTextViewWidthConstraint.constant = UIScreen.mainScreen().bounds.size.width - messageTextView.frame.origin.x - 8
-    visualEffectViewPlaceholderLabel.textColor = UIColor.gray()
   }
   
 }
