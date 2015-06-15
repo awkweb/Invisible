@@ -11,7 +11,9 @@ Parse.Cloud.define("sendMessage", function(request, response) {
   if (conversationId != "nil") {
     updateConversationForConversationId(conversationId, senderId, messageText, messageTime);
   } else {
-    createConversation(senderId, recipientIds, messageText, messageTime);
+    var participantIds = recipientIds.slice();
+    participantIds.push(senderId);
+    createConversation(senderId, participantIds, messageText, messageTime);
   }
 
   // Send push notification to query
@@ -20,11 +22,12 @@ Parse.Cloud.define("sendMessage", function(request, response) {
     data: {
       alert: senderName + ": " + messageText,
       badge: "Increment",
-      sound: "ringring.wav"
+      sound: "ringring.wav",
+      conversationId: conversationId
     }
   }, {
     success: function() {
-      response.success("Cloud Code push sent.");
+      response.success("CloudCode push sent.");
     },
     error: function(error) {
       response.error(error);
@@ -51,12 +54,9 @@ function updateConversationForConversationId(conversationId, senderId, messageTe
   });
 }
 
-function createConversation(senderId, recipientIds, messageText, messageTime) {
+function createConversation(senderId, participantIds, messageText, messageTime) {
   var Conversation = Parse.Object.extend("Conversation");
   var conversation = new Conversation();
-
-  var participantIds = recipientIds;
-  participantIds.push(senderId);
 
   conversation.set("senderId", senderId);
   conversation.set("messageText", messageText);

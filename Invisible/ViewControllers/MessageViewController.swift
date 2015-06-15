@@ -39,6 +39,9 @@ class MessageViewController: UIViewController {
     let longPress = UILongPressGestureRecognizer(target: self, action: "performLongPressGestureRecognizer:")
     contactCollectionView.addGestureRecognizer(longPress)
     initializeContactCollectionViewLayoutForScreenWidth(UIScreen.mainScreen().bounds.size.width)
+    contacts = currentUser().contacts!
+    oldMessageTextViewContentSize = baseMessageTextViewContentSize
+    numberOfCharactersRemaining = messageCharacterLimit
   }
   
   override func viewDidLoad() {
@@ -46,9 +49,6 @@ class MessageViewController: UIViewController {
     messageToolbar.messageContentView.messageTextView.delegate = self
     contactCollectionView.dataSource = self
     contactCollectionView.delegate = self
-    contacts = currentUser().contacts!
-    oldMessageTextViewContentSize = baseMessageTextViewContentSize
-    numberOfCharactersRemaining = messageCharacterLimit
   }
   
   // MARK: Notification center
@@ -75,6 +75,19 @@ class MessageViewController: UIViewController {
       }
     }
     
+    notificationCenter.addObserverForName("handlePushNotification", object: nil, queue: mainQueue) {
+      notification in
+      if let conversationId = notification.userInfo?["conversationId"] as? String {
+        fetchConversationFromId(conversationId) {
+          conversation in
+          self.selectedContactUserIds = conversation.participantIds.filter {$0 != currentUser().id}
+          self.conversation = conversation
+          self.contactCollectionView.reloadData()
+          self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
+        }
+      }
+    }
+  
     notificationCenter.addObserverForName(UITextViewTextDidChangeNotification, object: messageToolbar.messageContentView.messageTextView, queue: mainQueue) {
       notification in
       if let contentSizeHeight = notification.object?.contentSize.height {
@@ -212,7 +225,6 @@ extension MessageViewController: MessageToolbarDelegate {
     let textView = messageToolbar.messageContentView.messageTextView
     if !textView.text.isEmpty && !selectedContactUserIds.isEmpty {
       let conversationId = conversation != nil ? conversation!.id : "nil"
-
       let parameters: [NSObject : AnyObject] = [
         "conversation_id": conversationId,
         "sender_id": currentUser().id,

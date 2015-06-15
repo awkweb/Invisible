@@ -13,6 +13,17 @@ struct Conversation {
   let senderId: String
   let messageText: String
   let messageTime: String
+  let participantIds: [String]
+}
+
+func fetchConversationFromId(id: String, callback: (Conversation) -> ()) {
+  PFQuery(className: "Conversation")
+    .getObjectInBackgroundWithId(id) {
+      object, error in
+      if let conversation = object as PFObject! {
+        callback(Conversation(id: conversation.objectId!, senderId: conversation["senderId"] as! String, messageText: conversation["messageText"] as! String, messageTime: conversation["messageTime"] as! String, participantIds: conversation["participantIds"] as! [String]))
+      }
+  }
 }
 
 func fetchConversationForParticipantIds(participantIds: [String], callback: (Conversation?, NSError?) -> ()) {
@@ -24,7 +35,7 @@ func fetchConversationForParticipantIds(participantIds: [String], callback: (Con
         if !conversations.isEmpty {
           for c in conversations {
             if c["participantIds"]!.count == participantIds.count {
-              callback(Conversation(id: c.objectId!, senderId: c["senderId"] as! String, messageText: c["messageText"] as! String, messageTime: c["messageTime"] as! String), nil)
+              callback(Conversation(id: c.objectId!, senderId: c["senderId"] as! String, messageText: c["messageText"] as! String, messageTime: c["messageTime"] as! String, participantIds: c["participantIds"] as! [String]), nil)
               break
             } else {
               callback(nil, nil)

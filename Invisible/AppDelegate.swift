@@ -38,11 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       application.registerForRemoteNotifications()
     }
     
-    // Extract notification data from app open
-    if let notificationPayload = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
-      println(notificationPayload)
-    }
-    
     // UI
     UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.grayD()]
     
@@ -55,6 +50,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     window?.rootViewController = initialViewController
     window?.makeKeyAndVisible()
+    
+    // Extract notification data from app open
+    if let notificationPayload = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
+      handlePush(application, userInfo: launchOptions!)
+      return true
+    }
     
     return true
   }
@@ -74,8 +75,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+    handlePush(application, userInfo: userInfo)
+    completionHandler(.NewData)
+  }
+  
+  func applicationDidBecomeActive(application: UIApplication) {
+    let currentInstallation = PFInstallation.currentInstallation()
+    if currentInstallation.badge != 0 {
+      currentInstallation.badge = 0
+      currentInstallation.saveEventually(nil)
+    }
+  }
+  
+  func handlePush(application: UIApplication, userInfo: [NSObject : AnyObject]) {
     
-    if application.applicationState == .Active {
+    switch application.applicationState {
+    case .Active:
       let alertSound = "ringring.wav"
       let soundPlayer = SoundPlayer()
       soundPlayer.playSound(alertSound)
@@ -109,23 +124,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         kCRToastTimeIntervalKey: DBL_MAX,
         kCRToastInteractionRespondersKey: [CRToastInteractionResponder(interactionType: .SwipeRight, automaticallyDismiss: true, block: nil)]
       ]
-      CRToastManager.showNotificationWithOptions(options, completionBlock: nil)
-    }
-    
-    // Track app open
-    if application.applicationState == .Inactive {
+      CRToastManager.showNotificationWithOptions(options) {
+        NSNotificationCenter.defaultCenter().postNotificationName("handlePushNotification", object: nil, userInfo: userInfo)
+      }
+    case .Inactive: // Opened from notification center, banner, lock screen
+      CRToastManager.showNotificationWithMessage("Inactive", completionBlock: nil)
       PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: nil)
-    }
-    completionHandler(.NewData)
-  }
-  
-  func applicationDidBecomeActive(application: UIApplication) {
-    let currentInstallation = PFInstallation.currentInstallation()
-    if currentInstallation.badge != 0 {
-      currentInstallation.badge = 0
-      currentInstallation.saveEventually(nil)
+      NSNotificationCenter.defaultCenter().postNotificationName("handlePushNotification", object: nil, userInfo: userInfo)
+    case .Background:
+      CRToastManager.showNotificationWithMessage("Background", completionBlock: nil)
+    default:
+      CRToastManager.showNotificationWithMessage("Default", completionBlock: nil)
     }
   }
   
 }
-
