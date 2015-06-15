@@ -13,7 +13,6 @@ struct Conversation {
   let senderId: String
   let messageText: String
   let messageTime: String
-  let participantIds: [String]
 }
 
 func fetchConversationForParticipantIds(participantIds: [String], callback: (Conversation?, NSError?) -> ()) {
@@ -25,7 +24,7 @@ func fetchConversationForParticipantIds(participantIds: [String], callback: (Con
         if !conversations.isEmpty {
           for c in conversations {
             if c["participantIds"]!.count == participantIds.count {
-              callback(Conversation(id: c.objectId!, senderId: c["senderId"] as! String, messageText: c["messageText"] as! String, messageTime: c["messageTime"] as! String, participantIds: c["participantIds"] as! [String]), nil)
+              callback(Conversation(id: c.objectId!, senderId: c["senderId"] as! String, messageText: c["messageText"] as! String, messageTime: c["messageTime"] as! String), nil)
               break
             } else {
               callback(nil, nil)

@@ -1,13 +1,18 @@
 // CloudCode
 
 Parse.Cloud.define("sendMessage", function(request, response) {
-  var senderId = request.params.sender_id
-  var senderName = request.params.sender_name
-  var recipientIds = request.params.recipient_ids
-  var messageText = request.params.message_text
-  var messageTime = request.params.date_time
+  var conversationId = request.params.conversation_id;
+  var senderId = request.params.sender_id;
+  var senderName = request.params.sender_name;
+  var messageText = request.params.message_text;
+  var messageTime = request.params.date_time;
+  var recipientIds = request.params.recipient_ids;
 
-  // Fetch conversation for participant ids
+  if (conversationId != "nil") {
+    updateConversationForConversationId(conversationId, senderId, messageText, messageTime);
+  } else {
+    createConversation(senderId, recipientIds, messageText, messageTime);
+  }
 
   // Send push notification to query
   Parse.Push.send({
@@ -29,8 +34,36 @@ Parse.Cloud.define("sendMessage", function(request, response) {
 
 // Helpers
 
-// Create conversation
-// Update conversation
+function updateConversationForConversationId(conversationId, senderId, messageText, messageTime) {
+  var Conversation = Parse.Object.extend("Conversation");
+  var query = new Parse.Query(Conversation);
+  query.get(conversationId, {
+    success: function(conversation) {
+      conversation.set("senderId", senderId);
+      conversation.set("messageText", messageText);
+      conversation.set("messageTime", messageTime);
+      conversation.save();
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and message.
+    }
+  });
+}
+
+function createConversation(senderId, recipientIds, messageText, messageTime) {
+  var Conversation = Parse.Object.extend("Conversation");
+  var conversation = new Conversation();
+
+  var participantIds = recipientIds;
+  participantIds.push(senderId);
+
+  conversation.set("senderId", senderId);
+  conversation.set("messageText", messageText);
+  conversation.set("messageTime", messageTime);
+  conversation.set("participantIds", participantIds);
+  conversation.save();
+}
 
 function findUsersFromRecipientIds(recipientIds) {
   // Find users from recipient ids

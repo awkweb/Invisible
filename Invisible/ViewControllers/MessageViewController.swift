@@ -167,7 +167,7 @@ class MessageViewController: UIViewController {
     contentView.characterCounterLabel.text = "\(numberOfCharactersRemaining)"
     UIView.animateWithDuration(0.5) {
       contentView.placeholderLabel.hidden = !contentView.messageTextView.text.isEmpty
-      contentView.sendButton.enabled = !contentView.messageTextView.text.isEmpty && !self.selectedContactUserIds.isEmpty
+      contentView.sendButton.enabled = !contentView.messageTextView.text.isEmpty && !self.selectedContactUserIds.isEmpty && self.numberOfCharactersRemaining >= 0
       contentView.characterCounterLabel.hidden = self.oldMessageTextViewContentSize <= self.baseMessageTextViewContentSize
     }
   }
@@ -211,20 +211,24 @@ extension MessageViewController: MessageToolbarDelegate {
   func sendButtonPressed(sender: UIButton) {
     let textView = messageToolbar.messageContentView.messageTextView
     if !textView.text.isEmpty && !selectedContactUserIds.isEmpty {
-      let sendParameters: [NSObject : AnyObject] = [
+      let conversationId = conversation != nil ? conversation!.id : "nil"
+
+      let parameters: [NSObject : AnyObject] = [
+        "conversation_id": conversationId,
         "sender_id": currentUser().id,
         "sender_name": currentUser().displayName,
-        "recipient_ids": selectedContactUserIds,
         "message_text": textView.text,
-        "date_time": Helpers.dateToPrettyString(NSDate())
+        "date_time": Helpers.dateToPrettyString(NSDate()),
+        "recipient_ids": selectedContactUserIds
       ]
       
-      PFCloud.callFunctionInBackground("sendMessage", withParameters: sendParameters) {
+      PFCloud.callFunctionInBackground("sendMessage", withParameters: parameters) {
         success, error in
         if success != nil {
           textView.text = nil
           self.deselectAllSelectedContacts()
           self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
+          self.conversation = nil
           self.contactCollectionView.reloadSections(NSIndexSet(index: 1))
           NSNotificationCenter.defaultCenter().postNotificationName("UITextViewTextDidChangeNotification", object: textView, userInfo: ["fromSendButtonPressed": true])
           println(success!)
@@ -331,7 +335,6 @@ extension MessageViewController: UICollectionViewDelegate {
           fetchConversationForParticipantIds(participantIds) {
             conversation, error in
             self.conversation = conversation
-            println(self.conversation)
             collectionView.reloadSections(NSIndexSet(index: 1))
           }
         } else {
