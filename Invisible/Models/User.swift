@@ -45,37 +45,49 @@ func fetchUserFromId(id: String, callback: (User) -> ()) {
     }
 }
 
-func fetchUserIdFromUsername(username: String, callback: (String) -> ()) {
+func fetchUserIdFromUsername(username: String, callback: (String?, NSError?) -> ()) {
   PFUser.query()!
   .whereKey("username", equalTo: username)
   .getFirstObjectInBackgroundWithBlock {
     object, error in
     if let pfUser = object as? PFUser {
-      callback(pfUser.objectId!)
+      callback(pfUser.objectId!, nil)
+    } else {
+      if let error = error {
+        callback(nil, error)
+      }
     }
   }
 }
 
-func saveUserToContactsForUserId(userId: String, callback: (Bool, NSError?) -> ()) {
+func saveUserToContactsForUserId(userId: String, callback: (Bool?, NSError?) -> ()) {
   if userId != currentUser().id && !contains(currentUser().contacts!, userId) {
     let user = currentUser().pfUser
     user["contacts"] = currentUser().contacts! + [userId]
     user.saveInBackgroundWithBlock {
       success, error in
       if success {
-        callback(success, error)
+        callback(success, nil)
+      } else {
+        if let error = error {
+          callback(nil, error)
+        }
       }
     }
   }
 }
 
-func deleteUserFromContactsForUserId(userId: String, callback: (Bool, NSError?) -> ()) {
+func deleteUserFromContactsForUserId(userId: String, callback: (Bool?, NSError?) -> ()) {
   let user = currentUser().pfUser
   user["contacts"] = currentUser().contacts!.filter {$0 != userId}
   user.saveInBackgroundWithBlock {
     success, error in
     if success {
-      callback(success, error)
+      callback(success, nil)
+    } else {
+      if let error = error {
+        callback(nil, error)
+      }
     }
   }
 }

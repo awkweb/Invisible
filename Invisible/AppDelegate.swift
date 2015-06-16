@@ -79,6 +79,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func applicationDidBecomeActive(application: UIApplication) {
+    clearBadge()
+  }
+  
+  private func clearBadge() {
     let currentInstallation = PFInstallation.currentInstallation()
     if currentInstallation.badge != 0 {
       currentInstallation.badge = 0
@@ -86,14 +90,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
   
-  func handlePush(application: UIApplication, userInfo: [NSObject : AnyObject]) {
-    
+  private func handlePush(application: UIApplication, userInfo: [NSObject : AnyObject]) {
     switch application.applicationState {
     case .Active:
-      let alertSound = "ringring.wav"
-      let soundPlayer = SoundPlayer()
-      soundPlayer.playSound(alertSound)
-      
+      SoundPlayer().playSound(.Alert)
       var pushText = userInfo["aps"]!["alert"] as! String
       if count(pushText) > 72 {
         pushText = pushText.substringToIndex(advance(pushText.startIndex, 72))
@@ -106,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         kCRToastFontKey: UIFont.systemFontOfSize(16.0),
         kCRToastTextAlignmentKey: NSTextAlignment.Left.rawValue,
         kCRToastTextMaxNumberOfLinesKey: 2,
-        kCRToastSubtitleTextKey: "slide to view - tap to dismiss",
+        kCRToastSubtitleTextKey: "tap to view",
         kCRToastSubtitleFontKey: UIFont.systemFontOfSize(12.0),
         kCRToastSubtitleTextMaxNumberOfLinesKey: 1,
         kCRToastSubtitleTextAlignmentKey: NSTextAlignment.Left.rawValue,
@@ -118,15 +118,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         kCRToastNotificationPresentationTypeKey: CRToastPresentationType.Cover.rawValue,
         kCRToastAnimationInTypeKey: CRToastAnimationType.Spring.rawValue,
         kCRToastAnimationOutTypeKey: CRToastAnimationType.Spring.rawValue,
-        kCRToastAnimationInDirectionKey: CRToastAnimationDirection.Left.rawValue,
-        kCRToastAnimationOutDirectionKey: CRToastAnimationDirection.Right.rawValue,
+        kCRToastAnimationInDirectionKey: CRToastAnimationDirection.Top.rawValue,
+        kCRToastAnimationOutDirectionKey: CRToastAnimationDirection.Top.rawValue,
         kCRToastTimeIntervalKey: DBL_MAX,
         kCRToastInteractionRespondersKey: [
-          CRToastInteractionResponder(interactionType: .Swipe, automaticallyDismiss: true) {
+          CRToastInteractionResponder(interactionType: .Tap, automaticallyDismiss: true) {
             interaction in
             NSNotificationCenter.defaultCenter().postNotificationName("handlePushNotification", object: nil, userInfo: userInfo)
           },
-          CRToastInteractionResponder(interactionType: .Tap, automaticallyDismiss: true, block: nil)
+          CRToastInteractionResponder(interactionType: .SwipeUp, automaticallyDismiss: true, block: nil)
         ]
       ]
       CRToastManager.showNotificationWithOptions(options, completionBlock: nil)
@@ -134,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       NSNotificationCenter.defaultCenter().postNotificationName("handlePushNotification", object: nil, userInfo: userInfo)
       PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: nil)
     default:
-      CRToastManager.showNotificationWithMessage("Default", completionBlock: nil)
+      CRToastManager.showNotificationWithMessage("New Message", completionBlock: nil)
     }
   }
   

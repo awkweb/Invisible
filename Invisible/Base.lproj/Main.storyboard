@@ -72,7 +72,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4y8-jv-mtd" customClass="ContactCollectionView" customModule="Invisible" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <collectionViewLayout key="collectionViewLayout" id="Pkd-05-UCP" customClass="KRLCollectionViewGridLayout"/>
+                                <collectionViewLayout key="collectionViewLayout" id="zxg-AW-flu" customClass="KRLCollectionViewGridLayout"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddCollectionViewCell" id="m1F-FZ-BKL" customClass="AddCollectionViewCell" customModule="Invisible" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>

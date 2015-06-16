@@ -51,6 +51,7 @@
 		053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42EC1AFEA41C00A2CA53 /* Constants.swift */; };
 		05E377281B23317D007A0B83 /* KRLCollectionViewGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */; };
 		05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E377291B2362C3007A0B83 /* ringring.wav */; };
+		05E617941B307DAB005DB0FF /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E617931B307DAB005DB0FF /* NSDate+NVTimeAgo.m */; };
 		05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */; };
 		05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */; };
 		05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */; };
@@ -124,6 +125,8 @@
 		05E377261B23317D007A0B83 /* KRLCollectionViewGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRLCollectionViewGridLayout.h; sourceTree = "<group>"; };
 		05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRLCollectionViewGridLayout.m; sourceTree = "<group>"; };
 		05E377291B2362C3007A0B83 /* ringring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ringring.wav; path = Sounds/ringring.wav; sourceTree = "<group>"; };
+		05E617921B307DAB005DB0FF /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
+		05E617931B307DAB005DB0FF /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionView.swift; path = Views/ContactCollectionView.swift; sourceTree = "<group>"; };
 		05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCell.swift; path = Views/ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCellContentView.swift; path = Views/ContactCollectionViewCellContentView.swift; sourceTree = "<group>"; };
@@ -282,6 +285,7 @@
 				053883BF1B22385C00690AB5 /* Sounds */,
 				0517655E1B2A35D500F632AA /* CRToast */,
 				05E377251B23317D007A0B83 /* KRLCollectionViewGridLayout */,
+				05E617911B307DAB005DB0FF /* NSDate-Time-Ago */,
 				053F42EB1AFE94B000A2CA53 /* Frameworks */,
 				053F42B01AFE92FE00A2CA53 /* Info.plist */,
 			);
@@ -345,6 +349,15 @@
 				05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */,
 			);
 			path = KRLCollectionViewGridLayout;
+			sourceTree = "<group>";
+		};
+		05E617911B307DAB005DB0FF /* NSDate-Time-Ago */ = {
+			isa = PBXGroup;
+			children = (
+				05E617921B307DAB005DB0FF /* NSDate+NVTimeAgo.h */,
+				05E617931B307DAB005DB0FF /* NSDate+NVTimeAgo.m */,
+			);
+			path = "NSDate-Time-Ago";
 			sourceTree = "<group>";
 		};
 		05EF02771B026A5A0050455C /* ViewControllers */ = {
@@ -478,6 +491,7 @@
 				05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */,
 				0536BFB21B1A38B700161877 /* MessageToolbar.swift in Sources */,
 				050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */,
+				05E617941B307DAB005DB0FF /* NSDate+NVTimeAgo.m in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
 				053883C31B223A2E00690AB5 /* MessageCollectionViewCell.swift in Sources */,
 				053B4FD81B2CDCDF008290C8 /* Conversation.swift in Sources */,

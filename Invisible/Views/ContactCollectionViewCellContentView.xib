@@ -15,7 +15,7 @@
                     <gestureRecognizers/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91g-mA-Jae" userLabel="Display Name Label">
-                    <rect key="frame" x="0.0" y="60" width="85" height="21"/>
+                    <rect key="frame" x="0.0" y="64" width="85" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="Aa9-SQ-FQn"/>
                     </constraints>
@@ -26,7 +26,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="91g-mA-Jae" secondAttribute="bottom" constant="4" id="Pah-rB-Jr8"/>
+                <constraint firstAttribute="bottom" secondItem="91g-mA-Jae" secondAttribute="bottom" id="Pah-rB-Jr8"/>
                 <constraint firstAttribute="trailing" secondItem="RCe-IQ-4EW" secondAttribute="trailing" id="XjN-Wg-96t"/>
                 <constraint firstItem="RCe-IQ-4EW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZUp-eN-pWQ"/>
                 <constraint firstAttribute="trailing" secondItem="91g-mA-Jae" secondAttribute="trailing" id="ioF-rS-3eE"/>

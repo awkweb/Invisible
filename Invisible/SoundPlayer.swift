@@ -17,21 +17,20 @@ public class SoundPlayer: NSObject {
     static var cache = [NSURL:SystemSoundID]()
   }
   
-  public func playSound(soundFile:String) {
-    
-    if let url = NSBundle.mainBundle().URLForResource(soundFile, withExtension: nil) {
-      
-      var soundID : SystemSoundID = Internal.cache[url] ?? 0
-      
+  public enum Sound: String {
+    case Alert = "ringring.wav"
+  }
+  
+  public func playSound(sound: Sound) {
+    if let url = NSBundle.mainBundle().URLForResource(sound.rawValue, withExtension: nil) {
+      var soundID: SystemSoundID = Internal.cache[url] ?? 0
       if soundID == 0 {
         AudioServicesCreateSystemSoundID(url, &soundID)
         Internal.cache[url] = soundID
       }
-      
       AudioServicesPlaySystemSound(soundID)
-      
     } else {
-      println("Could not find sound file name `\(soundFile)`")
+      println("Could not find sound file name `\(sound.rawValue)`")
     }
   }
 

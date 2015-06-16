@@ -61,11 +61,15 @@ class MessageViewController: UIViewController {
       notification in
       if let conversationId = notification.userInfo?["conversationId"] as? String {
         fetchConversationFromId(conversationId) {
-          conversation in
-          self.selectedContactUserIds = conversation.participantIds.filter {$0 != currentUser().id}
-          self.conversation = conversation
-          self.contactCollectionView.reloadData()
-          self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
+          conversation, error in
+          if let conversation = conversation as Conversation! {
+            self.selectedContactUserIds = conversation.participantIds.filter {$0 != currentUser().id}
+            self.conversation = conversation
+            self.contactCollectionView.reloadData()
+            self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
+          } else {
+            println(error!)
+          }
         }
       }
     }
@@ -87,7 +91,7 @@ class MessageViewController: UIViewController {
         self.view.layoutIfNeeded()
       }
     }
-  
+    
     notificationCenter.addObserverForName(UITextViewTextDidChangeNotification, object: messageToolbar.messageContentView.messageTextView, queue: mainQueue) {
       notification in
       if let contentSizeHeight = notification.object?.contentSize.height {
@@ -118,7 +122,7 @@ class MessageViewController: UIViewController {
     let location = longPress.locationInView(contactCollectionView)
     let indexPath = contactCollectionView.indexPathForItemAtPoint(location)
     
-    if gestureState == .Began && indexPath!.row != 0 && indexPath!.row <= contacts.count {
+    if gestureState == .Began && indexPath!.row != 0 && indexPath!.row <= contacts.count && !contains(selectedContactUserIds, contacts[indexPath!.row - 1]) {
       presentDeleteContactAlertControllerForIndexPath(indexPath!)
     }
   }
@@ -231,7 +235,7 @@ extension MessageViewController: MessageToolbarDelegate {
         "sender_id": currentUser().id,
         "sender_name": currentUser().displayName,
         "message_text": textView.text,
-        "date_time": Helpers.dateToPrettyString(NSDate()),
+        "date_time": NSDate(),
         "recipient_ids": selectedContactUserIds
       ]
       
@@ -308,7 +312,7 @@ extension MessageViewController: UICollectionViewDataSource {
       let messageCell = collectionView.dequeueReusableCellWithReuseIdentifier("MessageCollectionViewCell", forIndexPath: indexPath) as! MessageCollectionViewCell
       let messageContentView = messageCell.messageCollectionViewCellContentView
       if conversation != nil {
-        messageContentView.dateTimeLabel.text = conversation!.messageTime
+        messageContentView.dateTimeLabel.text = conversation!.messageTime.formattedAsTimeAgo()
         messageContentView.messageTextView.text = conversation!.messageText
         fetchUserFromId(conversation!.senderId) {
           messageContentView.senderDisplayNameLabel.text = self.conversation!.senderId == currentUser().id ? "You" : $0.displayName
@@ -317,12 +321,17 @@ extension MessageViewController: UICollectionViewDataSource {
         messageContentView.messageTextView.backgroundColor = conversation!.senderId == currentUser().id ? UIColor.blue() : UIColor.grayL()
         messageContentView.messageTextView.textColor = conversation!.senderId == currentUser().id ? UIColor.whiteColor() : UIColor.grayD()
       }
-      messageContentView.dateTimeLabel.hidden = conversation == nil // Same type of thing for contactCell
+      messageContentView.noMessageHistoryLabel.hidden = conversation != nil || selectedContactUserIds.isEmpty
+      messageContentView.dateTimeLabel.hidden = conversation == nil
       messageContentView.senderDisplayNameLabel.hidden = conversation == nil
       messageContentView.senderImageView.hidden = conversation == nil
       messageContentView.messageTextView.hidden = conversation == nil
       return messageCell
     }
+  }
+  
+  func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    return UICollectionReusableView()
   }
   
 }
@@ -335,11 +344,7 @@ extension MessageViewController: UICollectionViewDelegate {
     switch indexPath.section {
     case 0:
       if indexPath.row == 0 {
-        if contacts.count < 11 {
-          presentAddContactAlertController()
-        } else {
-          presentAlertControllerWithHeaderText("Your grid is full!", message: "Delete a contact before adding another.", actionMessage: "Okay")
-        }
+        presentAddContactAlertController()
       } else if indexPath.row <= contacts.count {
         selectDeselectContactForIndexPath(indexPath)
         adjustContactCollectionViewLayoutForArray(selectedContactUserIds)
@@ -434,48 +439,60 @@ extension MessageViewController {
   }
   
   private func presentAddContactAlertController() {
-    let notificationCenter = NSNotificationCenter.defaultCenter()
-    let mainQueue = NSOperationQueue.mainQueue()
-    
-    let alert = UIAlertController(title: "Add Contact", message: "Type an username", preferredStyle: .Alert)
-    alert.addTextFieldWithConfigurationHandler {
-      textField in
-      textField.placeholder = "username"
-      textField.secureTextEntry = false
-      textField.textAlignment = .Center
-      textField.returnKeyType = .Done
-    }
-    let textField = alert.textFields![0] as! UITextField
-    
-    let addAction = UIAlertAction(title: "Add", style: .Default) {
-      action in
-      let user: () = fetchUserIdFromUsername(textField.text) {
-        saveUserToContactsForUserId($0) {
-          success, error in
-          if success {
-            self.contacts = currentUser().contacts!
-            let newContactIndexPath = NSIndexPath(forItem: currentUser().contacts!.count, inSection: 0)
-            self.contactCollectionView.reloadItemsAtIndexPaths([newContactIndexPath])
-          } else {println(error!)}
-          notificationCenter.removeObserver(UITextFieldTextDidChangeNotification, name: nil, object: textField)
+    if contacts.count < 11 {
+      let notificationCenter = NSNotificationCenter.defaultCenter()
+      let mainQueue = NSOperationQueue.mainQueue()
+      
+      let alert = UIAlertController(title: "Add Contact", message: "Type an username", preferredStyle: .Alert)
+      alert.addTextFieldWithConfigurationHandler {
+        textField in
+        textField.secureTextEntry = false
+        textField.textAlignment = .Center
+        textField.returnKeyType = .Done
+      }
+      let textField = alert.textFields![0] as! UITextField
+      
+      let addAction = UIAlertAction(title: "Add", style: .Default) {
+        action in
+        fetchUserIdFromUsername(textField.text) {
+          userId, error in
+          if userId != nil {
+            saveUserToContactsForUserId(userId!) {
+              success, error in
+              if success != nil {
+                self.contacts = currentUser().contacts!
+                let newContactIndexPath = NSIndexPath(forItem: currentUser().contacts!.count, inSection: 0)
+                self.contactCollectionView.reloadItemsAtIndexPaths([newContactIndexPath])
+              } else {
+                println(error!)
+              }
+              notificationCenter.removeObserver(UITextFieldTextDidChangeNotification, name: nil, object: textField)
+            }
+          } else {
+            if error != nil {
+              self.presentAlertControllerWithHeaderText("Unable to find user 🙊", message: "Try adding them again.", actionMessage: "Okay")
+            }
+          }
         }
       }
+      addAction.enabled = false
+      
+      notificationCenter.addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: mainQueue) {
+        notification in
+        addAction.enabled = !textField.text.isEmpty
+      }
+      
+      let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {
+        action in
+        notificationCenter.removeObserver(UITextFieldTextDidChangeNotification, name: nil, object: textField)
+      }
+      
+      alert.addAction(addAction)
+      alert.addAction(cancelAction)
+      presentViewController(alert, animated: true, completion: nil)
+    } else {
+      presentAlertControllerWithHeaderText("Your grid is full 🙊", message: "Delete a contact before adding another.", actionMessage: "Okay")
     }
-    addAction.enabled = false
-    
-    notificationCenter.addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: mainQueue) {
-      notification in
-      addAction.enabled = !textField.text.isEmpty
-    }
-    
-    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {
-      action in
-      notificationCenter.removeObserver(UITextFieldTextDidChangeNotification, name: nil, object: textField)
-    }
-    
-    alert.addAction(addAction)
-    alert.addAction(cancelAction)
-    presentViewController(alert, animated: true, completion: nil)
   }
   
   private func presentDeleteContactAlertControllerForIndexPath(indexPath: NSIndexPath) {
@@ -488,7 +505,7 @@ extension MessageViewController {
         action in
         deleteUserFromContactsForUserId(userId) {
           success, error in
-          if success {
+          if success != nil {
             self.contacts = currentUser().contacts!
             var reloadIndexPaths: [NSIndexPath] = []
             if indexPath.row == self.contacts.count + 1 {

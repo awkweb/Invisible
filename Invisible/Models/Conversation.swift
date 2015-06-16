@@ -12,16 +12,20 @@ struct Conversation {
   let id: String
   let senderId: String
   let messageText: String
-  let messageTime: String
+  let messageTime: NSDate
   let participantIds: [String]
 }
 
-func fetchConversationFromId(id: String, callback: (Conversation) -> ()) {
+func fetchConversationFromId(id: String, callback: (Conversation?, NSError?) -> ()) {
   PFQuery(className: "Conversation")
     .getObjectInBackgroundWithId(id) {
       object, error in
       if let conversation = object as PFObject! {
-        callback(Conversation(id: conversation.objectId!, senderId: conversation["senderId"] as! String, messageText: conversation["messageText"] as! String, messageTime: conversation["messageTime"] as! String, participantIds: conversation["participantIds"] as! [String]))
+        callback(Conversation(id: conversation.objectId!, senderId: conversation["senderId"] as! String, messageText: conversation["messageText"] as! String, messageTime: conversation["messageTime"] as! NSDate, participantIds: conversation["participantIds"] as! [String]), nil)
+      } else {
+        if let error = error {
+          callback(nil, error)
+        }
       }
   }
 }
@@ -35,7 +39,7 @@ func fetchConversationForParticipantIds(participantIds: [String], callback: (Con
         if !conversations.isEmpty {
           for c in conversations {
             if c["participantIds"]!.count == participantIds.count {
-              callback(Conversation(id: c.objectId!, senderId: c["senderId"] as! String, messageText: c["messageText"] as! String, messageTime: c["messageTime"] as! String, participantIds: c["participantIds"] as! [String]), nil)
+              callback(Conversation(id: c.objectId!, senderId: c["senderId"] as! String, messageText: c["messageText"] as! String, messageTime: c["messageTime"] as! NSDate, participantIds: c["participantIds"] as! [String]), nil)
               break
             } else {
               callback(nil, nil)
