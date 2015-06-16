@@ -57,6 +57,19 @@ class MessageViewController: UIViewController {
     let notificationCenter = NSNotificationCenter.defaultCenter()
     let mainQueue = NSOperationQueue.mainQueue()
     
+    notificationCenter.addObserverForName("handlePushNotification", object: nil, queue: mainQueue) {
+      notification in
+      if let conversationId = notification.userInfo?["conversationId"] as? String {
+        fetchConversationFromId(conversationId) {
+          conversation in
+          self.selectedContactUserIds = conversation.participantIds.filter {$0 != currentUser().id}
+          self.conversation = conversation
+          self.contactCollectionView.reloadData()
+          self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
+        }
+      }
+    }
+    
     notificationCenter.addObserverForName(UIKeyboardWillShowNotification, object: nil, queue: mainQueue) {
       notification in
       if let keyboardHeight = notification.userInfo?[UIKeyboardFrameEndUserInfoKey]?.CGRectValue().size.height {
@@ -72,19 +85,6 @@ class MessageViewController: UIViewController {
       self.messageToolbarBottomConstraint.constant = 0.0
       UIView.animateWithDuration(0.25) {
         self.view.layoutIfNeeded()
-      }
-    }
-    
-    notificationCenter.addObserverForName("handlePushNotification", object: nil, queue: mainQueue) {
-      notification in
-      if let conversationId = notification.userInfo?["conversationId"] as? String {
-        fetchConversationFromId(conversationId) {
-          conversation in
-          self.selectedContactUserIds = conversation.participantIds.filter {$0 != currentUser().id}
-          self.conversation = conversation
-          self.contactCollectionView.reloadData()
-          self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
-        }
       }
     }
   
@@ -104,6 +104,7 @@ class MessageViewController: UIViewController {
   
   private func removeNotificationCenterObservers() {
     let notificationCenter = NSNotificationCenter.defaultCenter()
+    notificationCenter.removeObserver("handlePushNotification")
     notificationCenter.removeObserver(UIKeyboardWillShowNotification)
     notificationCenter.removeObserver(UIKeyboardWillHideNotification)
     notificationCenter.removeObserver(UITextViewTextDidChangeNotification)
@@ -224,7 +225,7 @@ extension MessageViewController: MessageToolbarDelegate {
   func sendButtonPressed(sender: UIButton) {
     let textView = messageToolbar.messageContentView.messageTextView
     if !textView.text.isEmpty && !selectedContactUserIds.isEmpty {
-      let conversationId = conversation != nil ? conversation!.id : "nil"
+      let conversationId = conversation != nil ? conversation!.id : "empty"
       let parameters: [NSObject : AnyObject] = [
         "conversation_id": conversationId,
         "sender_id": currentUser().id,

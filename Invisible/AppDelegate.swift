@@ -54,7 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Extract notification data from app open
     if let notificationPayload = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? NSDictionary {
       handlePush(application, userInfo: launchOptions!)
-      return true
     }
     
     return true
@@ -107,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         kCRToastFontKey: UIFont.systemFontOfSize(16.0),
         kCRToastTextAlignmentKey: NSTextAlignment.Left.rawValue,
         kCRToastTextMaxNumberOfLinesKey: 2,
-        kCRToastSubtitleTextKey: "slide to view",
+        kCRToastSubtitleTextKey: "slide to view - tap to dismiss",
         kCRToastSubtitleFontKey: UIFont.systemFontOfSize(12.0),
         kCRToastSubtitleTextMaxNumberOfLinesKey: 1,
         kCRToastSubtitleTextAlignmentKey: NSTextAlignment.Left.rawValue,
@@ -122,17 +121,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         kCRToastAnimationInDirectionKey: CRToastAnimationDirection.Left.rawValue,
         kCRToastAnimationOutDirectionKey: CRToastAnimationDirection.Right.rawValue,
         kCRToastTimeIntervalKey: DBL_MAX,
-        kCRToastInteractionRespondersKey: [CRToastInteractionResponder(interactionType: .SwipeRight, automaticallyDismiss: true, block: nil)]
+        kCRToastInteractionRespondersKey: [
+          CRToastInteractionResponder(interactionType: .Swipe, automaticallyDismiss: true) {
+            interaction in
+            NSNotificationCenter.defaultCenter().postNotificationName("handlePushNotification", object: nil, userInfo: userInfo)
+          },
+          CRToastInteractionResponder(interactionType: .Tap, automaticallyDismiss: true, block: nil)
+        ]
       ]
-      CRToastManager.showNotificationWithOptions(options) {
-        NSNotificationCenter.defaultCenter().postNotificationName("handlePushNotification", object: nil, userInfo: userInfo)
-      }
-    case .Inactive: // Opened from notification center, banner, lock screen
-      CRToastManager.showNotificationWithMessage("Inactive", completionBlock: nil)
-      PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: nil)
+      CRToastManager.showNotificationWithOptions(options, completionBlock: nil)
+    case .Inactive:
       NSNotificationCenter.defaultCenter().postNotificationName("handlePushNotification", object: nil, userInfo: userInfo)
-    case .Background:
-      CRToastManager.showNotificationWithMessage("Background", completionBlock: nil)
+      PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: nil)
     default:
       CRToastManager.showNotificationWithMessage("Default", completionBlock: nil)
     }

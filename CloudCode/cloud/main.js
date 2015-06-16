@@ -8,62 +8,49 @@ Parse.Cloud.define("sendMessage", function(request, response) {
   var messageTime = request.params.date_time;
   var recipientIds = request.params.recipient_ids;
 
-  if (conversationId != "nil") {
-    updateConversationForConversationId(conversationId, senderId, messageText, messageTime);
+  if (conversationId != "empty") {
+    var Conversation = Parse.Object.extend("Conversation");
+    var query = new Parse.Query(Conversation);
+    query.get(conversationId, {
+      success: function(conversation) {
+        conversation.set("senderId", senderId);
+        conversation.set("messageText", messageText);
+        conversation.set("messageTime", messageTime);
+        conversation.save();
+
+        sendPushToRecipients(recipientIds, senderName, messageText, conversationId);
+        response.success("Cloud Code sendMessage completed! conversationId:" + conversationId)
+      },
+      error: function(object, error) {
+        response.error("updateConversationForConversationId error: " + error);
+      }
+    });
   } else {
     var participantIds = recipientIds.slice();
     participantIds.push(senderId);
-    createConversation(senderId, participantIds, messageText, messageTime);
-  }
 
-  // Send push notification to query
-  Parse.Push.send({
-    where: findUsersFromRecipientIds(recipientIds),
-    data: {
-      alert: senderName + ": " + messageText,
-      badge: "Increment",
-      sound: "ringring.wav",
-      conversationId: conversationId
-    }
-  }, {
-    success: function() {
-      response.success("CloudCode push sent.");
-    },
-    error: function(error) {
-      response.error(error);
-    }
-  });
+    var Conversation = Parse.Object.extend("Conversation");
+    var conversation = new Conversation();
+
+    conversation.save({
+      senderId: senderId,
+      messageText: messageText,
+      messageTime: messageTime,
+      participantIds: participantIds
+    }, {
+      success: function(conversation) {
+        sendPushToRecipients(recipientIds, senderName, messageText, conversation.id);
+        response.success("Cloud Code sendMessage completed! conversationId: " + conversation.id)
+      },
+      error: function(conversation, error) {
+        response.error("createConversation error: " + error);
+      }
+    });
+    
+  }
 });
 
 // Helpers
-
-function updateConversationForConversationId(conversationId, senderId, messageText, messageTime) {
-  var Conversation = Parse.Object.extend("Conversation");
-  var query = new Parse.Query(Conversation);
-  query.get(conversationId, {
-    success: function(conversation) {
-      conversation.set("senderId", senderId);
-      conversation.set("messageText", messageText);
-      conversation.set("messageTime", messageTime);
-      conversation.save();
-    },
-    error: function(object, error) {
-      // The object was not retrieved successfully.
-      // error is a Parse.Error with an error code and message.
-    }
-  });
-}
-
-function createConversation(senderId, participantIds, messageText, messageTime) {
-  var Conversation = Parse.Object.extend("Conversation");
-  var conversation = new Conversation();
-
-  conversation.set("senderId", senderId);
-  conversation.set("messageText", messageText);
-  conversation.set("messageTime", messageTime);
-  conversation.set("participantIds", participantIds);
-  conversation.save();
-}
 
 function findUsersFromRecipientIds(recipientIds) {
   // Find users from recipient ids
@@ -75,4 +62,23 @@ function findUsersFromRecipientIds(recipientIds) {
   pushQuery.matchesQuery("user", userQuery);
 
   return pushQuery
+}
+
+function sendPushToRecipients(recipientIds, senderName, messageText, conversationId) {
+  Parse.Push.send({
+    where: findUsersFromRecipientIds(recipientIds),
+    data: {
+      alert: senderName + ": " + messageText,
+      badge: "Increment",
+      sound: "ringring.wav",
+      conversationId: conversationId
+    }
+  }, {
+    success: function() {
+      console.log("Cloud Code push sent to conversationId:" + conversationId);
+    },
+    error: function(error) {
+      console.error("Send push error:" + error);
+    }
+  });
 }
