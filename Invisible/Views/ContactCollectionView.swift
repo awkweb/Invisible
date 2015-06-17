@@ -13,6 +13,7 @@ class ContactCollectionView: UICollectionView {
   override func awakeFromNib() {
     super.awakeFromNib()
     showsVerticalScrollIndicator = false
+    allowsMultipleSelection = true
   }
   
 }

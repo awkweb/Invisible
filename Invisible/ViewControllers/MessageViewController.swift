@@ -216,7 +216,6 @@ class MessageViewController: UIViewController {
       messageAspectRatioForItemsInSectionAtIndex = array.isEmpty ? 50 : 2.35
       contactCollectionView.performBatchUpdates({
         self.contactCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .Top, animated: true)
-        self.contactCollectionView.reloadData()
         }, completion: nil)
     }
   }
@@ -286,7 +285,7 @@ extension MessageViewController: UICollectionViewDataSource {
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     switch section {
-    case 0: return 12
+    case 0: return contacts.count
     default: return 1
     }
   }
@@ -305,25 +304,6 @@ extension MessageViewController: UICollectionViewDataSource {
           fetchUserFromId(userId) {
             contactContentView.displayNameLabel.text = $0.displayName
             $0.getPhoto {contactContentView.imageView.image = $0}
-          }
-          contactContentView.displayNameLabel.backgroundColor = contains(selectedContactUserIds, userId) ?  UIColor.red() : UIColor.clearColor()
-        } else {
-          contactContentView.displayNameLabel.text = nil
-          contactContentView.displayNameLabel.backgroundColor = UIColor.clearColor()
-          if contactGridNumberItemsPerLineForSectionAtIndex == 4 {
-            switch indexPath.row {
-            case 1, 3, 4, 6, 9, 11:
-              contactContentView.imageView.image = UIImage(named: "smile-dark")
-            default:
-              contactContentView.imageView.image = UIImage(named: "smile-light")
-            }
-          } else if contactGridNumberItemsPerLineForSectionAtIndex == 6 {
-            switch indexPath.row {
-            case 1, 3, 5, 6, 8, 10:
-              contactContentView.imageView.image = UIImage(named: "smile-dark")
-            default:
-              contactContentView.imageView.image = UIImage(named: "smile-light")
-            }
           }
         }
         return contactCell
@@ -362,18 +342,39 @@ extension MessageViewController: UICollectionViewDelegate {
       if indexPath.row == 0 {
         presentAddContactAlertController()
       } else if indexPath.row <= contacts.count {
-        selectDeselectContactForIndexPath(indexPath)
+        selectContactForIndexPath(indexPath)
         adjustContactCollectionViewLayoutForArray(selectedContactUserIds)
-        if !selectedContactUserIds.isEmpty {
+        let participantIds = selectedContactUserIds + [currentUser().id]
+        fetchConversationForParticipantIds(participantIds) {
+          conversation, error in
+          self.conversation = conversation
+          collectionView.reloadSections(NSIndexSet(index: 1))
+        }
+        updatePlaceholderLabelCharacterCounterLabelAndSendButton()
+      }
+    default:
+      break
+    }
+  }
+  
+  func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+    switch indexPath.section {
+    case 0:
+      if indexPath.row == 0 {
+        presentAddContactAlertController()
+      } else if indexPath.row <= contacts.count {
+        deselectContactForIndexPath(indexPath)
+        adjustContactCollectionViewLayoutForArray(selectedContactUserIds)
+        if selectedContactUserIds.isEmpty {
+          conversation = nil
+          collectionView.reloadSections(NSIndexSet(index: 1))
+        } else {
           let participantIds = selectedContactUserIds + [currentUser().id]
           fetchConversationForParticipantIds(participantIds) {
             conversation, error in
             self.conversation = conversation
             collectionView.reloadSections(NSIndexSet(index: 1))
           }
-        } else {
-          conversation = nil
-          collectionView.reloadSections(NSIndexSet(index: 1))
         }
         updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
@@ -428,30 +429,23 @@ extension MessageViewController: KRLCollectionViewDelegateGridLayout {
 
 extension MessageViewController {
   
-  private func selectDeselectContactForIndexPath(indexPath: NSIndexPath) {
+  private func selectContactForIndexPath(indexPath: NSIndexPath) {
     if !contains(selectedContactUserIds, contacts[indexPath.row - 1]) {
       selectedContactUserIds.append(contacts[indexPath.row - 1])
-      contactCollectionView.reloadItemsAtIndexPaths([indexPath])
-    } else {
-      for c in 0..<selectedContactUserIds.count {
-        if selectedContactUserIds[c] == contacts[indexPath.row - 1] {
-          selectedContactUserIds.removeAtIndex(c)
-          contactCollectionView.reloadItemsAtIndexPaths([indexPath])
-          break
-        }
-      }
+    }
+  }
+  
+  private func deselectContactForIndexPath(indexPath: NSIndexPath) {
+    if contains(selectedContactUserIds, contacts[indexPath.row - 1]) {
+      selectedContactUserIds = selectedContactUserIds.filter {$0 != self.contacts[indexPath.row - 1]}
     }
   }
   
   private func deselectAllSelectedContacts() {
-    var selectedContactIndexPaths: [NSIndexPath] = []
-    for i in 0..<contacts.count {
-      if contains(selectedContactUserIds, contacts[i]) {
-        selectedContactIndexPaths.append(NSIndexPath(forItem: i + 1, inSection: 0))
-      }
+    for indexPath in contactCollectionView.indexPathsForSelectedItems() {
+      contactCollectionView.deselectItemAtIndexPath((indexPath as! NSIndexPath), animated: false)
     }
     selectedContactUserIds = []
-    contactCollectionView.reloadItemsAtIndexPaths(selectedContactIndexPaths)
   }
   
   private func presentAddContactAlertController() {
@@ -486,7 +480,7 @@ extension MessageViewController {
             }
           } else {
             if error != nil {
-              self.presentAlertControllerWithHeaderText("Unable to find user 🙊", message: "Try adding them again.", actionMessage: "Okay")
+              self.presentAlertControllerWithHeaderText("Unable to find user", message: "Try adding them again.", actionMessage: "Okay")
             }
           }
         }
@@ -507,7 +501,7 @@ extension MessageViewController {
       alert.addAction(cancelAction)
       presentViewController(alert, animated: true, completion: nil)
     } else {
-      presentAlertControllerWithHeaderText("Your grid is full!", message: "Delete a contact before adding another.", actionMessage: "Okay")
+      presentAlertControllerWithHeaderText("Your grid is full", message: "Delete a contact before adding another.", actionMessage: "Okay")
     }
   }
   
