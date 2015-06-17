@@ -19,6 +19,7 @@ public class SoundPlayer: NSObject {
   
   public enum Sound: String {
     case Alert = "ringring.wav"
+    case Send = "chord.wav"
   }
   
   public func playSound(sound: Sound) {

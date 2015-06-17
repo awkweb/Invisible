@@ -52,6 +52,7 @@
 		05E377281B23317D007A0B83 /* KRLCollectionViewGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */; };
 		05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E377291B2362C3007A0B83 /* ringring.wav */; };
 		05E617941B307DAB005DB0FF /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E617931B307DAB005DB0FF /* NSDate+NVTimeAgo.m */; };
+		05E617961B30F564005DB0FF /* chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E617951B30F564005DB0FF /* chord.wav */; };
 		05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */; };
 		05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */; };
 		05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */; };
@@ -127,6 +128,7 @@
 		05E377291B2362C3007A0B83 /* ringring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ringring.wav; path = Sounds/ringring.wav; sourceTree = "<group>"; };
 		05E617921B307DAB005DB0FF /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
 		05E617931B307DAB005DB0FF /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
+		05E617951B30F564005DB0FF /* chord.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = chord.wav; path = Sounds/chord.wav; sourceTree = "<group>"; };
 		05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionView.swift; path = Views/ContactCollectionView.swift; sourceTree = "<group>"; };
 		05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCell.swift; path = Views/ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCellContentView.swift; path = Views/ContactCollectionViewCellContentView.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 		053883BF1B22385C00690AB5 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				05E617951B30F564005DB0FF /* chord.wav */,
 				05E377291B2362C3007A0B83 /* ringring.wav */,
 			);
 			name = Sounds;
@@ -456,6 +459,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05E617961B30F564005DB0FF /* chord.wav in Resources */,
 				05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */,
 				051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */,
 				053F42B71AFE92FE00A2CA53 /* Main.storyboard in Resources */,

@@ -120,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         kCRToastAnimationOutTypeKey: CRToastAnimationType.Spring.rawValue,
         kCRToastAnimationInDirectionKey: CRToastAnimationDirection.Top.rawValue,
         kCRToastAnimationOutDirectionKey: CRToastAnimationDirection.Top.rawValue,
-        kCRToastTimeIntervalKey: DBL_MAX,
+        kCRToastTimeIntervalKey: 5,
         kCRToastInteractionRespondersKey: [
           CRToastInteractionResponder(interactionType: .Tap, automaticallyDismiss: true) {
             interaction in

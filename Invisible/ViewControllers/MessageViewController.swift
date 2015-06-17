@@ -203,7 +203,7 @@ class MessageViewController: UIViewController {
       contactGridNumberItemsPerLineForSectionAtIndex = 4
       contactGridInteritemSpacingForSectionAtIndex = 1
       contactGridLineSpacingForSectionAtIndex = 1
-      messageAspectRatioForItemsInSectionAtIndex = 5
+      messageAspectRatioForItemsInSectionAtIndex = 50
     }
   }
   
@@ -213,9 +213,10 @@ class MessageViewController: UIViewController {
       contactGridNumberItemsPerLineForSectionAtIndex = array.isEmpty ? 4 : 6
       contactGridInteritemSpacingForSectionAtIndex = array.isEmpty ? 1 : 0
       contactGridLineSpacingForSectionAtIndex = array.isEmpty ? 1 : 0
-      messageAspectRatioForItemsInSectionAtIndex = array.isEmpty ? 5 : 2.35
+      messageAspectRatioForItemsInSectionAtIndex = array.isEmpty ? 50 : 2.35
       contactCollectionView.performBatchUpdates({
         self.contactCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .Top, animated: true)
+        self.contactCollectionView.reloadData()
         }, completion: nil)
     }
   }
@@ -227,6 +228,7 @@ class MessageViewController: UIViewController {
 extension MessageViewController: MessageToolbarDelegate {
   
   func sendButtonPressed(sender: UIButton) {
+    SoundPlayer().playSound(.Send)
     let textView = messageToolbar.messageContentView.messageTextView
     if !textView.text.isEmpty && !selectedContactUserIds.isEmpty {
       let conversationId = conversation != nil ? conversation!.id : "empty"
@@ -297,14 +299,32 @@ extension MessageViewController: UICollectionViewDataSource {
         return addCell
       } else {
         let contactCell = collectionView.dequeueReusableCellWithReuseIdentifier("ContactCollectionViewCell", forIndexPath: indexPath) as! ContactCollectionViewCell
+        let contactContentView = contactCell.contactCollectionViewCellContentView
         if indexPath.row <= contacts.count {
           let userId = contacts[indexPath.row - 1]
-          let contactContentView = contactCell.contactCollectionViewCellContentView
           fetchUserFromId(userId) {
             contactContentView.displayNameLabel.text = $0.displayName
             $0.getPhoto {contactContentView.imageView.image = $0}
           }
           contactContentView.displayNameLabel.backgroundColor = contains(selectedContactUserIds, userId) ?  UIColor.red() : UIColor.clearColor()
+        } else {
+          contactContentView.displayNameLabel.text = nil
+          contactContentView.displayNameLabel.backgroundColor = UIColor.clearColor()
+          if contactGridNumberItemsPerLineForSectionAtIndex == 4 {
+            switch indexPath.row {
+            case 1, 3, 4, 6, 9, 11:
+              contactContentView.imageView.image = UIImage(named: "smile-dark")
+            default:
+              contactContentView.imageView.image = UIImage(named: "smile-light")
+            }
+          } else if contactGridNumberItemsPerLineForSectionAtIndex == 6 {
+            switch indexPath.row {
+            case 1, 3, 5, 6, 8, 10:
+              contactContentView.imageView.image = UIImage(named: "smile-dark")
+            default:
+              contactContentView.imageView.image = UIImage(named: "smile-light")
+            }
+          }
         }
         return contactCell
       }
@@ -328,10 +348,6 @@ extension MessageViewController: UICollectionViewDataSource {
       messageContentView.messageTextView.hidden = conversation == nil
       return messageCell
     }
-  }
-  
-  func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-    return UICollectionReusableView()
   }
   
 }
@@ -491,7 +507,7 @@ extension MessageViewController {
       alert.addAction(cancelAction)
       presentViewController(alert, animated: true, completion: nil)
     } else {
-      presentAlertControllerWithHeaderText("Your grid is full 🙊", message: "Delete a contact before adding another.", actionMessage: "Okay")
+      presentAlertControllerWithHeaderText("Your grid is full!", message: "Delete a contact before adding another.", actionMessage: "Okay")
     }
   }
   
