@@ -12,17 +12,11 @@
 		050BD29D1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 050BD29C1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib */; };
 		050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AD1B0BC577004A05CA /* LogInViewController.swift */; };
 		050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050C98AE1B0BC577004A05CA /* MessageViewController.swift */; };
-		05101C801B09774D0089E37C /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05101C7F1B09774D0089E37C /* Helpers.swift */; };
 		051632F71B10E255008605CA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051632F61B10E255008605CA /* User.swift */; };
 		051765561B29BCD400F632AA /* MessageCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051765551B29BCD400F632AA /* MessageCollectionViewCellContentView.swift */; };
 		051765581B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */; };
 		0517655A1B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */; };
 		0517655D1B2A04EE00F632AA /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517655C1B2A04EE00F632AA /* ColorConstants.swift */; };
-		0517656A1B2A35D500F632AA /* CRToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765601B2A35D500F632AA /* CRToast.m */; };
-		0517656B1B2A35D500F632AA /* CRToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765631B2A35D500F632AA /* CRToastManager.m */; };
-		0517656C1B2A35D500F632AA /* CRToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765651B2A35D500F632AA /* CRToastView.m */; };
-		0517656D1B2A35D500F632AA /* CRToastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765671B2A35D500F632AA /* CRToastViewController.m */; };
-		0517656E1B2A35D500F632AA /* CRToastWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 051765691B2A35D500F632AA /* CRToastWindow.m */; };
 		051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */; };
 		051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */; };
 		0536BFA91B1A282400161877 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0536BFA71B1A282400161877 /* Bolts.framework */; };
@@ -49,9 +43,17 @@
 		053F42E81AFE949000A2CA53 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E71AFE949000A2CA53 /* libz.dylib */; };
 		053F42EA1AFE949C00A2CA53 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */; };
 		053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053F42EC1AFEA41C00A2CA53 /* Constants.swift */; };
-		05E377281B23317D007A0B83 /* KRLCollectionViewGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */; };
+		05A4D1F21B37752400ADB4C5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D1F11B37752400ADB4C5 /* SignUpViewController.swift */; };
+		05A4D1F41B37754D00ADB4C5 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D1F31B37754D00ADB4C5 /* ProfileViewController.swift */; };
+		05A4D1F61B37758000ADB4C5 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D1F51B37758000ADB4C5 /* SettingsViewController.swift */; };
+		05A4D20A1B37781400ADB4C5 /* CRToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D1FA1B37781400ADB4C5 /* CRToast.m */; };
+		05A4D20B1B37781400ADB4C5 /* CRToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D1FD1B37781400ADB4C5 /* CRToastManager.m */; };
+		05A4D20C1B37781400ADB4C5 /* CRToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D1FF1B37781400ADB4C5 /* CRToastView.m */; };
+		05A4D20D1B37781400ADB4C5 /* CRToastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D2011B37781400ADB4C5 /* CRToastViewController.m */; };
+		05A4D20E1B37781400ADB4C5 /* CRToastWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D2031B37781400ADB4C5 /* CRToastWindow.m */; };
+		05A4D20F1B37781400ADB4C5 /* KRLCollectionViewGridLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D2061B37781400ADB4C5 /* KRLCollectionViewGridLayout.m */; };
+		05A4D2101B37781400ADB4C5 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D2091B37781400ADB4C5 /* NSDate+NVTimeAgo.m */; };
 		05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E377291B2362C3007A0B83 /* ringring.wav */; };
-		05E617941B307DAB005DB0FF /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 05E617931B307DAB005DB0FF /* NSDate+NVTimeAgo.m */; };
 		05E617961B30F564005DB0FF /* chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E617951B30F564005DB0FF /* chord.wav */; };
 		05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */; };
 		05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */; };
@@ -75,23 +77,11 @@
 		050BD29C1B1F67AC008BABC0 /* AddCollectionViewCellContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AddCollectionViewCellContentView.xib; path = Views/AddCollectionViewCellContentView.xib; sourceTree = "<group>"; };
 		050C98AD1B0BC577004A05CA /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LogInViewController.swift; path = ViewControllers/LogInViewController.swift; sourceTree = "<group>"; };
 		050C98AE1B0BC577004A05CA /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewController.swift; path = ViewControllers/MessageViewController.swift; sourceTree = "<group>"; };
-		05101C7F1B09774D0089E37C /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		051632F61B10E255008605CA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		051765551B29BCD400F632AA /* MessageCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCellContentView.swift; path = Views/MessageCollectionViewCellContentView.swift; sourceTree = "<group>"; };
 		051765571B29BCEC00F632AA /* MessageCollectionViewCellContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageCollectionViewCellContentView.xib; path = Views/MessageCollectionViewCellContentView.xib; sourceTree = "<group>"; };
 		051765591B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageCollectionViewCellContentViewTextView.swift; path = Views/MessageCollectionViewCellContentViewTextView.swift; sourceTree = "<group>"; };
 		0517655C1B2A04EE00F632AA /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
-		0517655F1B2A35D500F632AA /* CRToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToast.h; sourceTree = "<group>"; };
-		051765601B2A35D500F632AA /* CRToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToast.m; sourceTree = "<group>"; };
-		051765611B2A35D500F632AA /* CRToastLayoutHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastLayoutHelpers.h; sourceTree = "<group>"; };
-		051765621B2A35D500F632AA /* CRToastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastManager.h; sourceTree = "<group>"; };
-		051765631B2A35D500F632AA /* CRToastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastManager.m; sourceTree = "<group>"; };
-		051765641B2A35D500F632AA /* CRToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastView.h; sourceTree = "<group>"; };
-		051765651B2A35D500F632AA /* CRToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastView.m; sourceTree = "<group>"; };
-		051765661B2A35D500F632AA /* CRToastViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastViewController.h; sourceTree = "<group>"; };
-		051765671B2A35D500F632AA /* CRToastViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastViewController.m; sourceTree = "<group>"; };
-		051765681B2A35D500F632AA /* CRToastWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastWindow.h; sourceTree = "<group>"; };
-		051765691B2A35D500F632AA /* CRToastWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastWindow.m; sourceTree = "<group>"; };
 		051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageToolbarContentView.swift; path = Views/MessageToolbarContentView.swift; sourceTree = "<group>"; };
 		051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageToolbarContentView.xib; path = Views/MessageToolbarContentView.xib; sourceTree = "<group>"; };
 		0536BFA71B1A282400161877 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Invisible/Frameworks/Bolts.framework; sourceTree = "<group>"; };
@@ -122,12 +112,26 @@
 		053F42E71AFE949000A2CA53 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		053F42E91AFE949C00A2CA53 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		053F42EC1AFEA41C00A2CA53 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		05A4D1F11B37752400ADB4C5 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = ViewControllers/SignUpViewController.swift; sourceTree = "<group>"; };
+		05A4D1F31B37754D00ADB4C5 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = ViewControllers/ProfileViewController.swift; sourceTree = "<group>"; };
+		05A4D1F51B37758000ADB4C5 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewController.swift; path = ViewControllers/SettingsViewController.swift; sourceTree = "<group>"; };
+		05A4D1F91B37781400ADB4C5 /* CRToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToast.h; sourceTree = "<group>"; };
+		05A4D1FA1B37781400ADB4C5 /* CRToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToast.m; sourceTree = "<group>"; };
+		05A4D1FB1B37781400ADB4C5 /* CRToastLayoutHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastLayoutHelpers.h; sourceTree = "<group>"; };
+		05A4D1FC1B37781400ADB4C5 /* CRToastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastManager.h; sourceTree = "<group>"; };
+		05A4D1FD1B37781400ADB4C5 /* CRToastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastManager.m; sourceTree = "<group>"; };
+		05A4D1FE1B37781400ADB4C5 /* CRToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastView.h; sourceTree = "<group>"; };
+		05A4D1FF1B37781400ADB4C5 /* CRToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastView.m; sourceTree = "<group>"; };
+		05A4D2001B37781400ADB4C5 /* CRToastViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastViewController.h; sourceTree = "<group>"; };
+		05A4D2011B37781400ADB4C5 /* CRToastViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastViewController.m; sourceTree = "<group>"; };
+		05A4D2021B37781400ADB4C5 /* CRToastWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastWindow.h; sourceTree = "<group>"; };
+		05A4D2031B37781400ADB4C5 /* CRToastWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastWindow.m; sourceTree = "<group>"; };
+		05A4D2051B37781400ADB4C5 /* KRLCollectionViewGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRLCollectionViewGridLayout.h; sourceTree = "<group>"; };
+		05A4D2061B37781400ADB4C5 /* KRLCollectionViewGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRLCollectionViewGridLayout.m; sourceTree = "<group>"; };
+		05A4D2081B37781400ADB4C5 /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
+		05A4D2091B37781400ADB4C5 /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		05E377241B232F22007A0B83 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		05E377261B23317D007A0B83 /* KRLCollectionViewGridLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRLCollectionViewGridLayout.h; sourceTree = "<group>"; };
-		05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRLCollectionViewGridLayout.m; sourceTree = "<group>"; };
 		05E377291B2362C3007A0B83 /* ringring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ringring.wav; path = Sounds/ringring.wav; sourceTree = "<group>"; };
-		05E617921B307DAB005DB0FF /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
-		05E617931B307DAB005DB0FF /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		05E617951B30F564005DB0FF /* chord.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = chord.wav; path = Sounds/chord.wav; sourceTree = "<group>"; };
 		05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionView.swift; path = Views/ContactCollectionView.swift; sourceTree = "<group>"; };
 		05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCell.swift; path = Views/ContactCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -206,24 +210,6 @@
 			name = MessageToolbar;
 			sourceTree = "<group>";
 		};
-		0517655E1B2A35D500F632AA /* CRToast */ = {
-			isa = PBXGroup;
-			children = (
-				0517655F1B2A35D500F632AA /* CRToast.h */,
-				051765601B2A35D500F632AA /* CRToast.m */,
-				051765611B2A35D500F632AA /* CRToastLayoutHelpers.h */,
-				051765621B2A35D500F632AA /* CRToastManager.h */,
-				051765631B2A35D500F632AA /* CRToastManager.m */,
-				051765641B2A35D500F632AA /* CRToastView.h */,
-				051765651B2A35D500F632AA /* CRToastView.m */,
-				051765661B2A35D500F632AA /* CRToastViewController.h */,
-				051765671B2A35D500F632AA /* CRToastViewController.m */,
-				051765681B2A35D500F632AA /* CRToastWindow.h */,
-				051765691B2A35D500F632AA /* CRToastWindow.m */,
-			);
-			path = CRToast;
-			sourceTree = "<group>";
-		};
 		053883BF1B22385C00690AB5 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,15 +266,12 @@
 			children = (
 				053F42EC1AFEA41C00A2CA53 /* Constants.swift */,
 				0517655C1B2A04EE00F632AA /* ColorConstants.swift */,
-				05101C7F1B09774D0089E37C /* Helpers.swift */,
 				053B4FD51B2C6610008290C8 /* SoundPlayer.swift */,
 				05E377241B232F22007A0B83 /* Bridging-Header.h */,
 				053F42B81AFE92FE00A2CA53 /* Images.xcassets */,
 				053F42BA1AFE92FE00A2CA53 /* LaunchScreen.xib */,
+				05A4D1F71B37781400ADB4C5 /* ThirdParty */,
 				053883BF1B22385C00690AB5 /* Sounds */,
-				0517655E1B2A35D500F632AA /* CRToast */,
-				05E377251B23317D007A0B83 /* KRLCollectionViewGridLayout */,
-				05E617911B307DAB005DB0FF /* NSDate-Time-Ago */,
 				053F42EB1AFE94B000A2CA53 /* Frameworks */,
 				053F42B01AFE92FE00A2CA53 /* Info.plist */,
 			);
@@ -345,20 +328,48 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		05E377251B23317D007A0B83 /* KRLCollectionViewGridLayout */ = {
+		05A4D1F71B37781400ADB4C5 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				05E377261B23317D007A0B83 /* KRLCollectionViewGridLayout.h */,
-				05E377271B23317D007A0B83 /* KRLCollectionViewGridLayout.m */,
+				05A4D1F81B37781400ADB4C5 /* CRToast */,
+				05A4D2041B37781400ADB4C5 /* KRLCollectionViewGridLayout */,
+				05A4D2071B37781400ADB4C5 /* NSDate-Time-Ago */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		05A4D1F81B37781400ADB4C5 /* CRToast */ = {
+			isa = PBXGroup;
+			children = (
+				05A4D1F91B37781400ADB4C5 /* CRToast.h */,
+				05A4D1FA1B37781400ADB4C5 /* CRToast.m */,
+				05A4D1FB1B37781400ADB4C5 /* CRToastLayoutHelpers.h */,
+				05A4D1FC1B37781400ADB4C5 /* CRToastManager.h */,
+				05A4D1FD1B37781400ADB4C5 /* CRToastManager.m */,
+				05A4D1FE1B37781400ADB4C5 /* CRToastView.h */,
+				05A4D1FF1B37781400ADB4C5 /* CRToastView.m */,
+				05A4D2001B37781400ADB4C5 /* CRToastViewController.h */,
+				05A4D2011B37781400ADB4C5 /* CRToastViewController.m */,
+				05A4D2021B37781400ADB4C5 /* CRToastWindow.h */,
+				05A4D2031B37781400ADB4C5 /* CRToastWindow.m */,
+			);
+			path = CRToast;
+			sourceTree = "<group>";
+		};
+		05A4D2041B37781400ADB4C5 /* KRLCollectionViewGridLayout */ = {
+			isa = PBXGroup;
+			children = (
+				05A4D2051B37781400ADB4C5 /* KRLCollectionViewGridLayout.h */,
+				05A4D2061B37781400ADB4C5 /* KRLCollectionViewGridLayout.m */,
 			);
 			path = KRLCollectionViewGridLayout;
 			sourceTree = "<group>";
 		};
-		05E617911B307DAB005DB0FF /* NSDate-Time-Ago */ = {
+		05A4D2071B37781400ADB4C5 /* NSDate-Time-Ago */ = {
 			isa = PBXGroup;
 			children = (
-				05E617921B307DAB005DB0FF /* NSDate+NVTimeAgo.h */,
-				05E617931B307DAB005DB0FF /* NSDate+NVTimeAgo.m */,
+				05A4D2081B37781400ADB4C5 /* NSDate+NVTimeAgo.h */,
+				05A4D2091B37781400ADB4C5 /* NSDate+NVTimeAgo.m */,
 			);
 			path = "NSDate-Time-Ago";
 			sourceTree = "<group>";
@@ -367,7 +378,10 @@
 			isa = PBXGroup;
 			children = (
 				050C98AD1B0BC577004A05CA /* LogInViewController.swift */,
+				05A4D1F11B37752400ADB4C5 /* SignUpViewController.swift */,
 				050C98AE1B0BC577004A05CA /* MessageViewController.swift */,
+				05A4D1F31B37754D00ADB4C5 /* ProfileViewController.swift */,
+				05A4D1F51B37758000ADB4C5 /* SettingsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -487,30 +501,32 @@
 			files = (
 				053B4FD61B2C6610008290C8 /* SoundPlayer.swift in Sources */,
 				050BD2991B1F6751008BABC0 /* AddCollectionViewCell.swift in Sources */,
-				0517656D1B2A35D500F632AA /* CRToastViewController.m in Sources */,
-				0517656C1B2A35D500F632AA /* CRToastView.m in Sources */,
 				051765561B29BCD400F632AA /* MessageCollectionViewCellContentView.swift in Sources */,
 				05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */,
 				0517655D1B2A04EE00F632AA /* ColorConstants.swift in Sources */,
 				05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */,
 				0536BFB21B1A38B700161877 /* MessageToolbar.swift in Sources */,
 				050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */,
-				05E617941B307DAB005DB0FF /* NSDate+NVTimeAgo.m in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
 				053883C31B223A2E00690AB5 /* MessageCollectionViewCell.swift in Sources */,
+				05A4D20C1B37781400ADB4C5 /* CRToastView.m in Sources */,
+				05A4D2101B37781400ADB4C5 /* NSDate+NVTimeAgo.m in Sources */,
+				05A4D1F41B37754D00ADB4C5 /* ProfileViewController.swift in Sources */,
 				053B4FD81B2CDCDF008290C8 /* Conversation.swift in Sources */,
-				05101C801B09774D0089E37C /* Helpers.swift in Sources */,
 				0536BFB71B1A77E700161877 /* MessageTextView.swift in Sources */,
 				05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */,
 				050C98B11B0BC577004A05CA /* LogInViewController.swift in Sources */,
-				05E377281B23317D007A0B83 /* KRLCollectionViewGridLayout.m in Sources */,
+				05A4D20F1B37781400ADB4C5 /* KRLCollectionViewGridLayout.m in Sources */,
 				050C98B21B0BC577004A05CA /* MessageViewController.swift in Sources */,
-				0517656E1B2A35D500F632AA /* CRToastWindow.m in Sources */,
 				0517655A1B29C3DA00F632AA /* MessageCollectionViewCellContentViewTextView.swift in Sources */,
-				0517656A1B2A35D500F632AA /* CRToast.m in Sources */,
-				0517656B1B2A35D500F632AA /* CRToastManager.m in Sources */,
+				05A4D1F61B37758000ADB4C5 /* SettingsViewController.swift in Sources */,
+				05A4D20E1B37781400ADB4C5 /* CRToastWindow.m in Sources */,
+				05A4D1F21B37752400ADB4C5 /* SignUpViewController.swift in Sources */,
+				05A4D20A1B37781400ADB4C5 /* CRToast.m in Sources */,
+				05A4D20D1B37781400ADB4C5 /* CRToastViewController.m in Sources */,
 				051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */,
 				053F42ED1AFEA41C00A2CA53 /* Constants.swift in Sources */,
+				05A4D20B1B37781400ADB4C5 /* CRToastManager.m in Sources */,
 				051632F71B10E255008605CA /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

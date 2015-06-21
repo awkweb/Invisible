@@ -34,12 +34,16 @@ func pfUserToUser(user: PFUser) -> User {
   return User(id: user.objectId!, username: user.username!, displayName: user["displayName"]! as! String, contacts: user["contacts"] as? [String], pfUser: user)
 }
 
-func fetchUserFromId(id: String, callback: (User) -> ()) {
+func fetchUserFromId(id: String, callback: (User?, NSError?) -> ()) {
   PFUser.query()!
     .getObjectInBackgroundWithId(id) {
       object, error in
       if let pfUser = object as? PFUser {
-        callback(pfUserToUser(pfUser))
+        callback(pfUserToUser(pfUser), nil)
+      } else {
+        if let error = error {
+          callback(nil, error)
+        }
       }
     }
 }

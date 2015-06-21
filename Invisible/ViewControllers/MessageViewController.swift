@@ -294,8 +294,11 @@ extension MessageViewController: UICollectionViewDataSource {
         if indexPath.row <= contacts.count {
           let userId = contacts[indexPath.row - 1]
           fetchUserFromId(userId) {
-            contactContentView.displayNameLabel.text = $0.displayName
-            $0.getPhoto {contactContentView.imageView.image = $0}
+            user, error in
+            if let user = user {
+              contactContentView.displayNameLabel.text = user.displayName
+              user.getPhoto {contactContentView.imageView.image = $0}
+            }
           }
         }
         return contactCell
@@ -307,8 +310,11 @@ extension MessageViewController: UICollectionViewDataSource {
         messageContentView.dateTimeLabel.text = conversation!.messageTime.formattedAsTimeAgo()
         messageContentView.messageTextView.text = conversation!.messageText
         fetchUserFromId(conversation!.senderId) {
-          messageContentView.senderDisplayNameLabel.text = self.conversation!.senderId == currentUser().id ? "You" : $0.displayName
-          $0.getPhoto {messageContentView.senderImageView.image = $0}
+          user, error in
+          if let user = user {
+            messageContentView.senderDisplayNameLabel.text = self.conversation!.senderId == currentUser().id ? "You" : user.displayName
+            user.getPhoto {messageContentView.senderImageView.image = $0}
+          }
         }
         messageContentView.messageTextView.backgroundColor = conversation!.senderId == currentUser().id ? UIColor.blue() : UIColor.grayL()
         messageContentView.messageTextView.textColor = conversation!.senderId == currentUser().id ? UIColor.whiteColor() : UIColor.grayD()
@@ -499,11 +505,8 @@ extension MessageViewController {
   
   private func presentDeleteContactAlertControllerForIndexPath(indexPath: NSIndexPath) {
     let userId = contacts[indexPath.row - 1]
-    var userDisplayName: String!
-    fetchUserFromId(userId) {
-      userDisplayName = $0.displayName
-      let alert = UIAlertController(title: "Remove Contact", message: "Are you sure you want to remove \(userDisplayName) from your contacts?", preferredStyle: .ActionSheet)
-      let deleteAction = UIAlertAction(title: "Remove \(userDisplayName)", style: .Destructive) {
+      let alert = UIAlertController(title: "Remove Contact", message: "Are you sure you want to remove user from your contacts?", preferredStyle: .ActionSheet)
+      let deleteAction = UIAlertAction(title: "Remove", style: .Destructive) {
         action in
         deleteUserFromContactsForUserId(userId) {
           success, error in
@@ -522,7 +525,6 @@ extension MessageViewController {
       alert.addAction(deleteAction)
       alert.addAction(cancelAction)
       self.presentViewController(alert, animated: true, completion: nil)
-    }
   }
   
   private func presentAlertControllerWithHeaderText(header: String, message: String, actionMessage: String) {
