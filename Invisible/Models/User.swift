@@ -17,7 +17,6 @@ struct User {
   
   func getPhoto(callback: (UIImage) -> ()) {
     let imageFile = pfUser["picture"] as! PFFile
-    
     imageFile.getDataInBackgroundWithBlock {
       data, error in
       if let data = data {

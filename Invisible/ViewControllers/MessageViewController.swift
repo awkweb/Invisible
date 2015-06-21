@@ -65,8 +65,14 @@ class MessageViewController: UIViewController {
           if let conversation = conversation as Conversation! {
             self.selectedContactUserIds = conversation.participantIds.filter {$0 != currentUser().id}
             self.conversation = conversation
-            self.contactCollectionView.reloadData()
-            self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
+            for s in self.selectedContactUserIds {
+              for c in 0..<self.contacts.count {
+                if s == self.contacts[c] {
+                  self.contactCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: c + 1, inSection: 0), animated: true, scrollPosition: .None)
+                  break
+                }
+              }
+            }
           } else {
             println(error!)
           }
@@ -203,20 +209,7 @@ class MessageViewController: UIViewController {
       contactGridNumberItemsPerLineForSectionAtIndex = 4
       contactGridInteritemSpacingForSectionAtIndex = 1
       contactGridLineSpacingForSectionAtIndex = 1
-      messageAspectRatioForItemsInSectionAtIndex = 50
-    }
-  }
-  
-  private func adjustContactCollectionViewLayoutForArray(array: [String]) {
-    let screenWidth = UIScreen.mainScreen().bounds.size.width
-    if screenWidth != 320 {
-      contactGridNumberItemsPerLineForSectionAtIndex = array.isEmpty ? 4 : 6
-      contactGridInteritemSpacingForSectionAtIndex = array.isEmpty ? 1 : 0
-      contactGridLineSpacingForSectionAtIndex = array.isEmpty ? 1 : 0
-      messageAspectRatioForItemsInSectionAtIndex = array.isEmpty ? 50 : 2.35
-      contactCollectionView.performBatchUpdates({
-        self.contactCollectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .Top, animated: true)
-        }, completion: nil)
+      messageAspectRatioForItemsInSectionAtIndex =  2.35
     }
   }
   
@@ -245,7 +238,6 @@ extension MessageViewController: MessageToolbarDelegate {
         if success != nil {
           textView.text = nil
           self.deselectAllSelectedContacts()
-          self.adjustContactCollectionViewLayoutForArray(self.selectedContactUserIds)
           self.conversation = nil
           self.contactCollectionView.reloadSections(NSIndexSet(index: 1))
           NSNotificationCenter.defaultCenter().postNotificationName("UITextViewTextDidChangeNotification", object: textView, userInfo: ["fromSendButtonPressed": true])
@@ -285,7 +277,7 @@ extension MessageViewController: UICollectionViewDataSource {
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     switch section {
-    case 0: return contacts.count
+    case 0: return contacts.count + 1
     default: return 1
     }
   }
@@ -343,7 +335,6 @@ extension MessageViewController: UICollectionViewDelegate {
         presentAddContactAlertController()
       } else if indexPath.row <= contacts.count {
         selectContactForIndexPath(indexPath)
-        adjustContactCollectionViewLayoutForArray(selectedContactUserIds)
         let participantIds = selectedContactUserIds + [currentUser().id]
         fetchConversationForParticipantIds(participantIds) {
           conversation, error in
@@ -364,7 +355,6 @@ extension MessageViewController: UICollectionViewDelegate {
         presentAddContactAlertController()
       } else if indexPath.row <= contacts.count {
         deselectContactForIndexPath(indexPath)
-        adjustContactCollectionViewLayoutForArray(selectedContactUserIds)
         if selectedContactUserIds.isEmpty {
           conversation = nil
           collectionView.reloadSections(NSIndexSet(index: 1))
@@ -449,7 +439,7 @@ extension MessageViewController {
   }
   
   private func presentAddContactAlertController() {
-    if contacts.count < 11 {
+    if contacts.count < 7 {
       let notificationCenter = NSNotificationCenter.defaultCenter()
       let mainQueue = NSOperationQueue.mainQueue()
       
@@ -472,7 +462,9 @@ extension MessageViewController {
               if success != nil {
                 self.contacts = currentUser().contacts!
                 let newContactIndexPath = NSIndexPath(forItem: currentUser().contacts!.count, inSection: 0)
-                self.contactCollectionView.reloadItemsAtIndexPaths([newContactIndexPath])
+                self.contactCollectionView.performBatchUpdates({
+                  self.contactCollectionView.insertItemsAtIndexPaths([newContactIndexPath])
+                  }, completion: nil)
               } else {
                 println(error!)
               }
@@ -517,16 +509,8 @@ extension MessageViewController {
           success, error in
           if success != nil {
             self.contacts = currentUser().contacts!
-            var reloadIndexPaths: [NSIndexPath] = []
-            if indexPath.row == self.contacts.count + 1 {
-              reloadIndexPaths += [NSIndexPath(forItem: indexPath.row, inSection: 0)]
-            } else {
-              for i in indexPath.row...self.contacts.count + 1 {
-                reloadIndexPaths += [NSIndexPath(forItem: i, inSection: 0)]
-              }
-            }
             self.contactCollectionView.performBatchUpdates({
-              self.contactCollectionView.reloadItemsAtIndexPaths(reloadIndexPaths)
+              self.contactCollectionView.deleteItemsAtIndexPaths([indexPath])
             }, completion: nil)
           } else {
             println(error!)
