@@ -29,7 +29,7 @@ class ContactCollectionViewCell: UICollectionViewCell {
     addSubview(contactCollectionViewCellContentView)
   }
   
-  override var selected : Bool {
+  override var selected: Bool {
     didSet {
       contactCollectionViewCellContentView.displayNameLabel.backgroundColor = selected ? UIColor.red() : UIColor.clearColor()
     }

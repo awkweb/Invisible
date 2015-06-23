@@ -63,7 +63,7 @@ func fetchUserIdFromUsername(username: String, callback: (String?, NSError?) -> 
   }
 }
 
-func saveUserToContactsForUserId(userId: String, callback: (Bool?, NSError?) -> ()) {
+func addUserToContactsForUserId(userId: String, callback: (Bool?, NSError?) -> ()) {
   if userId != currentUser().id && !contains(currentUser().contacts!, userId) {
     let user = currentUser().pfUser
     user["contacts"] = currentUser().contacts! + [userId]

@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // UI
     UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.grayD()]
+    UINavigationBar.appearance().tintColor = UIColor.blue()
     
     // Determine initialViewController
     var initialViewController: UIViewController
@@ -110,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         kCRToastSubtitleFontKey: UIFont.systemFontOfSize(12.0),
         kCRToastSubtitleTextMaxNumberOfLinesKey: 1,
         kCRToastSubtitleTextAlignmentKey: NSTextAlignment.Left.rawValue,
-        kCRToastImageKey: UIImage(named: "bell") as! AnyObject,
+        kCRToastImageKey: UIImage(named: "Notif") as! AnyObject,
         kCRToastImageAlignmentKey: CRToastAccessoryViewAlignment.Left.rawValue,
         kCRToastImageContentModeKey: UIViewContentMode.Center.rawValue,
         kCRToastBackgroundColorKey: UIColor.red(),

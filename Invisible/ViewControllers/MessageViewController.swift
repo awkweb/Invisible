@@ -46,7 +46,6 @@ class MessageViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    messageToolbar.messageContentView.messageTextView.delegate = self
     contactCollectionView.dataSource = self
     contactCollectionView.delegate = self
   }
@@ -63,16 +62,12 @@ class MessageViewController: UIViewController {
         fetchConversationFromId(conversationId) {
           conversation, error in
           if let conversation = conversation as Conversation! {
-            self.selectedContactUserIds = conversation.participantIds.filter {$0 != currentUser().id}
-            self.conversation = conversation
-            for s in self.selectedContactUserIds {
-              for c in 0..<self.contacts.count {
-                if s == self.contacts[c] {
-                  self.contactCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: c + 1, inSection: 0), animated: true, scrollPosition: .None)
-                  break
-                }
-              }
+            if !contains(self.contacts, conversation.senderId) {
+              self.presentAddContactAlertControllerForConversation(conversation)
+            } else {
+              self.selectContactsForConversation(conversation)
             }
+            self.contactCollectionView.reloadSections(NSIndexSet(index: 1))
           } else {
             println(error!)
           }
@@ -220,7 +215,6 @@ class MessageViewController: UIViewController {
 extension MessageViewController: MessageToolbarDelegate {
   
   func sendButtonPressed(sender: UIButton) {
-    SoundPlayer().playSound(.Send)
     let textView = messageToolbar.messageContentView.messageTextView
     if !textView.text.isEmpty && !selectedContactUserIds.isEmpty {
       let conversationId = conversation != nil ? conversation!.id : "empty"
@@ -236,6 +230,7 @@ extension MessageViewController: MessageToolbarDelegate {
       PFCloud.callFunctionInBackground("sendMessage", withParameters: parameters) {
         success, error in
         if success != nil {
+          SoundPlayer().playSound(.Send)
           textView.text = nil
           self.deselectAllSelectedContacts()
           self.conversation = nil
@@ -431,6 +426,19 @@ extension MessageViewController {
     }
   }
   
+  private func selectContactsForConversation(conversation: Conversation) {
+    self.selectedContactUserIds = conversation.participantIds.filter {contains(self.contacts, $0)}
+    self.conversation = conversation
+    for s in self.selectedContactUserIds {
+      for c in 0..<self.contacts.count {
+        if s == self.contacts[c] {
+          self.contactCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: c + 1, inSection: 0), animated: true, scrollPosition: .None)
+          break
+        }
+      }
+    }
+  }
+  
   private func deselectContactForIndexPath(indexPath: NSIndexPath) {
     if contains(selectedContactUserIds, contacts[indexPath.row - 1]) {
       selectedContactUserIds = selectedContactUserIds.filter {$0 != self.contacts[indexPath.row - 1]}
@@ -463,7 +471,7 @@ extension MessageViewController {
         fetchUserIdFromUsername(textField.text) {
           userId, error in
           if userId != nil {
-            saveUserToContactsForUserId(userId!) {
+            addUserToContactsForUserId(userId!) {
               success, error in
               if success != nil {
                 self.contacts = currentUser().contacts!
@@ -503,28 +511,62 @@ extension MessageViewController {
     }
   }
   
-  private func presentDeleteContactAlertControllerForIndexPath(indexPath: NSIndexPath) {
-    let userId = contacts[indexPath.row - 1]
-      let alert = UIAlertController(title: "Remove Contact", message: "Are you sure you want to remove user from your contacts?", preferredStyle: .ActionSheet)
-      let deleteAction = UIAlertAction(title: "Remove", style: .Destructive) {
-        action in
-        deleteUserFromContactsForUserId(userId) {
-          success, error in
-          if success != nil {
-            self.contacts = currentUser().contacts!
-            self.contactCollectionView.performBatchUpdates({
-              self.contactCollectionView.deleteItemsAtIndexPaths([indexPath])
-            }, completion: nil)
+  private func presentAddContactAlertControllerForConversation(conversation: Conversation) {
+    fetchUserFromId(conversation.senderId) {
+      user, error in
+      if let user = user {
+        let alert = UIAlertController(title: "\(user.displayName) is not in your contacts", message: "Would you like to add \(user.displayName)?", preferredStyle: .Alert)
+        let addAction = UIAlertAction(title: "Add", style: .Default) {
+          action in
+          if self.contacts.count < 7 {
+            addUserToContactsForUserId(conversation.senderId) {
+              success, error in
+              if success != nil {
+                self.contacts = currentUser().contacts!
+                let newContactIndexPath = NSIndexPath(forItem: currentUser().contacts!.count, inSection: 0)
+                self.contactCollectionView.performBatchUpdates({
+                  self.contactCollectionView.insertItemsAtIndexPaths([newContactIndexPath])
+                  }, completion: nil)
+                self.selectContactsForConversation(conversation)
+              } else {
+                println(error!)
+              }
+            }
           } else {
-            println(error!)
+            self.presentAlertControllerWithHeaderText("Your grid is full", message: "Delete a contact before adding another.", actionMessage: "Okay")
           }
         }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        self.presentViewController(alert, animated: true, completion: nil)
       }
-      let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-      
-      alert.addAction(deleteAction)
-      alert.addAction(cancelAction)
-      self.presentViewController(alert, animated: true, completion: nil)
+    }
+  }
+  
+  private func presentDeleteContactAlertControllerForIndexPath(indexPath: NSIndexPath) {
+    let userId = contacts[indexPath.row - 1]
+    let alert = UIAlertController(title: "Remove Contact", message: "Are you sure you want to remove user from your contacts?", preferredStyle: .ActionSheet)
+    let deleteAction = UIAlertAction(title: "Remove", style: .Destructive) {
+      action in
+      deleteUserFromContactsForUserId(userId) {
+        success, error in
+        if success != nil {
+          self.contacts = currentUser().contacts!
+          self.contactCollectionView.performBatchUpdates({
+            self.contactCollectionView.deleteItemsAtIndexPaths([indexPath])
+            }, completion: nil)
+        } else {
+          println(error!)
+        }
+      }
+    }
+    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+    
+    alert.addAction(deleteAction)
+    alert.addAction(cancelAction)
+    self.presentViewController(alert, animated: true, completion: nil)
   }
   
   private func presentAlertControllerWithHeaderText(header: String, message: String, actionMessage: String) {
