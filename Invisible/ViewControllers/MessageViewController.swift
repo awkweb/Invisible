@@ -46,6 +46,7 @@ class MessageViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    messageToolbar.messageContentView.messageTextView.delegate = self
     contactCollectionView.dataSource = self
     contactCollectionView.delegate = self
   }
@@ -62,12 +63,12 @@ class MessageViewController: UIViewController {
         fetchConversationFromId(conversationId) {
           conversation, error in
           if let conversation = conversation as Conversation! {
-            if !contains(self.contacts, conversation.senderId) {
-              self.presentAddContactAlertControllerForConversation(conversation)
+            self.conversation = conversation
+            if !contains(self.contacts, self.conversation!.senderId) {
+              self.presentAddContactAlertControllerForConversation(self.conversation!)
             } else {
-              self.selectContactsForConversation(conversation)
+              self.selectContactsForConversation(self.conversation!)
             }
-            self.contactCollectionView.reloadSections(NSIndexSet(index: 1))
           } else {
             println(error!)
           }
@@ -142,7 +143,7 @@ class MessageViewController: UIViewController {
       scrollMessageTextViewToBottomAnimated(true)
       return
     }
-    
+    // TODO: Content size needs to adjust
     adjustMessageToolbarHeightConstraintByDelta(dy)
     if !contentSizeIsIncreasing {
       scrollMessageTextViewToBottomAnimated(false)
@@ -182,12 +183,13 @@ class MessageViewController: UIViewController {
   
   private func updatePlaceholderLabelCharacterCounterLabelAndSendButton() {
     let contentView = messageToolbar.messageContentView
-    numberOfCharactersRemaining = messageCharacterLimit - count(contentView.messageTextView.text)
+    let textView = contentView.messageTextView
+    numberOfCharactersRemaining = messageCharacterLimit - count(textView.text)
     contentView.characterCounterLabel.text = "\(numberOfCharactersRemaining)"
     UIView.animateWithDuration(0.5) {
-      contentView.placeholderLabel.hidden = !contentView.messageTextView.text.isEmpty
-      contentView.sendButton.enabled = !contentView.messageTextView.text.isEmpty && !self.selectedContactUserIds.isEmpty && self.numberOfCharactersRemaining >= 0
-      contentView.characterCounterLabel.hidden = self.oldMessageTextViewContentSize <= self.baseMessageTextViewContentSize
+      contentView.placeholderLabel.hidden = !textView.text.isEmpty
+      contentView.sendButton.enabled = !textView.text.isEmpty && !self.selectedContactUserIds.isEmpty && self.numberOfCharactersRemaining >= 0
+      contentView.characterCounterLabel.hidden = (textView.contentSize.height / textView.font.lineHeight) < 2
     }
   }
   
@@ -229,16 +231,18 @@ extension MessageViewController: MessageToolbarDelegate {
       
       PFCloud.callFunctionInBackground("sendMessage", withParameters: parameters) {
         success, error in
-        if success != nil {
+        if let success = success as? Int {
           SoundPlayer().playSound(.Send)
           textView.text = nil
           self.deselectAllSelectedContacts()
           self.conversation = nil
           self.contactCollectionView.reloadSections(NSIndexSet(index: 1))
           NSNotificationCenter.defaultCenter().postNotificationName("UITextViewTextDidChangeNotification", object: textView, userInfo: ["fromSendButtonPressed": true])
-          println(success!)
         } else {
-          println(error!)
+          if let error = error {
+            self.presentAlertControllerWithHeaderText("Send message failed", message: nil, actionMessage: "Okay")
+            println(error)
+          }
         }
       }
     }
@@ -301,18 +305,22 @@ extension MessageViewController: UICollectionViewDataSource {
     default:
       let messageCell = collectionView.dequeueReusableCellWithReuseIdentifier("MessageCollectionViewCell", forIndexPath: indexPath) as! MessageCollectionViewCell
       let messageContentView = messageCell.messageCollectionViewCellContentView
-      if conversation != nil {
-        messageContentView.dateTimeLabel.text = conversation!.messageTime.formattedAsTimeAgo()
-        messageContentView.messageTextView.text = conversation!.messageText
-        fetchUserFromId(conversation!.senderId) {
+      if let conversation = conversation {
+        messageContentView.dateTimeLabel.text = conversation.messageTime.formattedAsTimeAgo()
+        messageContentView.messageTextView.text = conversation.messageText
+        fetchUserFromId(conversation.senderId) {
           user, error in
           if let user = user {
             messageContentView.senderDisplayNameLabel.text = self.conversation!.senderId == currentUser().id ? "You" : user.displayName
             user.getPhoto {messageContentView.senderImageView.image = $0}
+          } else {
+            if let error = error {
+              println(error)
+            }
           }
         }
-        messageContentView.messageTextView.backgroundColor = conversation!.senderId == currentUser().id ? UIColor.blue() : UIColor.grayL()
-        messageContentView.messageTextView.textColor = conversation!.senderId == currentUser().id ? UIColor.whiteColor() : UIColor.grayD()
+        messageContentView.messageTextView.backgroundColor = conversation.senderId == currentUser().id ? UIColor.blue() : UIColor.grayL()
+        messageContentView.messageTextView.textColor = conversation.senderId == currentUser().id ? UIColor.whiteColor() : UIColor.grayD()
       }
       messageContentView.noMessageHistoryLabel.hidden = conversation != nil || selectedContactUserIds.isEmpty
       messageContentView.dateTimeLabel.hidden = conversation == nil
@@ -427,16 +435,16 @@ extension MessageViewController {
   }
   
   private func selectContactsForConversation(conversation: Conversation) {
-    self.selectedContactUserIds = conversation.participantIds.filter {contains(self.contacts, $0)}
-    self.conversation = conversation
-    for s in self.selectedContactUserIds {
+    selectedContactUserIds = conversation.participantIds.filter {contains(self.contacts, $0)}
+    for s in selectedContactUserIds {
       for c in 0..<self.contacts.count {
         if s == self.contacts[c] {
-          self.contactCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: c + 1, inSection: 0), animated: true, scrollPosition: .None)
+          contactCollectionView.selectItemAtIndexPath(NSIndexPath(forItem: c + 1, inSection: 0), animated: true, scrollPosition: .None)
           break
         }
       }
     }
+    contactCollectionView.reloadSections(NSIndexSet(index: 1))
   }
   
   private func deselectContactForIndexPath(indexPath: NSIndexPath) {
@@ -536,8 +544,10 @@ extension MessageViewController {
             self.presentAlertControllerWithHeaderText("Your grid is full", message: "Delete a contact before adding another.", actionMessage: "Okay")
           }
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) {
+          action in
+          self.selectContactsForConversation(conversation)
+        }
         alert.addAction(addAction)
         alert.addAction(cancelAction)
         self.presentViewController(alert, animated: true, completion: nil)
@@ -547,7 +557,7 @@ extension MessageViewController {
   
   private func presentDeleteContactAlertControllerForIndexPath(indexPath: NSIndexPath) {
     let userId = contacts[indexPath.row - 1]
-    let alert = UIAlertController(title: "Remove Contact", message: "Are you sure you want to remove user from your contacts?", preferredStyle: .ActionSheet)
+    let alert = UIAlertController(title: "Remove from contacts", message: nil, preferredStyle: .ActionSheet)
     let deleteAction = UIAlertAction(title: "Remove", style: .Destructive) {
       action in
       deleteUserFromContactsForUserId(userId) {
@@ -563,13 +573,12 @@ extension MessageViewController {
       }
     }
     let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-    
     alert.addAction(deleteAction)
     alert.addAction(cancelAction)
     self.presentViewController(alert, animated: true, completion: nil)
   }
   
-  private func presentAlertControllerWithHeaderText(header: String, message: String, actionMessage: String) {
+  private func presentAlertControllerWithHeaderText(header: String, message: String?, actionMessage: String) {
     let alert = UIAlertController(title: header, message: message, preferredStyle: .Alert)
     alert.addAction(UIAlertAction(title: actionMessage, style: .Default, handler: nil))
     presentViewController(alert, animated: true, completion: nil)

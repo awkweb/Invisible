@@ -19,7 +19,7 @@ Parse.Cloud.define("sendMessage", function(request, response) {
         conversation.save();
 
         sendPushToRecipients(recipientIds, senderName, messageText, conversationId);
-        response.success("Cloud Code sendMessage completed! conversationId: " + conversationId)
+        response.success(true);
       },
       error: function(object, error) {
         response.error("updateConversationForConversationId error: " + error);
@@ -40,7 +40,7 @@ Parse.Cloud.define("sendMessage", function(request, response) {
     }, {
       success: function(conversation) {
         sendPushToRecipients(recipientIds, senderName, messageText, conversation.id);
-        response.success("Cloud Code sendMessage completed! conversationId: " + conversation.id)
+        response.success("Cloud Code sendMessage completed! conversationId: " + conversation.id);
       },
       error: function(conversation, error) {
         response.error("createConversation error: " + error);

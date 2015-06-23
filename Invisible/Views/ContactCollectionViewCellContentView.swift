@@ -13,10 +13,4 @@ class ContactCollectionViewCellContentView: UIView {
   @IBOutlet weak var imageView: UIImageView!
   @IBOutlet weak var displayNameLabel: UILabel!
   
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    let colorList = [UIColor.green(), UIColor.blue(), UIColor.red()]
-    backgroundColor = colorList[0]
-  }
-  
 }

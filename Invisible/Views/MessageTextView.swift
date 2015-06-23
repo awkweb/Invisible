@@ -35,7 +35,7 @@ class MessageTextView: UITextView {
     scrollsToTop = false
     userInteractionEnabled = true
     
-    font = UIFont.systemFontOfSize(16.0)
+    font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
     textColor = UIColor.grayD()
     textAlignment = .Natural
     
