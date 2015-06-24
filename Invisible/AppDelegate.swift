@@ -111,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         kCRToastSubtitleFontKey: UIFont.systemFontOfSize(12.0),
         kCRToastSubtitleTextMaxNumberOfLinesKey: 1,
         kCRToastSubtitleTextAlignmentKey: NSTextAlignment.Left.rawValue,
-        kCRToastImageKey: UIImage(named: "Notif") as! AnyObject,
+        kCRToastImageKey: UIImage(named: "star") as! AnyObject,
         kCRToastImageAlignmentKey: CRToastAccessoryViewAlignment.Left.rawValue,
         kCRToastImageContentModeKey: UIViewContentMode.Center.rawValue,
         kCRToastBackgroundColorKey: UIColor.red(),

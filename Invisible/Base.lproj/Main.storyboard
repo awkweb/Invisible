@@ -141,7 +141,10 @@
                             <constraint firstItem="4y8-jv-mtd" firstAttribute="leading" secondItem="TzZ-wj-eBT" secondAttribute="leadingMargin" constant="-16" id="uaR-id-LCP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="New Message" id="FHk-Dd-313"/>
+                    <navigationItem key="navigationItem" title="New Message" id="FHk-Dd-313">
+                        <barButtonItem key="leftBarButtonItem" image="gear" id="nzF-tr-4Ba"/>
+                        <barButtonItem key="rightBarButtonItem" image="profile" id="x9f-oK-T6Q"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="contactCollectionView" destination="4y8-jv-mtd" id="Z5V-Is-c3H"/>
                         <outlet property="messageToolbar" destination="q7S-9f-saw" id="Xap-QD-XHt"/>
@@ -251,4 +254,8 @@
             <point key="canvasLocation" x="-388" y="2374"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="gear" width="26" height="27"/>
+        <image name="profile" width="25" height="25"/>
+    </resources>
 </document>

@@ -64,6 +64,7 @@ class MessageViewController: UIViewController {
           conversation, error in
           if let conversation = conversation as Conversation! {
             self.conversation = conversation
+            self.deselectAllSelectedContacts()
             if !contains(self.contacts, self.conversation!.senderId) {
               self.presentAddContactAlertControllerForConversation(self.conversation!)
             } else {
@@ -73,6 +74,18 @@ class MessageViewController: UIViewController {
             println(error!)
           }
         }
+      }
+    }
+    
+    notificationCenter.addObserverForName(UITextViewTextDidChangeNotification, object: messageToolbar.messageContentView.messageTextView, queue: mainQueue) {
+      notification in
+      if let contentSizeHeight = notification.object?.contentSize.height {
+        let isFromSendButtonPressed = notification.userInfo?["fromSendButtonPressed"] != nil
+        let newMessageTextViewContentSize = isFromSendButtonPressed ? self.baseMessageTextViewContentSize : contentSizeHeight
+        let dy = newMessageTextViewContentSize - self.oldMessageTextViewContentSize
+        self.oldMessageTextViewContentSize = newMessageTextViewContentSize
+        self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
+        self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     }
     
@@ -91,18 +104,6 @@ class MessageViewController: UIViewController {
       self.messageToolbarBottomConstraint.constant = 0.0
       UIView.animateWithDuration(0.25) {
         self.view.layoutIfNeeded()
-      }
-    }
-    
-    notificationCenter.addObserverForName(UITextViewTextDidChangeNotification, object: messageToolbar.messageContentView.messageTextView, queue: mainQueue) {
-      notification in
-      if let contentSizeHeight = notification.object?.contentSize.height {
-        let isFromSendButtonPressed = notification.userInfo?["fromSendButtonPressed"] != nil
-        let newMessageTextViewContentSize = isFromSendButtonPressed ? self.baseMessageTextViewContentSize : contentSizeHeight
-        let dy = newMessageTextViewContentSize - self.oldMessageTextViewContentSize
-        self.oldMessageTextViewContentSize = newMessageTextViewContentSize
-        self.adjustMessageToolbarForMessageTextViewContentSizeChange(dy)
-        self.updatePlaceholderLabelCharacterCounterLabelAndSendButton()
       }
     }
     
@@ -133,23 +134,6 @@ class MessageViewController: UIViewController {
   
   private func adjustMessageToolbarForMessageTextViewContentSizeChange(dy: CGFloat) {
     let contentSizeIsIncreasing = dy > 0
-    
-    if messageToolbarHasReachedMaximumHeight() {
-      let contentOffsetIsPositive = messageToolbar.messageContentView.messageTextView.contentOffset.y > 0
-      if contentSizeIsIncreasing || contentOffsetIsPositive {
-        scrollMessageTextViewToBottomAnimated(true)
-        return
-      }
-      if messageToolbar.messageContentView.messageTextView.contentOffset.y == -1.0 && messageToolbar.messageContentView.messageTextView.contentSize.height >= 313 {
-        println("fired")
-        println(messageToolbar.messageContentView.messageTextView)
-        println(messageToolbar.messageContentView.messageTextView.contentOffset.y)
-        println(dy)
-        scrollMessageTextViewToBottomAnimated(false)
-        return
-      }
-    }
-
     adjustMessageToolbarHeightConstraintByDelta(dy)
     if !contentSizeIsIncreasing {
       scrollMessageTextViewToBottomAnimated(false)
@@ -181,12 +165,6 @@ class MessageViewController: UIViewController {
     UIView.animateWithDuration(0.01, delay: 0.01, options: .CurveLinear, animations: {
       textView.setContentOffset(contentOffsetToShowLastLine, animated: false)
       }, completion: nil)
-  }
-  
-  private func messageToolbarHasReachedMaximumHeight() -> Bool {
-    let toolbarPoint = messageToolbar.frame.origin.y
-    let navbarPoint = navigationController!.navigationBar.frame.origin.y + navigationController!.navigationBar.frame.height
-    return toolbarPoint <= navbarPoint + 20
   }
   
   private func updatePlaceholderLabelCharacterCounterLabelAndSendButton() {
