@@ -20,7 +20,6 @@ class MessageToolbarContentView: UIView {
     placeholderLabel.textColor = UIColor.gray()
     placeholderLabel.text = "Type a message..."
     characterCounterLabel.textColor = UIColor.gray()
-    sendButton.setTitleColor(UIColor.blue(), forState: .Normal)
     sendButton.setTitleColor(UIColor.gray(), forState: .Disabled)
   }
 

@@ -34,7 +34,7 @@ class MessageCollectionViewCellContentViewTextView: UITextView {
     showsVerticalScrollIndicator = false
     scrollEnabled = false
     scrollsToTop = false
-    userInteractionEnabled = false
+    userInteractionEnabled = true
     editable = false
     selectable = true
     

@@ -132,18 +132,24 @@ class MessageViewController: UIViewController {
   // MARK: Message toolbar
   
   private func adjustMessageToolbarForMessageTextViewContentSizeChange(dy: CGFloat) {
-    let contentSizeIsIncreasing = (dy > 0)
+    let contentSizeIsIncreasing = dy > 0
     
     if messageToolbarHasReachedMaximumHeight() {
-      let contentOffsetIsPositive = (messageToolbar.messageContentView.messageTextView.contentOffset.y > 0)
+      let contentOffsetIsPositive = messageToolbar.messageContentView.messageTextView.contentOffset.y > 0
       if contentSizeIsIncreasing || contentOffsetIsPositive {
         scrollMessageTextViewToBottomAnimated(true)
         return
       }
-      scrollMessageTextViewToBottomAnimated(true)
-      return
+      if messageToolbar.messageContentView.messageTextView.contentOffset.y == -1.0 && messageToolbar.messageContentView.messageTextView.contentSize.height >= 313 {
+        println("fired")
+        println(messageToolbar.messageContentView.messageTextView)
+        println(messageToolbar.messageContentView.messageTextView.contentOffset.y)
+        println(dy)
+        scrollMessageTextViewToBottomAnimated(false)
+        return
+      }
     }
-    // TODO: Content size needs to adjust
+
     adjustMessageToolbarHeightConstraintByDelta(dy)
     if !contentSizeIsIncreasing {
       scrollMessageTextViewToBottomAnimated(false)
@@ -178,7 +184,9 @@ class MessageViewController: UIViewController {
   }
   
   private func messageToolbarHasReachedMaximumHeight() -> Bool {
-    return numberOfCharactersRemaining < 0
+    let toolbarPoint = messageToolbar.frame.origin.y
+    let navbarPoint = navigationController!.navigationBar.frame.origin.y + navigationController!.navigationBar.frame.height
+    return toolbarPoint <= navbarPoint + 20
   }
   
   private func updatePlaceholderLabelCharacterCounterLabelAndSendButton() {
@@ -578,7 +586,7 @@ extension MessageViewController {
     self.presentViewController(alert, animated: true, completion: nil)
   }
   
-  private func presentAlertControllerWithHeaderText(header: String, message: String?, actionMessage: String) {
+  private func presentAlertControllerWithHeaderText(header: String, message: String?, actionMessage: String = "Okay") {
     let alert = UIAlertController(title: header, message: message, preferredStyle: .Alert)
     alert.addAction(UIAlertAction(title: actionMessage, style: .Default, handler: nil))
     presentViewController(alert, animated: true, completion: nil)
