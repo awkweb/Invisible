@@ -34,6 +34,7 @@ class MessageViewController: UIViewController {
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+    saveUserInstallation()
     addNotificationCenterObservers()
     messageToolbar.messageContentView.messageTextView.becomeFirstResponder()
     let longPress = UILongPressGestureRecognizer(target: self, action: "performLongPressGestureRecognizer:")
@@ -413,6 +414,18 @@ extension MessageViewController: KRLCollectionViewDelegateGridLayout {
 // MARK: Utilities
 
 extension MessageViewController {
+  
+  private func saveUserInstallation() {
+    let installation = PFInstallation.currentInstallation()
+    installation["user"] = PFUser.currentUser()
+    installation.saveInBackgroundWithBlock {
+      success, error in
+      
+      if !success {
+        println(error)
+      }
+    }
+  }
   
   private func selectContactForIndexPath(indexPath: NSIndexPath) {
     if !contains(selectedContactUserIds, contacts[indexPath.row - 1]) {

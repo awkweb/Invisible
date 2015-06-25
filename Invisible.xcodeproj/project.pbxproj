@@ -55,6 +55,8 @@
 		05A4D2101B37781400ADB4C5 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 05A4D2091B37781400ADB4C5 /* NSDate+NVTimeAgo.m */; };
 		05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E377291B2362C3007A0B83 /* ringring.wav */; };
 		05E617961B30F564005DB0FF /* chord.wav in Resources */ = {isa = PBXBuildFile; fileRef = 05E617951B30F564005DB0FF /* chord.wav */; };
+		05EFAB8E1B3BE3B100614BF4 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EFAB8D1B3BE3B100614BF4 /* SettingsTableViewCell.swift */; };
+		05EFAB901B3BE5DF00614BF4 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EFAB8F1B3BE5DF00614BF4 /* SettingsModel.swift */; };
 		05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */; };
 		05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */; };
 		05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */; };
@@ -133,6 +135,8 @@
 		05E377241B232F22007A0B83 /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		05E377291B2362C3007A0B83 /* ringring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ringring.wav; path = Sounds/ringring.wav; sourceTree = "<group>"; };
 		05E617951B30F564005DB0FF /* chord.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = chord.wav; path = Sounds/chord.wav; sourceTree = "<group>"; };
+		05EFAB8D1B3BE3B100614BF4 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsTableViewCell.swift; path = Views/SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		05EFAB8F1B3BE5DF00614BF4 /* SettingsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsModel.swift; path = Models/SettingsModel.swift; sourceTree = "<group>"; };
 		05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionView.swift; path = Views/ContactCollectionView.swift; sourceTree = "<group>"; };
 		05F322E01B1DFDD500BED665 /* ContactCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCell.swift; path = Views/ContactCollectionViewCell.swift; sourceTree = "<group>"; };
 		05F322F01B1E442800BED665 /* ContactCollectionViewCellContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCollectionViewCellContentView.swift; path = Views/ContactCollectionViewCellContentView.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 			children = (
 				051632F61B10E255008605CA /* User.swift */,
 				053B4FD71B2CDCDF008290C8 /* Conversation.swift */,
+				05EFAB8F1B3BE5DF00614BF4 /* SettingsModel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -320,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */,
+				05EFAB8D1B3BE3B100614BF4 /* SettingsTableViewCell.swift */,
 				050BD29E1B1F6980008BABC0 /* AddCollectionViewCell */,
 				050BD29F1B1F6997008BABC0 /* ContactCollectionViewCell */,
 				053883C81B223AA400690AB5 /* MessageCollectionViewCell */,
@@ -507,11 +513,13 @@
 				05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */,
 				0536BFB21B1A38B700161877 /* MessageToolbar.swift in Sources */,
 				050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */,
+				05EFAB8E1B3BE3B100614BF4 /* SettingsTableViewCell.swift in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
 				053883C31B223A2E00690AB5 /* MessageCollectionViewCell.swift in Sources */,
 				05A4D20C1B37781400ADB4C5 /* CRToastView.m in Sources */,
 				05A4D2101B37781400ADB4C5 /* NSDate+NVTimeAgo.m in Sources */,
 				05A4D1F41B37754D00ADB4C5 /* ProfileViewController.swift in Sources */,
+				05EFAB901B3BE5DF00614BF4 /* SettingsModel.swift in Sources */,
 				053B4FD81B2CDCDF008290C8 /* Conversation.swift in Sources */,
 				0536BFB71B1A77E700161877 /* MessageTextView.swift in Sources */,
 				05F322E11B1DFDD500BED665 /* ContactCollectionViewCell.swift in Sources */,

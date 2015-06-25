@@ -15,7 +15,6 @@ class LogInViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
     usernameTextField.delegate = self
     passwordTextField.delegate = self
   }
@@ -23,7 +22,6 @@ class LogInViewController: UIViewController {
   @IBAction func logInButtonPressed(sender: UIButton) {
     let username = usernameTextField.text
     let password = passwordTextField.text
-    
     if username.isEmpty {
       println("Enter a username.")
     } else {
@@ -35,30 +33,21 @@ class LogInViewController: UIViewController {
     }
   }
   
+  @IBAction func signUpButtonPressed(sender: UIButton) {
+    let signUpVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SignUpViewController") as! SignUpViewController
+    self.presentViewController(signUpVC, animated: true, completion: nil)
+  }
+  
   private func logInWithUsername(username: String, password: String) {
     PFUser.logInWithUsernameInBackground(username, password: password) {
       user, error in
-      
-      if user != nil {
-        println("Log in success!")
-        self.saveUserInstallation()
+      if let user = user {
         let messageVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("MessagesNavController") as! UIViewController
         self.presentViewController(messageVC, animated: true, completion: nil)
       } else {
-        println("Log in error: \(error)")
-      }
-    }
-  }
-  
-  // TODO: Move to SignUpVC
-  private func saveUserInstallation() {
-    let installation = PFInstallation.currentInstallation()
-    installation["user"] = PFUser.currentUser()
-    installation.saveInBackgroundWithBlock {
-      success, error in
-      
-      if !success {
-        println(error)
+        if let error = error {
+          println("Log in error: \(error)")
+        }
       }
     }
   }
@@ -69,13 +58,11 @@ class LogInViewController: UIViewController {
 extension LogInViewController: UITextFieldDelegate {
   
   func textFieldShouldReturn(textField: UITextField) -> Bool {
-    
     switch textField {
     case usernameTextField: passwordTextField.becomeFirstResponder()
     case passwordTextField: logInButtonPressed(UIButton())
     default: break
     }
-    
     return true
   }
   
