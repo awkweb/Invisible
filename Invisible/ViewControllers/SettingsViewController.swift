@@ -12,18 +12,18 @@ class SettingsViewController: UIViewController {
   
   @IBOutlet weak var tableView: UITableView!
   
+  let settingsA0 = SettingsModel(title: "Log Out", detail: nil, disclosureIndicator: true)
+  let settingsB0 = SettingsModel(title: "Support", detail: nil, disclosureIndicator: true)
+  let settingsB1 = SettingsModel(title: "Twitter", detail: nil, disclosureIndicator: true)
+  let settingsC0 = SettingsModel(title: "Built By", detail: "@thomasmeagher", disclosureIndicator: true)
+  let settingsC1 = SettingsModel(title: "Acknowledgements", detail: nil, disclosureIndicator: true)
+  let settingsC2 = SettingsModel(title: "Version", detail: kVersion, disclosureIndicator: false)
   var baseArray: [[SettingsModel]] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.dataSource = self
     tableView.delegate = self
-    let settingsA0 = SettingsModel(title: "Log Out", detail: nil, disclosureIndicator: true)
-    let settingsB0 = SettingsModel(title: "Support", detail: nil, disclosureIndicator: true)
-    let settingsB1 = SettingsModel(title: "Twitter", detail: nil, disclosureIndicator: true)
-    let settingsC0 = SettingsModel(title: "Built By", detail: "@thomasmeagher", disclosureIndicator: true)
-    let settingsC1 = SettingsModel(title: "Acknowledgements", detail: nil, disclosureIndicator: true)
-    let settingsC2 = SettingsModel(title: "Version", detail: kVersion, disclosureIndicator: false)
     let settingsAArray = [settingsA0]
     let settingsBArray = [settingsB0, settingsB1]
     let settingsCArray = [settingsC0, settingsC1, settingsC2]
@@ -51,19 +51,19 @@ extension SettingsViewController: UITableViewDataSource {
     return baseArray.count
   }
   
+  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return baseArray[section].count
+  }
+  
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let settingsCell = baseArray[indexPath.section][indexPath.row]
+    let baseArrayItem = baseArray[indexPath.section][indexPath.row]
     let cell = tableView.dequeueReusableCellWithIdentifier("SettingsTableViewCell") as! SettingsTableViewCell
-    cell.titleLabel.text = settingsCell.title
-    cell.detailLabel.text = settingsCell.detail ?? nil
-    if settingsCell.disclosureIndicator {
+    cell.titleLabel.text = baseArrayItem.title
+    cell.detailLabel.text = baseArrayItem.detail ?? nil
+    if baseArrayItem.disclosureIndicator {
       cell.accessoryType = .DisclosureIndicator
     }
     return cell
-  }
-  
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return baseArray[section].count
   }
   
   func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -19,6 +19,10 @@
 		0517655D1B2A04EE00F632AA /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517655C1B2A04EE00F632AA /* ColorConstants.swift */; };
 		051C1F791B1CB872003560E4 /* MessageToolbarContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */; };
 		051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */; };
+		0524C9281B3C3D30007804C3 /* ProfileTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0524C9271B3C3D30007804C3 /* ProfileTableViewHeaderFooterView.swift */; };
+		0524C92D1B3C4962007804C3 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0524C92C1B3C4962007804C3 /* ProfileModel.swift */; };
+		0524C92F1B3C4A0C007804C3 /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0524C92E1B3C4A0C007804C3 /* ProfileTableViewCell.swift */; };
+		0524C9311B3C7BCF007804C3 /* ProfileTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0524C9301B3C7BCF007804C3 /* ProfileTableViewHeaderFooterView.xib */; };
 		0536BFA91B1A282400161877 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0536BFA71B1A282400161877 /* Bolts.framework */; };
 		0536BFAA1B1A282400161877 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0536BFA81B1A282400161877 /* Parse.framework */; };
 		0536BFB21B1A38B700161877 /* MessageToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0536BFB11B1A38B700161877 /* MessageToolbar.swift */; };
@@ -86,6 +90,10 @@
 		0517655C1B2A04EE00F632AA /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		051C1F781B1CB872003560E4 /* MessageToolbarContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageToolbarContentView.swift; path = Views/MessageToolbarContentView.swift; sourceTree = "<group>"; };
 		051C1F7A1B1CB899003560E4 /* MessageToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MessageToolbarContentView.xib; path = Views/MessageToolbarContentView.xib; sourceTree = "<group>"; };
+		0524C9271B3C3D30007804C3 /* ProfileTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileTableViewHeaderFooterView.swift; path = Views/ProfileTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		0524C92C1B3C4962007804C3 /* ProfileModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileModel.swift; path = Views/ProfileModel.swift; sourceTree = "<group>"; };
+		0524C92E1B3C4A0C007804C3 /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileTableViewCell.swift; path = Views/ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		0524C9301B3C7BCF007804C3 /* ProfileTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ProfileTableViewHeaderFooterView.xib; path = Views/ProfileTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
 		0536BFA71B1A282400161877 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Invisible/Frameworks/Bolts.framework; sourceTree = "<group>"; };
 		0536BFA81B1A282400161877 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Invisible/Frameworks/Parse.framework; sourceTree = "<group>"; };
 		0536BFB11B1A38B700161877 /* MessageToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageToolbar.swift; path = Views/MessageToolbar.swift; sourceTree = "<group>"; };
@@ -200,6 +208,7 @@
 				051632F61B10E255008605CA /* User.swift */,
 				053B4FD71B2CDCDF008290C8 /* Conversation.swift */,
 				05EFAB8F1B3BE5DF00614BF4 /* SettingsModel.swift */,
+				0524C92C1B3C4962007804C3 /* ProfileModel.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -213,6 +222,15 @@
 				0536BFB61B1A77E700161877 /* MessageTextView.swift */,
 			);
 			name = MessageToolbar;
+			sourceTree = "<group>";
+		};
+		0524C92B1B3C3E00007804C3 /* ProfileImageTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				0524C9271B3C3D30007804C3 /* ProfileTableViewHeaderFooterView.swift */,
+				0524C9301B3C7BCF007804C3 /* ProfileTableViewHeaderFooterView.xib */,
+			);
+			name = ProfileImageTableViewCell;
 			sourceTree = "<group>";
 		};
 		053883BF1B22385C00690AB5 /* Sounds */ = {
@@ -326,6 +344,8 @@
 			children = (
 				05F322DE1B1DF9A000BED665 /* ContactCollectionView.swift */,
 				05EFAB8D1B3BE3B100614BF4 /* SettingsTableViewCell.swift */,
+				0524C92E1B3C4A0C007804C3 /* ProfileTableViewCell.swift */,
+				0524C92B1B3C3E00007804C3 /* ProfileImageTableViewCell */,
 				050BD29E1B1F6980008BABC0 /* AddCollectionViewCell */,
 				050BD29F1B1F6997008BABC0 /* ContactCollectionViewCell */,
 				053883C81B223AA400690AB5 /* MessageCollectionViewCell */,
@@ -386,8 +406,8 @@
 				050C98AD1B0BC577004A05CA /* LogInViewController.swift */,
 				05A4D1F11B37752400ADB4C5 /* SignUpViewController.swift */,
 				050C98AE1B0BC577004A05CA /* MessageViewController.swift */,
-				05A4D1F31B37754D00ADB4C5 /* ProfileViewController.swift */,
 				05A4D1F51B37758000ADB4C5 /* SettingsViewController.swift */,
+				05A4D1F31B37754D00ADB4C5 /* ProfileViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -479,6 +499,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0524C9311B3C7BCF007804C3 /* ProfileTableViewHeaderFooterView.xib in Resources */,
 				05E617961B30F564005DB0FF /* chord.wav in Resources */,
 				05E3772A1B2362C3007A0B83 /* ringring.wav in Resources */,
 				051C1F7B1B1CB899003560E4 /* MessageToolbarContentView.xib in Resources */,
@@ -508,6 +529,7 @@
 				053B4FD61B2C6610008290C8 /* SoundPlayer.swift in Sources */,
 				050BD2991B1F6751008BABC0 /* AddCollectionViewCell.swift in Sources */,
 				051765561B29BCD400F632AA /* MessageCollectionViewCellContentView.swift in Sources */,
+				0524C92D1B3C4962007804C3 /* ProfileModel.swift in Sources */,
 				05F322DF1B1DF9A000BED665 /* ContactCollectionView.swift in Sources */,
 				0517655D1B2A04EE00F632AA /* ColorConstants.swift in Sources */,
 				05F322F21B1E442800BED665 /* ContactCollectionViewCellContentView.swift in Sources */,
@@ -515,7 +537,9 @@
 				050BD29B1B1F6778008BABC0 /* AddCollectionViewCellContentView.swift in Sources */,
 				05EFAB8E1B3BE3B100614BF4 /* SettingsTableViewCell.swift in Sources */,
 				053F42B21AFE92FE00A2CA53 /* AppDelegate.swift in Sources */,
+				0524C92F1B3C4A0C007804C3 /* ProfileTableViewCell.swift in Sources */,
 				053883C31B223A2E00690AB5 /* MessageCollectionViewCell.swift in Sources */,
+				0524C9281B3C3D30007804C3 /* ProfileTableViewHeaderFooterView.swift in Sources */,
 				05A4D20C1B37781400ADB4C5 /* CRToastView.m in Sources */,
 				05A4D2101B37781400ADB4C5 /* NSDate+NVTimeAgo.m in Sources */,
 				05A4D1F41B37754D00ADB4C5 /* ProfileViewController.swift in Sources */,

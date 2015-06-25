@@ -259,7 +259,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zky-IF-DKd">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsTableViewCell" id="BPi-Uo-TXx" customClass="SettingsTableViewCell" customModule="Invisible" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -270,13 +270,13 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zeL-Js-fy9">
                                                     <rect key="frame" x="511" y="13" width="81" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4c-c0-G3q">
                                                     <rect key="frame" x="8" y="12" width="75" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -339,9 +339,57 @@
                     <view key="view" contentMode="scaleToFill" id="JWF-SF-Drf">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="74z-ai-Huq">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileTableViewCell" id="z2l-FW-FNW" customClass="ProfileTableViewCell" customModule="Invisible" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z2l-FW-FNW" id="kFz-p9-Hci">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85d-Ee-Lf4">
+                                                    <rect key="frame" x="8" y="12" width="75" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9v-zT-zxt">
+                                                    <rect key="frame" x="511" y="13" width="81" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="N9v-zT-zxt" firstAttribute="top" secondItem="kFz-p9-Hci" secondAttribute="topMargin" constant="5" id="nAr-Rd-RDe"/>
+                                                <constraint firstItem="85d-Ee-Lf4" firstAttribute="top" secondItem="kFz-p9-Hci" secondAttribute="topMargin" constant="4" id="q1m-CO-tk8"/>
+                                                <constraint firstItem="85d-Ee-Lf4" firstAttribute="leading" secondItem="kFz-p9-Hci" secondAttribute="leadingMargin" id="quu-EM-zT0"/>
+                                                <constraint firstItem="N9v-zT-zxt" firstAttribute="trailing" secondItem="kFz-p9-Hci" secondAttribute="trailingMargin" id="wgR-Mf-PMm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="detailLabel" destination="N9v-zT-zxt" id="GPS-kv-Vvw"/>
+                                            <outlet property="titleLabel" destination="85d-Ee-Lf4" id="riw-TG-GFm"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="74z-ai-Huq" firstAttribute="leading" secondItem="JWF-SF-Drf" secondAttribute="leadingMargin" constant="-16" id="HeB-ar-XiE"/>
+                            <constraint firstItem="Mby-9C-KpW" firstAttribute="top" secondItem="74z-ai-Huq" secondAttribute="bottom" id="XNT-Xy-UeY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="74z-ai-Huq" secondAttribute="trailing" constant="-16" id="bqL-5I-b7R"/>
+                            <constraint firstItem="74z-ai-Huq" firstAttribute="top" secondItem="mSU-TB-moz" secondAttribute="bottom" constant="-64" id="cIf-Hp-NAU"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="blQ-QH-64g"/>
+                    <connections>
+                        <outlet property="tableView" destination="74z-ai-Huq" id="CSx-s1-Zq7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lUB-Le-dg9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
