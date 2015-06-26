@@ -17,15 +17,24 @@ class ProfileViewController: UIViewController {
   let profile2 = ProfileModel(title: "Password", detail: nil, disclosureIndicator: true)
   var baseArray: [ProfileModel] = []
   
+  // MARK: View life cycle
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    baseArray += [profile0, profile1, profile2]
+    tableView.backgroundColor = UIColor.grayL()
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.dataSource = self
     tableView.delegate = self
     tableView.registerNib(UINib(nibName: "ProfileTableViewHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "ProfileTableViewHeaderFooterView")
-    baseArray += [profile0, profile1, profile2]
   }
   
 }
+
+// MARK: Table view data source
 
 extension ProfileViewController: UITableViewDataSource {
   
@@ -55,6 +64,8 @@ extension ProfileViewController: UITableViewDataSource {
   }
     
 }
+
+// MARK: Table view data delegaate
 
 extension ProfileViewController: UITableViewDelegate {
   

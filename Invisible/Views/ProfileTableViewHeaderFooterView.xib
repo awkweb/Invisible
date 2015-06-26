@@ -13,23 +13,11 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="66h-mz-pND" userLabel="Background Image View">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
                 </imageView>
-                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWd-d6-3Jd">
+                <visualEffectView opaque="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="503-d7-3P4">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
-                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="xEe-hm-7ag">
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4FN-GJ-R8X">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kmh-xf-XJq">
-                                <rect key="frame" x="40" y="36" width="240" height="128"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="pMK-Io-lYh">
-                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <vibrancyEffect>
-                                    <blurEffect style="light"/>
-                                </vibrancyEffect>
-                            </visualEffectView>
-                        </subviews>
                     </view>
                     <blurEffect style="light"/>
                 </visualEffectView>
@@ -55,27 +43,27 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="503-d7-3P4" firstAttribute="leading" secondItem="66h-mz-pND" secondAttribute="leading" id="2Np-1z-1Nm"/>
                 <constraint firstAttribute="trailing" secondItem="66h-mz-pND" secondAttribute="trailing" id="4St-uN-hoH"/>
+                <constraint firstItem="503-d7-3P4" firstAttribute="top" secondItem="66h-mz-pND" secondAttribute="top" id="IV4-CU-1lT"/>
                 <constraint firstItem="5EA-fe-1FX" firstAttribute="top" secondItem="u7g-yZ-vfP" secondAttribute="bottom" constant="21" id="OAm-g5-5Ee"/>
                 <constraint firstAttribute="centerX" secondItem="u7g-yZ-vfP" secondAttribute="centerX" constant="0.5" id="Oqw-6v-g0Z"/>
                 <constraint firstAttribute="trailing" secondItem="hjy-Ch-Xd2" secondAttribute="trailing" constant="9" id="Sat-rd-Uf0"/>
-                <constraint firstAttribute="bottom" secondItem="nWd-d6-3Jd" secondAttribute="bottom" id="Tog-Wp-kHc"/>
                 <constraint firstItem="66h-mz-pND" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VIN-pc-qZg"/>
                 <constraint firstItem="66h-mz-pND" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VMS-Lt-klf"/>
                 <constraint firstItem="5EA-fe-1FX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="XQO-JN-bOl"/>
                 <constraint firstItem="hjy-Ch-Xd2" firstAttribute="top" secondItem="5EA-fe-1FX" secondAttribute="bottom" constant="8" id="YXa-Tc-XG0"/>
-                <constraint firstAttribute="trailing" secondItem="nWd-d6-3Jd" secondAttribute="trailing" id="d9j-oh-Mdj"/>
                 <constraint firstItem="u7g-yZ-vfP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="45" id="dRl-cI-Ypv"/>
                 <constraint firstItem="hjy-Ch-Xd2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="9" id="dmj-4A-E2x"/>
                 <constraint firstAttribute="trailing" secondItem="5EA-fe-1FX" secondAttribute="trailing" constant="8" id="epV-Kg-f4f"/>
-                <constraint firstItem="nWd-d6-3Jd" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="l2c-ez-iP4"/>
+                <constraint firstItem="503-d7-3P4" firstAttribute="bottom" secondItem="66h-mz-pND" secondAttribute="bottom" id="ioB-Ol-vtc"/>
+                <constraint firstItem="503-d7-3P4" firstAttribute="trailing" secondItem="66h-mz-pND" secondAttribute="trailing" id="pj8-KD-nPx"/>
                 <constraint firstAttribute="bottom" secondItem="66h-mz-pND" secondAttribute="bottom" id="rMI-i7-xwl"/>
-                <constraint firstItem="nWd-d6-3Jd" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zw2-gL-08g"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="backgroundImageView" destination="66h-mz-pND" id="1Wi-Uu-vGc"/>
+                <outlet property="backgroundImageView" destination="66h-mz-pND" id="Bjh-6l-3Ya"/>
                 <outlet property="dateJoinedLabel" destination="hjy-Ch-Xd2" id="nBt-MF-ohq"/>
                 <outlet property="profilePictureImageView" destination="u7g-yZ-vfP" id="Kno-b3-bYu"/>
                 <outlet property="usernameLabel" destination="5EA-fe-1FX" id="EzJ-Oz-vKK"/>

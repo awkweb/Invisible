@@ -19,15 +19,22 @@ class SettingsViewController: UIViewController {
   let settingsC1 = SettingsModel(title: "Acknowledgements", detail: nil, disclosureIndicator: true)
   let settingsC2 = SettingsModel(title: "Version", detail: kVersion, disclosureIndicator: false)
   var baseArray: [[SettingsModel]] = []
+
+  // MARK: View life cycle
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    tableView.dataSource = self
-    tableView.delegate = self
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
     let settingsAArray = [settingsA0]
     let settingsBArray = [settingsB0, settingsB1]
     let settingsCArray = [settingsC0, settingsC1, settingsC2]
     baseArray += [settingsAArray, settingsBArray, settingsCArray]
+    tableView.backgroundColor = UIColor.grayL()
+  }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    tableView.dataSource = self
+    tableView.delegate = self
   }
   
   private func logOut() {
@@ -44,7 +51,8 @@ class SettingsViewController: UIViewController {
   
 }
 
-// MARK: - UITableViewDataSource
+// MARK: Table view data source
+
 extension SettingsViewController: UITableViewDataSource {
   
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -76,7 +84,8 @@ extension SettingsViewController: UITableViewDataSource {
   
 }
 
-// MARK: - UITableViewDelegate
+// MARK: Table view data delegate
+
 extension SettingsViewController: UITableViewDelegate {
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

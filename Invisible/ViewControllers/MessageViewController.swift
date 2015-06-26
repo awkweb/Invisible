@@ -52,6 +52,11 @@ class MessageViewController: UIViewController {
     contactCollectionView.delegate = self
   }
   
+  override func viewDidDisappear(animated: Bool) {
+    super.viewDidDisappear(animated)
+    removeNotificationCenterObservers()
+  }
+  
   // MARK: Notification center
   
   private func addNotificationCenterObservers() {
